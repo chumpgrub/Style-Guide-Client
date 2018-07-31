@@ -1,0 +1,36 @@
+.container {
+    padding: 0 15px;
+    margin: 0 auto;
+    max-width: 1400px;
+}
+
+.col {
+    padding: 0 15px;
+
+    &--full {
+        flex-grow: 1;
+        width: 100%;
+    }
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+
+    &--gutter-10 {
+        margin: 0 -5px;
+
+        .col {
+            padding: 0 5px;
+        }
+    }
+
+    &--gutter-30 {
+        margin: 0 -15px;
+
+        .col {
+            padding: 0 15px;
+        }
+    }
+}

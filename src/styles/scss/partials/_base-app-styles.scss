@@ -1,0 +1,40 @@
+body {
+    background: #e6e6e6;
+}
+
+section.definitions {
+    margin-bottom: 80px;
+}
+
+.project-title {
+    font-family: Helvetica, sans-serif;
+    font-size: 48px;
+    font-weight: 400;
+    letter-spacing: 0.05rem;
+    margin: 0.8rem 0;
+}
+
+.definition-title {
+    font-family: Helvetica, sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 0.05rem;
+    margin: 0.8rem 0;
+}
+
+.project-timestamp {
+    display: flex;
+    margin-bottom: 30px;
+    font-family: Helvetica, sans-serif;
+    font-size: 0.8rem;
+
+    dt,
+    dd {
+        margin-right: 10px;
+    }
+
+    dt {
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+}

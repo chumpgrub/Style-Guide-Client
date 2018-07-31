@@ -1,0 +1,94 @@
+.col--image {
+    margin-bottom: 20px;
+
+    .image {
+        position: relative;
+        padding-left: 30px;
+        box-shadow: 0 0 0 2px #fff, 0 0 0 3px #ccc;
+        border-bottom: none;
+        background: #fff;
+        max-width: 800px;
+
+        input {
+            display: block;
+            width: 100%;
+
+            + input {
+                margin-top: 10px;
+            }
+
+            &.full {
+                width: 100%;
+            }
+
+            &.half {
+                width: 50%;
+            }
+        }
+
+        svg {
+            position: absolute;
+            top: calc(50% - 10px);
+            left: 4px;
+            cursor: move;
+        }
+    }
+}
+
+.form-row {
+    display: flex;
+
+    &:last-of-type .form-element {
+        border-bottom: none;
+    }
+}
+
+.form-element {
+    position: relative;
+    border-bottom: 1px solid #ccc;
+    height: 55px;
+
+    &--full {
+        width: 100%;
+    }
+
+    &--half {
+        width: 50%;
+
+        + .form-element--half {
+            border-left: 1px solid #ccc;
+        }
+    }
+
+    label {
+        transition: top 0.2s, font-size 0.2s, color 0.2s;
+        position: absolute;
+        padding: 0;
+        top: 27px;
+        left: 10px;
+        font-family: Helvetica, sans-serif;
+        font-size: 16px;
+        z-index: 1;
+    }
+
+    input {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border: none;
+        outline: 0;
+        font-size: 16px;
+        padding: 15px 4px 10px 10px;
+
+        &:focus + label {
+        }
+    }
+
+    &.focus label,
+    input:focus + label {
+        top: 10px;
+        font-size: 12px;
+        color: #c8543b;
+    }
+}
