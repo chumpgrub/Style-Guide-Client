@@ -1,0 +1,14 @@
+@mixin webfont($weight: 400) {
+    font-family: "montserrat", sans-serif;
+    font-weight: $weight;
+}
+
+@mixin button($background: #c8543b) {
+    @include webfont(400);
+    padding: 18px 35px;
+    background: $background;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.150em;
+}

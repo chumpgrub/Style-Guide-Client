@@ -38,30 +38,6 @@ table {
 * {
   box-sizing: border-box; }
 
-.container {
-  padding: 0 15px;
-  margin: 0 auto;
-  max-width: 1400px; }
-
-.col {
-  padding: 0 15px; }
-  .col--full {
-    flex-grow: 1;
-    width: 100%; }
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -15px; }
-  .row--gutter-10 {
-    margin: 0 -5px; }
-    .row--gutter-10 .col {
-      padding: 0 5px; }
-  .row--gutter-30 {
-    margin: 0 -15px; }
-    .row--gutter-30 .col {
-      padding: 0 15px; }
-
 .Select {
   position: relative; }
 
@@ -446,8 +422,35 @@ table {
 @-webkit-keyframes Select-animation-spin {
   to {
     -webkit-transform: rotate(1turn); } }
+/* Colors */
+/* Fonts */
+.container {
+  padding: 0 15px;
+  margin: 0 auto;
+  max-width: 1400px; }
+
+.col {
+  padding: 0 15px; }
+  .col--full {
+    flex-grow: 1;
+    width: 100%; }
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px; }
+  .row--gutter-10 {
+    margin: 0 -5px; }
+    .row--gutter-10 .col {
+      padding: 0 5px; }
+  .row--gutter-30 {
+    margin: 0 -15px; }
+    .row--gutter-30 .col {
+      padding: 0 15px; }
+
 body {
-  background: #e6e6e6; }
+  background: #e6e6e6;
+  font-family: Arial, sans-serif; }
 
 section.definitions {
   margin-bottom: 80px; }
@@ -478,10 +481,107 @@ section.definitions {
     text-transform: uppercase;
     font-weight: bold; }
 
+header {
+  padding: 15px 0;
+  background: #333333; }
+  header .container {
+    display: flex;
+    align-items: center; }
+  header img {
+    max-width: 300px; }
+  header .header__actions {
+    flex-grow: 1;
+    text-align: right; }
+  header .button {
+    font-family: "montserrat", sans-serif;
+    font-weight: 400;
+    padding: 18px 35px;
+    background: #c8543b;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.150em; }
+
+.project-search {
+  margin-top: 30px;
+  height: 60px;
+  padding: 15px;
+  width: 100%;
+  font-size: 16px; }
+
+.project-list .project {
+  display: flex;
+  margin: 30px 0;
+  background: #fff;
+  border: 1px solid #ccc; }
+  .project-list .project .project__definitions {
+    flex-grow: 1;
+    padding: 25px 20px; }
+  .project-list .project h3 {
+    font-family: "montserrat", sans-serif;
+    font-weight: 400;
+    margin-bottom: 15px;
+    font-size: 22px;
+    text-transform: uppercase; }
+    .project-list .project h3 a {
+      color: #333333;
+      text-decoration: none; }
+      .project-list .project h3 a:hover {
+        color: #c8543b; }
+      .project-list .project h3 a svg {
+        position: relative;
+        top: -2px;
+        margin-left: 8px;
+        font-size: 16px; }
+  .project-list .project-colors {
+    display: flex;
+    margin-bottom: 18px; }
+  .project-list .project-fonts ul {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: georgia, garamond, serif;
+    font-style: italic;
+    color: #666666; }
+    .project-list .project-fonts ul li + li {
+      margin-left: 20px;
+      padding-left: 18px;
+      border-left: 1px solid #666666; }
+  .project-list .project__color-preview {
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px; }
+    .project-list .project__color-preview:last-of-type {
+      margin-right: 0; }
+  .project-list .project__actions {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 35px;
+    margin: 10px 12px 0 0; }
+    .project-list .project__actions a {
+      flex: 0 1 40px;
+      display: block;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      color: #ccc; }
+      .project-list .project__actions a:hover {
+        color: #c8543b; }
+      .project-list .project__actions a svg {
+        margin-top: calc(50% - 8px); }
+      .project-list .project__actions a + a {
+        border-top: 1px solid #ccc; }
+
 .definitions--notes textarea {
   padding: 10px;
   width: 50%;
   min-height: 100px; }
+.definitions--notes .project-notes {
+  width: 100%;
+  max-width: 700px;
+  line-height: 1.6; }
 
 .project-colors {
   display: flex;

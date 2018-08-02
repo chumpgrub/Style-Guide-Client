@@ -1,15 +1,16 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-//import Header from '../components/Header/Header';
-
-const Header = () => <header>My Header</header>;
+import TypeKit from 'react-typekit';
+import Header from '../components/Global/Header';
 
 const Layout = (props) => {
     return (
-        <div className="container">
+        <div>
+            <TypeKit kitId="wsw8dkp" />
             <Header/>
-            <div>
-                {props.children}
+            <div className="container">
+                <main>
+                    {props.children}
+                </main>
             </div>
         </div>
     );

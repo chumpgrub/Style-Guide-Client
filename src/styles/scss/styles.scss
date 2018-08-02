@@ -1,8 +1,19 @@
 @import 'partials/reset';
-@import 'partials/grid';
 @import 'partials/select2';
-@import 'partials/base-app-styles';
-@import 'partials/notes-section';
-@import 'partials/color-section';
-@import 'partials/image-section';
-@import 'partials/typography-section';
+
+// Global
+@import 'partials/global/variables';
+@import 'partials/global/mixins';
+@import 'partials/global/grid';
+@import 'partials/global/base-app-styles';
+@import 'partials/global/app-typography';
+@import 'partials/global/header';
+
+// Projects View
+@import 'partials/projects/list';
+
+// Project View
+@import 'partials/project/notes-section';
+@import 'partials/project/color-section';
+@import 'partials/project/image-section';
+@import 'partials/project/typography-section';

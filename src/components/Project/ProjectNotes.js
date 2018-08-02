@@ -3,7 +3,11 @@ import React from 'react';
 const ProjectNotes = ({editing, notes, handleNoteChange}) => {
     const notePreview = () => {
         return (
-            <p>{notes}</p>
+            <div className="project-notes">
+            {notes.split('\n').map((item, key) => {
+                return <span key={key}>{item}<br/></span>
+            })}
+            </div>
         )
     }
     const noteEdit = () => {

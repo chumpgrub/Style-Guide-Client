@@ -3,7 +3,7 @@ import qs from 'qs';
 import update from 'immutability-helper';
 
 // const url = 'https://styleguide-backend.local/api';
-const url = 'http://style.markfurrow.com/api';
+const url = 'http://style-server.markfurrow.com/api';
 
 export function getProjects() {
     return axios.get(`${url}/projects`, {crossdomain: true}).then((res) => {
@@ -183,6 +183,38 @@ export function createNewColor(project, color) {
         url: `${url}/projects/${id}`,
         crossdomain: true,
         data: qs.stringify({colors_defs: JSON.stringify(updated_colors)})
+    }).then((res) => {
+        let data = res.data;
+        return {
+            type: 'GET_PROJECT',
+            payload: Object.assign({},
+                {...data},
+                {image_defs: JSON.parse(data.image_defs)},
+                {colors_defs: JSON.parse(data.colors_defs)},
+                {font_defs: JSON.parse(data.font_defs)},
+                {web_fonts: JSON.parse(data.web_fonts)},
+                {typekit_fonts: JSON.parse(data.typekit_fonts)},
+                {google_fonts: JSON.parse(data.google_fonts)}
+            )
+        }
+    }).catch((err) => {
+        console.log(err);
+    });
+}
+
+export function updateProjectNote(project, notes) {
+    let {id} = project;
+
+    let updated_notes = update(project.notes, {$set: notes});
+
+    console.log(updated_notes);
+
+    return axios({
+        method: 'PUT',
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        url: `${url}/projects/${id}`,
+        crossdomain: true,
+        data: qs.stringify({notes: updated_notes})
     }).then((res) => {
         let data = res.data;
         return {

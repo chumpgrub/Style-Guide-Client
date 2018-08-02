@@ -1,0 +1,22 @@
+header {
+    padding: 15px 0;
+    background: $dark-gray;
+
+    .container {
+        display: flex;
+        align-items: center;
+    }
+
+    img {
+        max-width: 300px;
+    }
+
+    .header__actions {
+        flex-grow: 1;
+        text-align: right;
+    }
+
+    .button {
+        @include button();
+    }
+}

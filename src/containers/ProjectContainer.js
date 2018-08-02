@@ -11,7 +11,8 @@ import {
     createNewColor,
     updateProjectColorName,
     updateProjectColor,
-    updateProjectColorOrder
+    updateProjectColorOrder,
+    updateProjectNote
 } from "../actions";
 
 import Layout from '../hoc/Layout';
@@ -43,6 +44,8 @@ class ProjectContainer extends Component {
 
     handleNoteChange = (note) => {
         console.log(note);
+        console.log(this.props.project);
+        this.props.updateProjectNote(this.props.project, note);
     }
 
     handleColorOrder = (colors) => {
@@ -180,7 +183,8 @@ const mapDispatchToProps = (dispatch) => {
         createNewColor,
         updateProjectColor,
         updateProjectColorName,
-        updateProjectColorOrder
+        updateProjectColorOrder,
+        updateProjectNote
     }, dispatch)
 }
 

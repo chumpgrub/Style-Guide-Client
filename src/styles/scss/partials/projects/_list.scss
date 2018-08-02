@@ -1,0 +1,114 @@
+.project-search {
+    margin-top: 30px;
+    height: 60px;
+    padding: 15px;
+    width: 100%;
+    font-size: 16px;
+}
+
+.project-list {
+    .project {
+        display: flex;
+        margin: 30px 0;
+        background: #fff;
+        border: 1px solid #ccc;
+
+        .project__definitions {
+            flex-grow: 1;
+            padding: 25px 20px;
+        }
+
+        h3 {
+            @include webfont();
+            margin-bottom: 15px;
+            font-size: 22px;
+            text-transform: uppercase;
+
+            a {
+                color: $dark-gray;
+                text-decoration: none;
+
+                &:hover {
+                    color: $orange;
+                }
+
+                svg {
+                    position: relative;
+                    top: -2px;
+                    margin-left: 8px;
+                    font-size: 16px;
+                }
+            }
+        }
+
+        &-colors {
+            display: flex;
+            margin-bottom: 18px;
+        }
+
+        &-fonts {
+            ul {
+                display: flex;
+                flex-wrap: wrap;
+                font-family: $italic;
+                font-style: italic;
+                color: $mid-gray;
+
+                li {
+                    + li {
+                        margin-left: 20px;
+                        padding-left: 18px;
+                        border-left: 1px solid $mid-gray;
+                    }
+                }
+            }
+        }
+
+        &__color-preview {
+            border-radius: 50%;
+            height: 20px;
+            width: 20px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+
+            &:last-of-type {
+                margin-right: 0;
+            }
+        }
+
+        &__actions {
+            display: flex;
+            flex-direction: column;
+            flex: 0 0 35px;
+            margin: 10px 12px 0 0;
+
+            a {
+                flex: 0 1 40px;
+                display: block;
+                height: 100%;
+                width: 100%;
+                text-align: center;
+                font-size: 16px;
+                color: #ccc;
+
+                &:hover {
+                    color: $orange;
+                }
+
+                &.edit {
+                }
+
+                &.export {
+                }
+
+                svg {
+                    margin-top: calc(50% - 8px);
+                }
+
+                + a {
+                    border-top: 1px solid #ccc;
+                }
+            }
+        }
+    }
+}

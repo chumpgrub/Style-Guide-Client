@@ -1,20 +1,6 @@
 import React, {Component} from 'react';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import hexRgb from 'hex-rgb';
-
-const getRGB = (value) => {
-
-    // Test for 6 or 3 digit hex value.
-    let isOk = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(value);
-
-    if (isOk) {
-        let hex = value.replace(/^#/, '');
-        return hexRgb(hex);
-    }
-
-    return '';
-}
 
 const NewColor = ({handleColorNew}) => {
     return (
@@ -27,7 +13,6 @@ const NewColor = ({handleColorNew}) => {
 const ColorSwatch = SortableElement(({editing, color, id, handleColorNameChange, handleColorChange, handleColorDelete}) => {
 
     const styles = {background: color.value};
-    const rgb = getRGB(color.value);
 
     const shouldColorUpdate = (key, color, event) => {
 
@@ -96,9 +81,6 @@ const ColorSwatch = SortableElement(({editing, color, id, handleColorNameChange,
                 <div className="color-swatch" style={styles}></div>
                 <div>
                     {editing ? edit() : preview()}
-                </div>
-                <div className="color-rgb">
-                    {/*{rgb.red},{rgb.green},{rgb.blue}*/}
                 </div>
                 {editing && <FontAwesomeIcon onClick={() => handleColorDelete(color)} icon={['far', 'trash-alt']}/>}
             </div>
