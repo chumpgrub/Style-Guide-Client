@@ -1,13 +1,21 @@
 .definitions--notes {
+
     textarea {
-        padding: 10px;
-        width: 50%;
-        min-height: 100px;
+        padding: 4px;
+        background: none;
+        border: 1px solid #ccc;
+        outline: none;
+        min-height: 40px;
+        resize: none;
     }
 
+    textarea,
     .project-notes {
         width: 100%;
         max-width: 700px;
         line-height: 1.6;
+        font-family: $body;
+        font-size: 18px;
+        color: $dark-gray;
     }
 }

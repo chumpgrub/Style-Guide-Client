@@ -1,4 +1,5 @@
 import React from 'react';
+import TextareaAutosize from 'react-autosize-textarea';
 
 const ProjectNotes = ({editing, notes, handleNoteChange}) => {
     const notePreview = () => {
@@ -12,7 +13,12 @@ const ProjectNotes = ({editing, notes, handleNoteChange}) => {
     }
     const noteEdit = () => {
         return (
-            <textarea defaultValue={notes} onBlur={(e) => checkNoteChange(e)} />
+            <TextareaAutosize
+                rows={1}
+                defaultValue={notes}
+                onBlur={(e) => checkNoteChange(e)}
+                placeholder="Provide project information, here..."
+            />
         )
     }
     const checkNoteChange = (e) => {

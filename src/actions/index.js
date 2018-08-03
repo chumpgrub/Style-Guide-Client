@@ -202,12 +202,40 @@ export function createNewColor(project, color) {
     });
 }
 
-export function updateProjectNote(project, notes) {
+export function updateProjectTitle(project, title) {
+
     let {id} = project;
+    let updated_title = update(project.name, {$set: title});
 
+    return axios({
+        method: 'PUT',
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        url: `${url}/projects/${id}`,
+        crossdomain: true,
+        data: qs.stringify({name: updated_title})
+    }).then((res) => {
+        let data = res.data;
+        return {
+            type: 'GET_PROJECT',
+            payload: Object.assign({},
+                {...data},
+                {image_defs: JSON.parse(data.image_defs)},
+                {colors_defs: JSON.parse(data.colors_defs)},
+                {font_defs: JSON.parse(data.font_defs)},
+                {web_fonts: JSON.parse(data.web_fonts)},
+                {typekit_fonts: JSON.parse(data.typekit_fonts)},
+                {google_fonts: JSON.parse(data.google_fonts)}
+            )
+        }
+    }).catch((err) => {
+        console.log(err);
+    });
+}
+
+export function updateProjectNote(project, notes) {
+
+    let {id} = project;
     let updated_notes = update(project.notes, {$set: notes});
-
-    console.log(updated_notes);
 
     return axios({
         method: 'PUT',

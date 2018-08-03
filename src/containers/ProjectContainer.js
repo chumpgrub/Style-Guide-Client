@@ -12,10 +12,12 @@ import {
     updateProjectColorName,
     updateProjectColor,
     updateProjectColorOrder,
+    updateProjectTitle,
     updateProjectNote
 } from "../actions";
 
 import Layout from '../hoc/Layout';
+import ProjectTitle from '../components/Project/ProjectTitle';
 import ProjectNotes from '../components/Project/ProjectNotes';
 import ColorsPreview from '../components/Project/Colors/ColorsPreview';
 import ImagesPreview from '../components/Project/Images/ImagesPreview';
@@ -40,6 +42,11 @@ class ProjectContainer extends Component {
 
     componentWillMount() {
         this.props.getProject(this.props.match.params.id);
+    }
+
+    handleTitleChange = (title) => {
+        console.log(title);
+        this.props.updateProjectTitle(this.props.project, title);
     }
 
     handleNoteChange = (note) => {
@@ -120,7 +127,11 @@ class ProjectContainer extends Component {
 
         return (
             <div>
-                <h1 className="project-title">{project.name}</h1>
+                <ProjectTitle
+                    editing={editing}
+                    title={project.name}
+                    handleTitleChange={this.handleTitleChange}
+                />
                 <dl className="project-timestamp">
                     <dt>Created:</dt>
                     <dd><Moment format="MMM DD YYYY">{project.created_at}</Moment></dd>
@@ -184,6 +195,7 @@ const mapDispatchToProps = (dispatch) => {
         updateProjectColor,
         updateProjectColorName,
         updateProjectColorOrder,
+        updateProjectTitle,
         updateProjectNote
     }, dispatch)
 }

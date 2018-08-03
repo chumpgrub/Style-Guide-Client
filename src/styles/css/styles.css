@@ -455,13 +455,6 @@ body {
 section.definitions {
   margin-bottom: 80px; }
 
-.project-title {
-  font-family: Helvetica, sans-serif;
-  font-size: 48px;
-  font-weight: 400;
-  letter-spacing: 0.05rem;
-  margin: 0.8rem 0; }
-
 .definition-title {
   font-family: Helvetica, sans-serif;
   font-size: 32px;
@@ -574,14 +567,44 @@ header {
       .project-list .project__actions a + a {
         border-top: 1px solid #ccc; }
 
+.project-title input {
+  padding: 4px;
+  background: none;
+  border: 1px solid #ccc;
+  outline: none;
+  min-height: 40px;
+  resize: none; }
+.project-title input,
+.project-title > div {
+  margin: 0.8rem 0;
+  width: 100%;
+  max-width: 700px;
+  font-family: "montserrat", sans-serif;
+  font-size: 48px;
+  font-weight: 500;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+  color: #333333; }
+
+.back {
+  display: block;
+  margin: 60px 0; }
+
 .definitions--notes textarea {
-  padding: 10px;
-  width: 50%;
-  min-height: 100px; }
+  padding: 4px;
+  background: none;
+  border: 1px solid #ccc;
+  outline: none;
+  min-height: 40px;
+  resize: none; }
+.definitions--notes textarea,
 .definitions--notes .project-notes {
   width: 100%;
   max-width: 700px;
-  line-height: 1.6; }
+  line-height: 1.6;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  color: #333333; }
 
 .project-colors {
   display: flex;

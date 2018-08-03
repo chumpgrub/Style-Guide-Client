@@ -10,7 +10,7 @@ const Routes = () => {
             <Route path="/" exact component={Projects}/>
             <Route path="/project/new" exact component={() => {
                 return (
-                    <Project editing={true} />
+                    <Project editing={true} new={true} />
                 )
             }}/>
             <Route path="/project/:id" exact render={({match}) => {
