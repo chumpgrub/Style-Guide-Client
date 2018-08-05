@@ -11,18 +11,24 @@ section.definitions {
 }
 
 .definition-title {
-    font-family: Helvetica, sans-serif;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    font-family: $headline;
     font-size: 32px;
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: 0.05rem;
-    margin: 0.8rem 0;
+    text-transform: uppercase;
+    color: $dark-gray;
+    border-bottom: 1px solid $dark-gray;
 }
 
 .project-timestamp {
     display: flex;
-    margin-bottom: 30px;
-    font-family: Helvetica, sans-serif;
+    margin-bottom: 80px;
+    font-family: $italic;
     font-size: 0.8rem;
+    font-style: italic;
+    color: $mid-gray;
 
     dt,
     dd {

@@ -1,25 +1,30 @@
 .project-title {
 
     input {
+        margin: 15px -5px;
         padding: 4px;
-        background: none;
-        border: 1px solid #ccc;
+        background: rgba(255,255,255,0.25);
+        border: 1px solid transparent;
         outline: none;
         min-height: 40px;
         resize: none;
     }
 
     input,
-    > div {
-        margin: 0.8rem 0;
+    .title {
         width: 100%;
-        max-width: 700px;
+        max-width: 800px;
         font-family: $headline;
         font-size: 48px;
         font-weight: 500;
         letter-spacing: 0.05rem;
         text-transform: uppercase;
         color: $dark-gray;
+    }
+
+    .title {
+        height: 98px;
+        line-height: 98px;
     }
 }
 

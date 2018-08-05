@@ -22,7 +22,7 @@ const ProjectTitle = ({editing, title, handleTitleChange}) => {
 
     const titlePreview = () => {
         return (
-            <div>
+            <div className="title">
                 {title}
             </div>
         )

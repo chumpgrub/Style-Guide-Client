@@ -66,9 +66,10 @@
         padding: 0;
         top: 27px;
         left: 10px;
-        font-family: Helvetica, sans-serif;
+        font-family: $headline;
         font-size: 16px;
         z-index: 1;
+        color: $mid-gray;
     }
 
     input {
@@ -89,6 +90,6 @@
     input:focus + label {
         top: 10px;
         font-size: 12px;
-        color: #c8543b;
+        color: $mid-gray;
     }
 }

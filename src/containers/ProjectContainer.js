@@ -13,7 +13,9 @@ import {
     updateProjectColor,
     updateProjectColorOrder,
     updateProjectTitle,
-    updateProjectNote
+    updateProjectNote,
+    updateProjectImageOrder,
+    updateProjectImages
 } from "../actions";
 
 import Layout from '../hoc/Layout';
@@ -36,7 +38,8 @@ class ProjectContainer extends Component {
         this.state = {
             loading: true,
             editing: false,
-            colors: null
+            colors: null,
+            images: null
         }
     }
 
@@ -119,6 +122,41 @@ class ProjectContainer extends Component {
         );
     }
 
+    handleImageChange = (image, value) => {
+
+        const images = this.props.project.image_defs;
+        const objIndex = images.findIndex(obj => obj.id === image.id);
+
+        // console.log(images);
+
+        let newImages = [
+            ...images.slice(0, objIndex),
+            {...value},
+            ...images.slice(objIndex + 1)
+        ];
+
+        // console.log(newImages);
+
+        this.setState({
+            images: newImages
+        });
+
+        this.props.updateProjectImages(
+            this.props.project,
+            newImages
+        );
+
+        console.log(image);
+        console.log(value);
+    }
+
+    handleImageOrder = (images) => {
+        this.setState({
+            images: images
+        });
+        this.props.updateProjectImageOrder(this.props.project, images);
+    }
+
     renderProject(project) {
 
         let project_id = this.props.match.params.id;
@@ -126,7 +164,11 @@ class ProjectContainer extends Component {
         let colors = this.state.colors || this.props.project.colors_defs || null;
 
         return (
-            <div>
+            <div className="project">
+                {editing ?
+                    <Link to={'/project/' + project_id }>view</Link>
+                    : <Link to={'/project/' + project_id + '/edit'}>edit</Link>
+                }
                 <ProjectTitle
                     editing={editing}
                     title={project.name}
@@ -138,10 +180,6 @@ class ProjectContainer extends Component {
                     <dt>Last Updated:</dt>
                     <dd><Moment format="MMM DD YYYY @ h:MM A">{project.updated_at}</Moment></dd>
                 </dl>
-                {editing ?
-                    <Link to={'/project/' + project_id }>view</Link>
-                    : <Link to={'/project/' + project_id + '/edit'}>edit</Link>
-                }
                 <ProjectNotes
                     editing={editing}
                     notes={project.notes}
@@ -162,6 +200,8 @@ class ProjectContainer extends Component {
                 <ImagesPreview
                     editing={editing}
                     images={project.image_defs}
+                    handleImageChange={this.handleImageChange}
+                    handleImageOrder={this.handleImageOrder}
                 />
             </div>
         )
@@ -196,7 +236,9 @@ const mapDispatchToProps = (dispatch) => {
         updateProjectColorName,
         updateProjectColorOrder,
         updateProjectTitle,
-        updateProjectNote
+        updateProjectNote,
+        updateProjectImageOrder,
+        updateProjectImages
     }, dispatch)
 }
 
