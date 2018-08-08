@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
+
 import TypeKitFonts from '../../Fonts/TypeKitFonts';
+import GoogleFonts from '../../Fonts/GoogleFonts';
+import WebSafeFonts from '../../Fonts/WebSafeFonts';
 
 const TypographyDefinition = ({font}) => {
     console.log(font);
@@ -33,8 +36,21 @@ class TypographyPreview extends Component {
 
     renderEdit() {
         return (
-            <div>
-                <TypeKitFonts fonts={[]}/>
+            <div className="col col--full font-sources">
+                <div className="row">
+                    <div className="col font-source">
+                        <h3>Typekit Fonts</h3>
+                        <TypeKitFonts fonts={[]}/>
+                    </div>
+                    <div className="col font-source">
+                        <h3>Google Fonts</h3>
+                        <GoogleFonts fonts={[]}/>
+                    </div>
+                    <div className="col font-source">
+                        <h3>Web Safe Fonts</h3>
+                        <WebSafeFonts fonts={[]}/>
+                    </div>
+                </div>
             </div>
         )
     }

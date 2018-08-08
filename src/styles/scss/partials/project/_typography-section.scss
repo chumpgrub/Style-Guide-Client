@@ -1,0 +1,13 @@
+.font-sources {
+    .font-source {
+        width: 33.3333%;
+
+        h3 {
+            @include webfont();
+            margin-bottom: 15px;
+            font-size: 16px;
+            //text-transform: uppercase;
+            color: $dark-gray;
+        }
+    }
+}

@@ -67,19 +67,20 @@ class WebSafeFonts extends Component {
         this.setState({
             value: value
         })
-        this.props.onFamilyChange(value, 'websafe');
+        // this.props.onFamilyChange(value, 'websafe');
     }
 
     render() {
         return (
             <div className="project--font-families__select">
-                <Select multi={true}
-                        value={this.state.value}
-                        valueKey='slug'
-                        labelKey='name'
-                        onChange={this.onChange}
-                        options={webSafeFonts}
-                        backspaceRemoves={true}
+                <Select.Creatable
+                    multi={true}
+                    value={this.state.value}
+                    valueKey='slug'
+                    labelKey='name'
+                    onChange={this.onChange}
+                    options={webSafeFonts}
+                    backspaceRemoves={true}
                 />
             </div>
         )

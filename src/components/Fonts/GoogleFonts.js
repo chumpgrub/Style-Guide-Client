@@ -30,7 +30,7 @@ class GoogleFonts extends Component {
         this.setState({
             value: value
         })
-        this.props.onFamilyChange(value);
+        // this.props.onFamilyChange(value);
     }
 
     getFontFamilies = () => {
@@ -53,13 +53,14 @@ class GoogleFonts extends Component {
     render() {
         return (
             <div className="project--font-families__select">
-                <Select multi={true}
-                              value={this.state.value}
-                              onChange={this.onChange}
-                              valueKey='family'
-                              labelKey='family'
-                              options={this.state.googleFonts}
-                              backspaceRemoves={true}
+                <Select
+                    multi={true}
+                    value={this.state.value}
+                    onChange={this.onChange}
+                    valueKey='family'
+                    labelKey='family'
+                    options={this.state.googleFonts}
+                    backspaceRemoves={true}
                 />
             </div>
         )

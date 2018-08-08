@@ -91,7 +91,6 @@ export function updateProjectColors(project, colors) {
         let data = res.data;
         return {
             type: 'GET_PROJECT',
-            // type: 'UPDATE_COLOR',
             payload: Object.assign({},
                 {...data},
                 {image_defs: JSON.parse(data.image_defs)},
@@ -105,7 +104,6 @@ export function updateProjectColors(project, colors) {
     }).catch((err) => {
         console.log(err);
     });
-
 
     return {
         type: 'UPDATE_COLOR',

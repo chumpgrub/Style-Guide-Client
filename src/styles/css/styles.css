@@ -774,4 +774,13 @@ header {
     font-size: 12px;
     color: #999; }
 
+.font-sources .font-source {
+  width: 33.3333%; }
+  .font-sources .font-source h3 {
+    font-family: "montserrat", sans-serif;
+    font-weight: 400;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333333; }
+
 /*# sourceMappingURL=styles.css.map */

@@ -25,8 +25,8 @@ class TypeKitFonts extends Component {
         console.log(value);
         this.setState({
             value: value
-        })
-        this.props.onFamilyChange(value);
+        });
+        // this.props.onFamilyChange(value);
     }
 
     getFontFamilies = (input) => {
@@ -52,13 +52,14 @@ class TypeKitFonts extends Component {
     render() {
         return (
             <div className="project--font-families__select">
-                <Select.AsyncCreatable multi={true}
-                              value={this.state.value}
-                              onChange={this.onChange}
-                              valueKey='name'
-                              labelKey='name'
-                              loadOptions={this.getFontFamilies}
-                              backspaceRemoves={true}
+                <Select.AsyncCreatable
+                    multi={true}
+                    value={this.state.value}
+                    onChange={this.onChange}
+                    valueKey='name'
+                    labelKey='name'
+                    loadOptions={this.getFontFamilies}
+                    backspaceRemoves={true}
                 />
             </div>
         )
