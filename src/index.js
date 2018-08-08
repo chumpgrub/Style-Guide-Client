@@ -9,12 +9,12 @@ import reducers from './reducers';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars, faPlusCircle, faCircleNotch, faPencilAlt, faFileCode, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
+import { faTrashAlt, faTimesCircle, faCopy } from '@fortawesome/free-regular-svg-icons';
 
 // import css
 import './styles/css/styles.css';
 
-library.add( faBars, faPlusCircle, faTrashAlt, faTimesCircle, faCircleNotch, faPencilAlt, faFileCode, faChevronRight );
+library.add( faBars, faPlusCircle, faTrashAlt, faTimesCircle, faCircleNotch, faPencilAlt, faFileCode, faChevronRight, faCopy );
 
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore);
 

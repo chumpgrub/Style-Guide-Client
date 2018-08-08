@@ -688,14 +688,31 @@ header {
   padding-bottom: 8px; }
 
 .col--image {
-  margin-bottom: 20px; }
+  margin-bottom: 30px; }
+  .col--image.col {
+    width: 50%; }
   .col--image .image {
     position: relative;
-    padding-left: 30px;
-    box-shadow: 0 0 0 2px #fff, 0 0 0 3px #ccc;
-    border-bottom: none;
-    background: #fff;
-    max-width: 800px; }
+    border: 1px solid #ccc;
+    background: #fff; }
+    .col--image .image--edit {
+      padding: 10px 20px 10px 60px;
+      max-width: 800px; }
+    .col--image .image--preview {
+      padding: 20px;
+      width: 100%;
+      height: 100%; }
+    .col--image .image h3 {
+      font-family: "montserrat", sans-serif;
+      font-weight: 400;
+      margin-bottom: 15px;
+      font-size: 22px;
+      text-transform: uppercase;
+      color: #333333; }
+    .col--image .image__dimensions {
+      font-family: georgia, garamond, serif;
+      font-style: italic;
+      color: #999; }
     .col--image .image input {
       display: block;
       width: 100%; }
@@ -705,16 +722,21 @@ header {
         width: 100%; }
       .col--image .image input.half {
         width: 50%; }
-    .col--image .image svg {
+    .col--image .image > svg {
       position: absolute;
       top: calc(50% - 10px);
-      left: 4px;
+      left: 20px;
       cursor: move; }
 
 .form-row {
   display: flex; }
   .form-row:last-of-type .form-element {
     border-bottom: none; }
+  .form-row--actions {
+    justify-content: flex-end; }
+    .form-row--actions svg {
+      margin: 10px;
+      cursor: pointer; }
 
 .form-element {
   position: relative;
@@ -735,7 +757,8 @@ header {
     font-family: "montserrat", sans-serif;
     font-size: 16px;
     z-index: 1;
-    color: #999; }
+    color: #999;
+    pointer-events: none; }
   .form-element input {
     position: absolute;
     bottom: 0;

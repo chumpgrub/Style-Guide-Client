@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
+import update from 'immutability-helper';
+
 const NewColor = ({handleColorNew}) => {
     return (
         <div className="col color color--new" onClick={handleColorNew}>
@@ -10,24 +12,22 @@ const NewColor = ({handleColorNew}) => {
     )
 }
 
-const ColorSwatch = SortableElement(({editing, color, id, handleColorNameChange, handleColorChange, handleColorDelete}) => {
+const ColorSwatch = SortableElement(({editing, color, id, handleColorChange, handleColorDelete}) => {
 
     const styles = {background: color.value};
 
     const shouldColorUpdate = (key, color, event) => {
 
-        let newData = event.target.value;
-        let oldData = color[key];
+        let newValue = event.target.value;
+        let oldValue = color[key];
 
-        if (newData !== oldData) {
-            switch(key) {
-                case 'name':
-                    handleColorNameChange(color, newData);
-                    break;
-                case 'value':
-                    handleColorChange(color, newData);
-                    break;
-            }
+        if (newValue !== oldValue) {
+
+            let newColor = update(color, {
+                [key]: {$set: newValue}
+            });
+
+            handleColorChange(color, newColor);
         }
     }
 
@@ -94,7 +94,7 @@ const ColorSwatch = SortableElement(({editing, color, id, handleColorNameChange,
 //     value:
 // }
 
-const SortableList = SortableContainer(({colors, editing, handleColorNameChange, handleColorChange, handleColorDelete, handleColorNew}) => {
+const SortableList = SortableContainer(({colors, editing, handleColorChange, handleColorDelete, handleColorNew}) => {
     return (
         <div className="row row--gutter-30 project-colors">
             {
@@ -106,7 +106,6 @@ const SortableList = SortableContainer(({colors, editing, handleColorNameChange,
                             editing={editing}
                             color={color}
                             disabled={!editing}
-                            handleColorNameChange={handleColorNameChange}
                             handleColorChange={handleColorChange}
                             handleColorNew={handleColorNew}
                             handleColorDelete={handleColorDelete}
@@ -126,17 +125,11 @@ class ColorsPreview extends Component {
         this.props.handleColorOrder([...updatedOrder]);
     }
 
-    handleColorNameChange = (color, value) => {
-        this.props.handleColorNameChange(color, value);
-    }
-
     handleColorChange = (color, value) => {
         this.props.handleColorChange(color, value);
     }
 
     handleColorDelete = (color) => {
-        console.log('DELETING COLOR');
-        console.log(color);
         const {id} = color;
         const {colors} = this.props;
         const objIndex = colors.findIndex(obj => obj.id === id);
@@ -165,7 +158,6 @@ class ColorsPreview extends Component {
                         distance={50}
                         editing={editing}
                         colors={colors}
-                        handleColorNameChange={this.handleColorNameChange}
                         handleColorChange={this.handleColorChange}
                         handleColorDelete={this.handleColorDelete}
                         handleColorNew={this.handleColorNew}

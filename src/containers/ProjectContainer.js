@@ -9,8 +9,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
     getProject,
     createNewColor,
-    updateProjectColorName,
-    updateProjectColor,
+    updateProjectColors,
     updateProjectColorOrder,
     updateProjectTitle,
     updateProjectNote,
@@ -71,7 +70,7 @@ class ProjectContainer extends Component {
         const newColor = {
             id: lastColor.id + 1,
             name: '',
-            value: '#'
+            value: ''
         };
         const newColors = [
             ...colors, newColor
@@ -103,12 +102,13 @@ class ProjectContainer extends Component {
     }
 
     handleColorChange = (color, value) => {
+
         const colors = this.props.project.colors_defs;
         const objIndex = colors.findIndex(obj => obj.id === color.id);
 
         let newColors = [
             ...colors.slice(0, objIndex),
-            {...color, value: value},
+            {...value},
             ...colors.slice(objIndex + 1)
         ];
 
@@ -116,9 +116,9 @@ class ProjectContainer extends Component {
             colors: newColors
         });
 
-        this.props.updateProjectColor(
+        this.props.updateProjectColors(
             this.props.project,
-            Object.assign({}, {...color}, {value: value})
+            newColors
         );
     }
 
@@ -188,7 +188,6 @@ class ProjectContainer extends Component {
                 <ColorsPreview
                     editing={editing}
                     colors={colors}
-                    handleColorNameChange={this.handleColorNameChange}
                     handleColorChange={this.handleColorChange}
                     handleColorNew={this.handleColorNew}
                     handleColorOrder={this.handleColorOrder}
@@ -232,8 +231,7 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         getProject,
         createNewColor,
-        updateProjectColor,
-        updateProjectColorName,
+        updateProjectColors,
         updateProjectColorOrder,
         updateProjectTitle,
         updateProjectNote,

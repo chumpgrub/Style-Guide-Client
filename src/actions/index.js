@@ -74,21 +74,10 @@ export function updateProjectColorOrder(project, colors) {
     });
 }
 
-export function updateProjectColor(project, color) {
+export function updateProjectColors(project, colors) {
 
     let {id} = project;
-
-    let updated_colors = update(project.colors_defs, {
-        $apply: (colors) => {
-            return colors.map((def) => {
-                if ( def.id == color.id ) {
-                    return Object.assign({}, {...def}, {value: color.value} )
-                } else {
-                    return def;
-                }
-            })
-        }
-    });
+    let updated_colors = update(project.colors_defs, {$set: colors});
 
     return axios({
         method: 'PUT',
@@ -103,52 +92,6 @@ export function updateProjectColor(project, color) {
         return {
             type: 'GET_PROJECT',
             // type: 'UPDATE_COLOR',
-            payload: Object.assign({},
-                {...data},
-                {image_defs: JSON.parse(data.image_defs)},
-                {colors_defs: JSON.parse(data.colors_defs)},
-                {font_defs: JSON.parse(data.font_defs)},
-                {web_fonts: JSON.parse(data.web_fonts)},
-                {typekit_fonts: JSON.parse(data.typekit_fonts)},
-                {google_fonts: JSON.parse(data.google_fonts)}
-            )
-        }
-    }).catch((err) => {
-        console.log(err);
-    });
-
-
-    return {
-        type: 'UPDATE_COLOR',
-        payload: {}
-    }
-}
-
-export function updateProjectColorName(project, color) {
-
-    let {id} = project;
-    let updated_colors = update(project.colors_defs, {
-        $apply: (colors) => {
-            return colors.map((def) => {
-                if ( def.id == color.id ) {
-                    return Object.assign({}, {...def}, {name: color.name} )
-                } else {
-                    return def;
-                }
-            })
-        }
-    });
-
-    return axios({
-        method: 'PUT',
-        headers: { 'content-type': 'application/x-www-form-urlencoded' },
-        url: `${url}/projects/${id}`,
-        crossdomain: true,
-        data: qs.stringify({colors_defs: JSON.stringify(updated_colors)})
-    }).then((res) => {
-        let data = res.data;
-        return {
-            type: 'GET_PROJECT',
             payload: Object.assign({},
                 {...data},
                 {image_defs: JSON.parse(data.image_defs)},
@@ -275,7 +218,6 @@ export function updateProjectImages(project, images) {
         url: `${url}/projects/${id}`,
         crossdomain: true,
         data: qs.stringify({image_defs: JSON.stringify(updated_images)})
-        // data: qs.stringify({image_defs: updated_images})
     }).then((res) => {
         let data = res.data;
         return {

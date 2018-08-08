@@ -5,18 +5,28 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import update from 'immutability-helper';
 
 const Image = SortableElement(({editing, image, handleImageChange}) => {
+    const editingClass = editing ? '--full' : '';
     return (
-        <div className="col col--full col--image">
+        <div className={`col col`+ editingClass +` col--image`}>
             {
                 editing ?
                     <ImageEdit
                         image={image}
                         handleImageChange={handleImageChange}
-                    /> : image.name
+                    /> : <ImagePreview image={image} />
             }
         </div>
     )
-})
+});
+
+const ImagePreview = ({image}) => {
+    return(
+        <div className="image image--preview">
+            <h3>{image.name}</h3>
+            <div className="image__dimensions">{image.width} x {image.height}</div>
+        </div>
+    )
+}
 
 const ImageEdit = ({image, handleImageChange}) => {
 
@@ -35,6 +45,10 @@ const ImageEdit = ({image, handleImageChange}) => {
             handleImageChange(image, newImage);
         }
 
+    }
+
+    const handleImageDelete = (image) => {
+        console.log(image);
     }
 
     return (
@@ -91,6 +105,16 @@ const ImageEdit = ({image, handleImageChange}) => {
                     <label htmlFor="color">Text Color</label>
                 </div>
             </div>
+            <div className="form-row form-row--actions">
+                <FontAwesomeIcon
+                    onClick={() => handleImageDelete(image)}
+                    icon={['far', 'copy']}
+                />
+                <FontAwesomeIcon
+                    onClick={() => handleImageDelete(image)}
+                    icon={['far', 'trash-alt']}
+                />
+            </div>
         </div>
     )
 }
@@ -131,19 +155,8 @@ class ImagesPreview extends Component {
         this.props.handleImageOrder([...updatedOrder]);
     }
 
-    renderEdit(images) {
-        return (
-            <div>
-                {images ? images.map(image => <ImageEdit key={image.id} image={image}/>) : null}
-            </div>
-        )
-    }
-
-    renderPreview(images) {
-
-    }
-
     render() {
+
         let {editing, images} = this.props;
 
         return (
@@ -152,7 +165,7 @@ class ImagesPreview extends Component {
                 {
                     images ?
                     <SortableList
-                        axis="y"
+                        axis="xy"
                         distance={50}
                         editing={editing}
                         images={images}
