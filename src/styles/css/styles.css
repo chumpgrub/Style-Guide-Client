@@ -448,18 +448,21 @@ table {
     .row--gutter-30 .col {
       padding: 0 15px; }
 
+html {
+  font-size: 16px; }
+
 body {
   background: #e6e6e6;
   font-family: Arial, sans-serif; }
 
 section.definitions {
-  margin-bottom: 80px; }
+  margin-bottom: 6rem; }
 
 .definition-title {
-  margin-bottom: 20px;
-  padding-bottom: 15px;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
   font-family: "montserrat", sans-serif;
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 500;
   letter-spacing: 0.05rem;
   text-transform: uppercase;
@@ -481,7 +484,7 @@ section.definitions {
     font-weight: bold; }
 
 header {
-  padding: 15px 0;
+  padding: 1rem 0;
   background: #333333; }
   header .container {
     display: flex;
@@ -586,7 +589,7 @@ header {
   width: 100%;
   max-width: 800px;
   font-family: "montserrat", sans-serif;
-  font-size: 48px;
+  font-size: 3rem;
   font-weight: 500;
   letter-spacing: 0.05rem;
   text-transform: uppercase;
@@ -611,9 +614,9 @@ header {
 .definitions--notes .project-notes {
   width: 100%;
   max-width: 800px;
-  line-height: 1.6;
+  line-height: 1.4;
   font-family: Arial, sans-serif;
-  font-size: 18px;
+  font-size: 1rem;
   color: #333333; }
 
 .project-colors {
@@ -774,13 +777,24 @@ header {
     font-size: 12px;
     color: #999; }
 
-.font-sources .font-source {
+.project-fonts .font-source {
   width: 33.3333%; }
-  .font-sources .font-source h3 {
+  .project-fonts .font-source h3 {
     font-family: "montserrat", sans-serif;
     font-weight: 400;
-    margin-bottom: 15px;
-    font-size: 16px;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
     color: #333333; }
+  .project-fonts .font-source ul {
+    margin-left: 8px; }
+    .project-fonts .font-source ul li {
+      margin-bottom: 0.8rem;
+      font-family: georgia, garamond, serif;
+      font-style: italic;
+      color: #999; }
+      .project-fonts .font-source ul li:before {
+        display: inline-block;
+        content: '-';
+        margin-right: 4px; }
 
 /*# sourceMappingURL=styles.css.map */

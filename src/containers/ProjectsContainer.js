@@ -44,6 +44,15 @@ class ProjectsContainer extends Component {
         this.props.getProjects();
     }
 
+    formatFontFamilies = (source, fonts) => {
+        let fontData = fonts.map(font => {
+            return font.name
+        })
+        return (
+            <li>{source} Fonts: {fontData.join(', ')}</li>
+        )
+    }
+
     renderProjects(projects) {
         return projects.map(project => {
 
@@ -59,12 +68,10 @@ class ProjectsContainer extends Component {
                         {colors ? <ColorsPreview {...colors}/>: ''}
                         <div className="project-fonts">
                             <ul>
-                                <li><b>Typekit Fonts:</b> Myriad, Proxima Nova</li>
-                                <li><b>Web Fonts:</b> Arial, sans-serif</li>
+                                {typekitfonts ? this.formatFontFamilies('TypeKit', typekitfonts) : ''}
+                                {googlefonts ? this.formatFontFamilies('Google', googlefonts) : ''}
+                                {webfonts ?  this.formatFontFamilies('Web', webfonts) : ''}
                             </ul>
-                            {typekitfonts ? 'Typekit Fonts:' : ''}
-                            {googlefonts ? 'Google Fonts:' : ''}
-                            {webfonts ? 'Web Fonts:' : ''}
                         </div>
                     </div>
                     <div className="project__actions">

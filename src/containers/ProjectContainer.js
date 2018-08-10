@@ -13,6 +13,7 @@ import {
     updateProjectColorOrder,
     updateProjectTitle,
     updateProjectNote,
+    updateProjectFontFamily,
     updateProjectImageOrder,
     updateProjectImages
 } from "../actions";
@@ -22,6 +23,7 @@ import ProjectTitle from '../components/Project/ProjectTitle';
 import ProjectNotes from '../components/Project/ProjectNotes';
 import ColorsPreview from '../components/Project/Colors/ColorsPreview';
 import ImagesPreview from '../components/Project/Images/ImagesPreview';
+import FontFamilies from '../components/Fonts/FontFamilies';
 import TypographyPreview from '../components/Project/Typography/TypographyPreview';
 
 const Loading = () => (
@@ -157,11 +159,20 @@ class ProjectContainer extends Component {
         this.props.updateProjectImageOrder(this.props.project, images);
     }
 
+    handleFontFamilyChange = (font_type, fonts) => {
+        let {project} = this.props;
+        console.log(project);
+        console.log(fonts);
+        this.props.updateProjectFontFamily(project, font_type, fonts);
+    }
+
     renderProject(project) {
 
         let project_id = this.props.match.params.id;
         let editing = this.props.editing;
         let colors = this.state.colors || this.props.project.colors_defs || null;
+        let {typekit_fonts, google_fonts, web_fonts} = this.props.project;
+        console.log(typekit_fonts);
 
         return (
             <div className="project">
@@ -191,6 +202,13 @@ class ProjectContainer extends Component {
                     handleColorChange={this.handleColorChange}
                     handleColorNew={this.handleColorNew}
                     handleColorOrder={this.handleColorOrder}
+                />
+                <FontFamilies
+                    editing={editing}
+                    typekit={typekit_fonts}
+                    google={google_fonts}
+                    web={web_fonts}
+                    handleFontFamilyChange={this.handleFontFamilyChange}
                 />
                 <TypographyPreview
                     editing={editing}
@@ -235,6 +253,7 @@ const mapDispatchToProps = (dispatch) => {
         updateProjectColorOrder,
         updateProjectTitle,
         updateProjectNote,
+        updateProjectFontFamily,
         updateProjectImageOrder,
         updateProjectImages
     }, dispatch)

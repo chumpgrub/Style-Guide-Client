@@ -1,20 +1,24 @@
+html {
+    font-size: 16px;
+}
+
 body {
     background: $light-gray;
-    font-family: Arial, sans-serif;
+    font-family: $body;
 }
 
 section.definitions {
-    margin-bottom: 80px;
+    margin-bottom: 6rem;
 }
 
 .project-title {
 }
 
 .definition-title {
-    margin-bottom: 20px;
-    padding-bottom: 15px;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
     font-family: $headline;
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 500;
     letter-spacing: 0.05rem;
     text-transform: uppercase;
@@ -25,7 +29,7 @@ section.definitions {
 .project-timestamp {
     display: flex;
     margin-bottom: 80px;
-    font-family: $italic;
+    font-family: $body-serif;
     font-size: 0.8rem;
     font-style: italic;
     color: $mid-gray;
