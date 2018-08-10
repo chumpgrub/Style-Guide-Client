@@ -67,7 +67,7 @@ class WebSafeFonts extends Component {
         this.setState({
             value: value
         })
-        // this.props.onFamilyChange(value, 'websafe');
+        this.props.handleChange(value);
     }
 
     render() {

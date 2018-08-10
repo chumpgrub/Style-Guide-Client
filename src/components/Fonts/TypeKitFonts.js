@@ -26,7 +26,7 @@ class TypeKitFonts extends Component {
         this.setState({
             value: value
         });
-        // this.props.onFamilyChange(value);
+        this.props.handleChange(value);
     }
 
     getFontFamilies = (input) => {
