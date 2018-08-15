@@ -65,7 +65,7 @@ const ColorSwatch = SortableElement(({editing, color, id, handleColorChange, han
             }
         }
         return (
-            <div>
+            <div className="color-data">
                 <div className="color-name">{color.name}</div>
                 <div className="color-hex">{color.value}</div>
                 <div className="color-hex color-var">{nameToVariable(color.name)}</div>
@@ -79,9 +79,7 @@ const ColorSwatch = SortableElement(({editing, color, id, handleColorChange, han
         <div className={'col color color--preview ' + edtingState}>
             <div className="color__inner">
                 <div className="color-swatch" style={styles}></div>
-                <div>
-                    {editing ? edit() : preview()}
-                </div>
+                {editing ? edit() : preview()}
                 {editing && <FontAwesomeIcon onClick={() => handleColorDelete(color)} icon={['far', 'trash-alt']}/>}
             </div>
         </div>

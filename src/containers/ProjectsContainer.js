@@ -35,6 +35,7 @@ class ProjectsContainer extends Component {
     constructor(props) {
         super(props);
         this.renderProjects = this.renderProjects.bind(this);
+        this.handleProjectExport = this.handleProjectExport.bind(this);
         this.state = {
             response: ''
         };
@@ -42,6 +43,10 @@ class ProjectsContainer extends Component {
 
     componentWillMount() {
         this.props.getProjects();
+    }
+
+    handleProjectExport = (id) => {
+        console.log(id);
     }
 
     formatFontFamilies = (source, fonts) => {
@@ -76,7 +81,8 @@ class ProjectsContainer extends Component {
                     </div>
                     <div className="project__actions">
                         <Link className="edit" title="edit" to={'/project/'+project.id+'/edit'}><FontAwesomeIcon icon={['fas', 'pencil-alt']}/></Link>
-                        <Link className="export" title="export" to={'/project/'+project.id+'/export'}><FontAwesomeIcon icon={['fas', 'file-code']}/></Link>
+                        <span className="export" title="export" onClick={() => this.handleProjectExport(project.id)}><FontAwesomeIcon icon={['fas', 'file-code']}/></span>
+                        {/*<Link className="export" title="export" to={'/project/'+project.id+'/export'}><FontAwesomeIcon icon={['fas', 'file-code']}/></Link>*/}
                     </div>
                 </div>
             )

@@ -73,37 +73,26 @@
     width: 100%;
 }
 
+.color-data {
+    padding: 1rem;
+    line-height: 1.6;
+}
+
 .color-rgb,
 .color-name,
 .color-hex {
-    padding: 4px;
     text-align: center;
     font-family: monospace;
+    color: $dark-gray;
 }
 
 .color--preview.preview {
     .color-name {
-        font-family: Helvetica;
+        margin-bottom: 1em;
+        font-family: $headline;
         font-weight: bold;
+        text-transform: uppercase;
         letter-spacing: 0.03em;
+        color: $dark-gray;
     }
-}
-
-.color-name,
-.color-hex {
-    input {
-        //width: 100%;
-        //text-align: center;
-        //border: 1px solid #ccc;
-        //padding: 4px;
-        //outline: none;
-    }
-}
-
-.color-name {
-    padding-top: 8px;
-}
-
-.color-rgb {
-    padding-bottom: 8px;
 }

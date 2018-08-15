@@ -561,7 +561,8 @@ header {
     flex-direction: column;
     flex: 0 0 35px;
     margin: 10px 12px 0 0; }
-    .project-list .project__actions a {
+    .project-list .project__actions a,
+    .project-list .project__actions span {
       flex: 0 1 40px;
       display: block;
       height: 100%;
@@ -569,11 +570,14 @@ header {
       text-align: center;
       font-size: 16px;
       color: #ccc; }
-      .project-list .project__actions a:hover {
+      .project-list .project__actions a:hover,
+      .project-list .project__actions span:hover {
         color: #c8543b; }
-      .project-list .project__actions a svg {
+      .project-list .project__actions a svg,
+      .project-list .project__actions span svg {
         margin-top: calc(50% - 8px); }
-      .project-list .project__actions a + a {
+      .project-list .project__actions a + a,
+      .project-list .project__actions span + a {
         border-top: 1px solid #ccc; }
 
 .project-title input {
@@ -672,23 +676,24 @@ header {
   height: 40px;
   width: 100%; }
 
+.color-data {
+  padding: 1rem;
+  line-height: 1.6; }
+
 .color-rgb,
 .color-name,
 .color-hex {
-  padding: 4px;
   text-align: center;
-  font-family: monospace; }
+  font-family: monospace;
+  color: #333333; }
 
 .color--preview.preview .color-name {
-  font-family: Helvetica;
+  margin-bottom: 1em;
+  font-family: "montserrat", sans-serif;
   font-weight: bold;
-  letter-spacing: 0.03em; }
-
-.color-name {
-  padding-top: 8px; }
-
-.color-rgb {
-  padding-bottom: 8px; }
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #333333; }
 
 .col--image {
   margin-bottom: 30px; }
