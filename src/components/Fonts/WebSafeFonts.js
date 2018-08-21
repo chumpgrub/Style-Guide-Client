@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import Select from 'react-select';
+// import Select from 'react-select';
+import Creatable from 'react-select';
 
 const webSafeFonts = [
     {
@@ -73,14 +74,15 @@ class WebSafeFonts extends Component {
     render() {
         return (
             <div className="project--font-families__select">
-                <Select.Creatable
-                    multi={true}
+                <Creatable
+                    isClearable
+                    isMulti
                     value={this.state.value}
-                    valueKey='slug'
-                    labelKey='name'
+                    getOptionValue={(option) => option.slug}
+                    getOptionLabel={(option) => option.name}
                     onChange={this.onChange}
                     options={webSafeFonts}
-                    backspaceRemoves={true}
+                    backspaceRemovesValue
                 />
             </div>
         )

@@ -8,13 +8,41 @@ import Routes from './Routes';
 import reducers from './reducers';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBars, faPlusCircle, faCircleNotch, faPencilAlt, faFileCode, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { faTrashAlt, faTimesCircle, faCopy } from '@fortawesome/free-regular-svg-icons';
+import {
+    faBars,
+    faPlusCircle,
+    faCircleNotch,
+    faPencilAlt,
+    faFileCode,
+    faChevronRight,
+    faMobileAlt,
+    faTabletAlt,
+    faDesktop
+} from '@fortawesome/free-solid-svg-icons';
+
+import {
+    faTrashAlt,
+    faTimesCircle,
+    faCopy
+} from '@fortawesome/free-regular-svg-icons';
 
 // import css
 import './styles/css/styles.css';
 
-library.add( faBars, faPlusCircle, faTrashAlt, faTimesCircle, faCircleNotch, faPencilAlt, faFileCode, faChevronRight, faCopy );
+library.add(
+    faBars,
+    faPlusCircle,
+    faTrashAlt,
+    faTimesCircle,
+    faCircleNotch,
+    faPencilAlt,
+    faFileCode,
+    faChevronRight,
+    faCopy,
+    faMobileAlt,
+    faTabletAlt,
+    faDesktop
+);
 
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore);
 

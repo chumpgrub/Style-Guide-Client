@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Select from 'react-select';
+import Async from 'react-select/lib/Async';
 
 const typeKitRequest = (input) => {
 
@@ -32,7 +32,7 @@ class TypeKitFonts extends Component {
     getFontFamilies = (input) => {
 
         if (!input) {
-            return Promise.resolve({ options: [] });
+            return Promise.resolve([]);
         }
 
         let request = typeKitRequest(input);
@@ -42,7 +42,7 @@ class TypeKitFonts extends Component {
                 return results.json()
             })
             .then(dataJSON => {
-                return { options: dataJSON };
+                return dataJSON;
             })
             .catch((error) => {
                 console.log(error);
@@ -52,14 +52,16 @@ class TypeKitFonts extends Component {
     render() {
         return (
             <div className="project--font-families__select">
-                <Select.AsyncCreatable
-                    multi={true}
+                <Async
+                    isMulti
+                    cacheOptions
+                    defaultOptions
                     value={this.state.value}
                     onChange={this.onChange}
-                    valueKey='name'
-                    labelKey='name'
+                    getOptionValue={(option) => option.name}
+                    getOptionLabel={(option) => option.name}
                     loadOptions={this.getFontFamilies}
-                    backspaceRemoves={true}
+                    backspaceRemovesValue
                 />
             </div>
         )

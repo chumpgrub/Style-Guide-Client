@@ -772,6 +772,8 @@ header {
     bottom: 0;
     left: 0;
     right: 0;
+    display: block;
+    width: 100%;
     border: none;
     outline: 0;
     font-size: 16px;
@@ -781,6 +783,44 @@ header {
     top: 10px;
     font-size: 12px;
     color: #999; }
+
+.react-tabs__tab-list {
+  border-bottom: 1px solid #aaa;
+  margin: 0 0 10px;
+  padding: 0; }
+.react-tabs__tab {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-bottom: none;
+  bottom: -1px;
+  position: relative;
+  list-style: none;
+  padding: 6px 12px;
+  cursor: pointer; }
+  .react-tabs__tab--selected {
+    background: #fff;
+    border-color: #aaa;
+    color: black;
+    border-radius: 5px 5px 0 0; }
+  .react-tabs__tab--disabled {
+    color: GrayText;
+    cursor: default; }
+  .react-tabs__tab:focus {
+    box-shadow: 0 0 5px #0188fe;
+    border-color: #0188fe;
+    outline: none; }
+    .react-tabs__tab:focus:after {
+      content: "";
+      position: absolute;
+      height: 5px;
+      left: -4px;
+      right: -4px;
+      bottom: -5px;
+      background: #fff; }
+.react-tabs__tab-panel {
+  display: none; }
+  .react-tabs__tab-panel--selected {
+    display: block; }
 
 .project-fonts .font-source {
   width: 33.3333%; }
@@ -801,5 +841,28 @@ header {
         display: inline-block;
         content: '-';
         margin-right: 4px; }
+
+.typography-definition {
+  margin-bottom: 3rem; }
+  .typography-definition .type {
+    padding: 1rem;
+    background: #fff; }
+  .typography-definition h3 {
+    font-family: "montserrat", sans-serif;
+    font-weight: 400;
+    margin-bottom: 15px;
+    font-size: 22px;
+    text-transform: uppercase;
+    color: #333333; }
+
+.custom-option > span {
+  position: relative;
+  top: 2px;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 10px;
+  box-shadow: 0 0 0 2px #fff; }
 
 /*# sourceMappingURL=styles.css.map */

@@ -54,13 +54,13 @@ class GoogleFonts extends Component {
         return (
             <div className="project--font-families__select">
                 <Select
-                    multi={true}
+                    isMulti
                     value={this.state.value}
                     onChange={this.onChange}
-                    valueKey='family'
-                    labelKey='family'
+                    getOptionValue={(option) => option.family}
+                    getOptionLabel={(option) => option.family}
                     options={this.state.googleFonts}
-                    backspaceRemoves={true}
+                    backspaceRemovesValue
                 />
             </div>
         )

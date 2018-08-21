@@ -26,6 +26,20 @@ import ImagesPreview from '../components/Project/Images/ImagesPreview';
 import FontFamilies from '../components/Fonts/FontFamilies';
 import TypographyPreview from '../components/Project/Typography/TypographyPreview';
 
+const getFontFamilies = (typekit, google, web) => {
+    let google_families = [];
+    let typekit_web_families = typekit.concat(web);
+    if (google.length) {
+        google_families = google.map(font => {
+            return {
+                slug: font.name,
+                name: font.name
+            }
+        })
+    }
+    return typekit_web_families.concat(google_families);
+}
+
 const Loading = () => (
     <div>
         <FontAwesomeIcon icon={['fas', 'circle-notch']} size='2x' spin />
@@ -172,7 +186,8 @@ class ProjectContainer extends Component {
         let editing = this.props.editing;
         let colors = this.state.colors || this.props.project.colors_defs || null;
         let {typekit_fonts, google_fonts, web_fonts} = this.props.project;
-        console.log(typekit_fonts);
+
+        let font_families = getFontFamilies(typekit_fonts, google_fonts, web_fonts);
 
         return (
             <div className="project">
@@ -213,6 +228,8 @@ class ProjectContainer extends Component {
                 <TypographyPreview
                     editing={editing}
                     fonts={project.font_defs}
+                    families={font_families}
+                    colors={colors}
                 />
                 <ImagesPreview
                     editing={editing}
