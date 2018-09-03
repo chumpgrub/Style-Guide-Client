@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const url = 'http://style-server.markfurrow.com/api';
+const { REACT_APP_STYLE_SERVER } = process.env;
 
 export const getProjects = () => {
 
-    return axios.get(`${url}/projects`, {crossdomain: true}).then((res) => {
+    return axios.get(`${REACT_APP_STYLE_SERVER}/projects`, {crossdomain: true}).then((res) => {
         let data = res.data;
         console.log(res);
         return {

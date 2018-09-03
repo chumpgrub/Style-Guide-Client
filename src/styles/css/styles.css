@@ -865,4 +865,19 @@ header {
   margin-right: 10px;
   box-shadow: 0 0 0 2px #fff; }
 
+.defs--global {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 2rem; }
+  .defs--global h4 {
+    flex-grow: 1;
+    width: 100%;
+    margin-bottom: 1rem; }
+  .defs--global .def {
+    width: 50%; }
+    .defs--global .def--font-family {
+      padding-right: 15px; }
+    .defs--global .def--font-color {
+      padding-left: 15px; }
+
 /*# sourceMappingURL=styles.css.map */

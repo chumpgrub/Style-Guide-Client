@@ -4,15 +4,12 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Link} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-
 import {getProjects} from '../actions';
-
 import Layout from '../hoc/Layout';
 
+const { REACT_APP_STYLE_SERVER } = process.env;
+
 const ColorsPreview = (colors) => {
-    console.log(colors);
-    // console.log(colors.colors);
-    // console.log(JSON.parse(colors.colors));
 
     return(
         <div className="project-colors">
@@ -30,6 +27,24 @@ const ColorsPreview = (colors) => {
     )
 }
 
+class DownloadForm extends Component {
+
+    componentDidMount() {
+        this.refs.projectExportForm.submit();
+    }
+
+    render() {
+        return (
+            <form ref="projectExportForm"
+                  method="get"
+                  action={`${REACT_APP_STYLE_SERVER}/projects/`+this.props.id+`/export`}
+            >
+                <input type="text"/>
+            </form>
+        )
+    }
+}
+
 class ProjectsContainer extends Component {
 
     constructor(props) {
@@ -37,7 +52,8 @@ class ProjectsContainer extends Component {
         this.renderProjects = this.renderProjects.bind(this);
         this.handleProjectExport = this.handleProjectExport.bind(this);
         this.state = {
-            response: ''
+            response: '',
+            download: false
         };
     }
 
@@ -46,7 +62,7 @@ class ProjectsContainer extends Component {
     }
 
     handleProjectExport = (id) => {
-        console.log(id);
+        this.setState({download: id});
     }
 
     formatFontFamilies = (source, fonts) => {
@@ -59,6 +75,7 @@ class ProjectsContainer extends Component {
     }
 
     renderProjects(projects) {
+
         return projects.map(project => {
 
             const colors = ! _.isEmpty(JSON.parse(project.colors_defs)) ? JSON.parse(project.colors_defs) : null;
@@ -84,6 +101,11 @@ class ProjectsContainer extends Component {
                         <span className="export" title="export" onClick={() => this.handleProjectExport(project.id)}><FontAwesomeIcon icon={['fas', 'file-code']}/></span>
                         {/*<Link className="export" title="export" to={'/project/'+project.id+'/export'}><FontAwesomeIcon icon={['fas', 'file-code']}/></Link>*/}
                     </div>
+                    { this.state.download && this.state.download == project.id ?
+                        <DownloadForm id={project.id} />
+                        :
+                        null
+                    }
                 </div>
             )
         })

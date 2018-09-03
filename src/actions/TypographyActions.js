@@ -2,25 +2,17 @@ import axios from 'axios';
 import qs from 'qs';
 import update from 'immutability-helper';
 
-const url = 'http://style-server.markfurrow.com/api';
+const { REACT_APP_STYLE_SERVER } = process.env;
 
 export const updateProjectFontFamily = (project, font_type, fonts) => {
 
-    console.log(fonts);
     let {id} = project;
-    // let updated_typekit = update(project, {
-    //     [font_type]: {$set: fonts}
-    // });
     let updated_type = update(project[font_type], {$set: fonts});
-    console.log(updated_type);
-    console.log(qs.stringify({[font_type]: JSON.stringify(updated_type)}));
-    // console.log(qs.stringify({typekit_fonts: updated_typekit}));
-    // return '';
 
     return axios({
         method: 'PUT',
         headers: {'content-type': 'application/x-www-form-urlencoded'},
-        url: `${url}/projects/${id}`,
+        url: `${REACT_APP_STYLE_SERVER}/projects/${id}`,
         crossdomain: true,
         data: qs.stringify({[font_type]: JSON.stringify(updated_type)})
     }).then((res) => {

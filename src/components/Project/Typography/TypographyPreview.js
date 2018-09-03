@@ -34,24 +34,6 @@ const TypograhyElements = [
     }
 ];
 
-// const CustomOption = ({innerProps, isDisabled}) => {
-//     console.log(innerProps);
-//     // let {option, isDisabled} = props;
-//     return (!isDisabled ?
-//         <div {...innerProps}>
-//             testing
-//         </div>
-//     : null)
-// }
-
-// const CustomOption = ({children, innerProps, innerRef, getStyles}) => {
-//     console.log(innerProps);
-//     return (
-//         <div className="custom-option" ref={innerRef} {...innerProps} {...getStyles}>
-//             {children}
-//         </div>
-//     )
-// }
 const CustomOption = (props) => {
     let styles = props.getStyles('option', props);
     let swatch_styles = {
@@ -85,29 +67,34 @@ const TypographyEdit = ({elem, families, colors}) => {
         <div className="col col--full typography-definition">
             <div className="type type--edit">
                 <h3>{elem.name}</h3>
-                <label>Font Family</label>
-                <Select
-                    // value={this.state.value}
-                    getOptionValue={(option) => option.slug}
-                    getOptionLabel={(option) => option.name}
-                    // onChange={this.onChange}
-                    options={families}
-                    backspaceRemovesValue
-                />
-                <br/>
-                <label>Font Color</label>
-                <Select
-                    getOptionValue={(option) => option.value}
-                    getOptionLabel={(option) => option.name}
-                    components={{ Option: CustomOption }}
-                    styles={{ option: (base) => ({ ...base }) }}
-                    options={colors}
-                    // value={this.state.value}
-                    // optionComponent={CustomOption}
-                    // onChange={this.onChange}
-                    // backspaceRemoves={true}
-                />
-                <br/>
+                <div className="defs defs--global">
+                    <h4>Global</h4>
+                    <div className="def def--font-family">
+                        <label>Font Family</label>
+                        <Select
+                            getOptionValue={(option) => option.slug}
+                            getOptionLabel={(option) => option.name}
+                            styles={{ menu: (base) => ({ ...base, zIndex: 100 }) }}
+                            options={families}
+                            backspaceRemovesValue
+                            // value={this.state.value}
+                            // onChange={this.onChange}
+                        />
+                    </div>
+                    <div className="def def--font-color">
+                        <label>Font Color</label>
+                        <Select
+                            getOptionValue={(option) => option.value}
+                            getOptionLabel={(option) => option.name}
+                            components={{ Option: CustomOption }}
+                            styles={{ menu: (base) => ({ ...base, zIndex: 100 }) }}
+                            options={colors}
+                            backspaceRemovesValue
+                            // value={this.state.value}
+                            // onChange={this.onChange}
+                        />
+                    </div>
+                </div>
                 <Tabs>
                     <TabList>
                         <Tab><FontAwesomeIcon icon={['fa', 'desktop']}/></Tab>

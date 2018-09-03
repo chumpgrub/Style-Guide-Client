@@ -49,7 +49,6 @@
 }
 
 .custom-option {
-
     > span {
         position: relative;
         top: 2px;
@@ -59,5 +58,29 @@
         border-radius: 50%;
         margin-right: 10px;
         box-shadow: 0 0 0 2px #fff;
+    }
+}
+
+.defs--global {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+
+    h4 {
+        flex-grow: 1;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .def {
+        width: 50%;
+
+        &--font-family {
+            padding-right: 15px;
+        }
+
+        &--font-color {
+            padding-left: 15px;
+        }
     }
 }

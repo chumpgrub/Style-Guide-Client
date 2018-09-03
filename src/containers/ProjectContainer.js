@@ -27,8 +27,14 @@ import FontFamilies from '../components/Fonts/FontFamilies';
 import TypographyPreview from '../components/Project/Typography/TypographyPreview';
 
 const getFontFamilies = (typekit, google, web) => {
+    let font_families = [];
+    if ( typekit.length ) {
+        font_families.push({
+            label: 'TypeKit Fonts',
+            options: typekit
+        })
+    }
     let google_families = [];
-    let typekit_web_families = typekit.concat(web);
     if (google.length) {
         google_families = google.map(font => {
             return {
@@ -36,8 +42,18 @@ const getFontFamilies = (typekit, google, web) => {
                 name: font.name
             }
         })
+        font_families.push({
+            label: 'Google Fonts',
+            options: google_families
+        })
     }
-    return typekit_web_families.concat(google_families);
+    if ( web.length ) {
+        font_families.push({
+            label: 'Web Safe Fonts',
+            options: web
+        })
+    }
+    return font_families;
 }
 
 const Loading = () => (

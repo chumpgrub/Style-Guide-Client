@@ -2,7 +2,7 @@ import axios from 'axios';
 import qs from 'qs';
 import update from 'immutability-helper';
 
-const url = 'http://style-server.markfurrow.com/api';
+const { REACT_APP_STYLE_SERVER } = process.env;
 
 export const updateProjectColorOrder = (project, colors) => {
 
@@ -11,7 +11,7 @@ export const updateProjectColorOrder = (project, colors) => {
     return axios({
         method: 'PUT',
         headers: {'content-type': 'application/x-www-form-urlencoded'},
-        url: `${url}/projects/${id}`,
+        url: `${REACT_APP_STYLE_SERVER}/projects/${id}`,
         crossdomain: true,
         data: qs.stringify({colors_defs: JSON.stringify(colors)})
     }).then((res) => {
@@ -42,7 +42,7 @@ export const updateProjectColors = (project, colors) => {
     return axios({
         method: 'PUT',
         headers: {'content-type': 'application/x-www-form-urlencoded'},
-        url: `${url}/projects/${id}`,
+        url: `${REACT_APP_STYLE_SERVER}/projects/${id}`,
         crossdomain: true,
         data: qs.stringify({colors_defs: JSON.stringify(updated_colors)})
     }).then((res) => {
@@ -82,7 +82,7 @@ export const createNewColor = (project, color) => {
     return axios({
         method: 'PUT',
         headers: {'content-type': 'application/x-www-form-urlencoded'},
-        url: `${url}/projects/${id}`,
+        url: `${REACT_APP_STYLE_SERVER}/projects/${id}`,
         crossdomain: true,
         data: qs.stringify({colors_defs: JSON.stringify(updated_colors)})
     }).then((res) => {

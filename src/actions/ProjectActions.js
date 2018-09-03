@@ -2,7 +2,7 @@ import axios from 'axios';
 import qs from 'qs';
 import update from 'immutability-helper';
 
-const url = 'http://style-server.markfurrow.com/api';
+const { REACT_APP_STYLE_SERVER } = process.env;
 
 /**
  * Get Single Project Data By ID.
@@ -13,7 +13,7 @@ const url = 'http://style-server.markfurrow.com/api';
 export const getProject = (id) => {
 
     return axios.get(
-        `${url}/projects/${id}`,
+        `${REACT_APP_STYLE_SERVER}/projects/${id}`,
         {crossdomain: true}
     ).then((res) => {
         let data = res.data;
@@ -39,13 +39,11 @@ export const updateProjectTitle = (project, title) => {
 
     let {id} = project;
     let updated_title = update(project.name, {$set: title});
-    console.log(project.name);
-    console.log(updated_title);
 
     return axios({
         method: 'PUT',
         headers: {'content-type': 'application/x-www-form-urlencoded'},
-        url: `${url}/projects/${id}`,
+        url: `${REACT_APP_STYLE_SERVER}/projects/${id}`,
         crossdomain: true,
         data: qs.stringify({name: updated_title})
     }).then((res) => {
@@ -76,7 +74,7 @@ export const updateProjectNote = (project, notes) => {
     return axios({
         method: 'PUT',
         headers: {'content-type': 'application/x-www-form-urlencoded'},
-        url: `${url}/projects/${id}`,
+        url: `${REACT_APP_STYLE_SERVER}/projects/${id}`,
         crossdomain: true,
         data: qs.stringify({notes: updated_notes})
     }).then((res) => {
