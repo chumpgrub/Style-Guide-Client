@@ -15,6 +15,7 @@
             max-width: 800px;
         }
 
+        &--new,
         &--preview {
             padding: 20px;
             width: 100%;
@@ -58,6 +59,17 @@
             left: 20px;
             cursor: move;
         }
+
+        &--new {
+            text-align: center;
+
+            svg {
+                left: auto;
+                transform: rotate(45deg);
+                cursor: pointer;
+            }
+        }
+
     }
 }
 

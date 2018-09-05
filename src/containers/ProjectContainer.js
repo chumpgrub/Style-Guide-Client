@@ -15,7 +15,8 @@ import {
     updateProjectNote,
     updateProjectFontFamily,
     updateProjectImageOrder,
-    updateProjectImages
+    updateProjectImages,
+    createNewImage
 } from "../actions";
 
 import Layout from '../hoc/Layout';
@@ -110,7 +111,7 @@ class ProjectContainer extends Component {
         this.setState({
             colors: newColors
         });
-        this.props.createNewColor(this.props.project, newColor)
+        this.props.createNewColor(this.props.project, newColors)
     }
 
     handleColorNameChange = (color, name) => {
@@ -159,15 +160,11 @@ class ProjectContainer extends Component {
         const images = this.props.project.image_defs;
         const objIndex = images.findIndex(obj => obj.id === image.id);
 
-        // console.log(images);
-
         let newImages = [
             ...images.slice(0, objIndex),
             {...value},
             ...images.slice(objIndex + 1)
         ];
-
-        // console.log(newImages);
 
         this.setState({
             images: newImages
@@ -178,8 +175,6 @@ class ProjectContainer extends Component {
             newImages
         );
 
-        console.log(image);
-        console.log(value);
     }
 
     handleImageOrder = (images) => {
@@ -187,6 +182,27 @@ class ProjectContainer extends Component {
             images: images
         });
         this.props.updateProjectImageOrder(this.props.project, images);
+    }
+
+    handleImageNew = () => {
+        const images = this.props.project.image_defs;
+        const lastImage = images.reduce((prev, current) => (prev.id > current.id) ? prev : current);
+        const newImage = {
+            id: lastImage.id + 1,
+            name: '',
+            width: '',
+            height: ''
+        };
+
+        const newImages = [
+            ...images, newImage
+        ];
+
+        this.setState({
+            images: newImage
+        });
+
+        this.props.createNewImage(this.props.project, newImages)
     }
 
     handleFontFamilyChange = (font_type, fonts) => {
@@ -252,6 +268,7 @@ class ProjectContainer extends Component {
                     images={project.image_defs}
                     handleImageChange={this.handleImageChange}
                     handleImageOrder={this.handleImageOrder}
+                    handleImageNew={this.handleImageNew}
                 />
             </div>
         )
@@ -288,7 +305,8 @@ const mapDispatchToProps = (dispatch) => {
         updateProjectNote,
         updateProjectFontFamily,
         updateProjectImageOrder,
-        updateProjectImages
+        updateProjectImages,
+        createNewImage
     }, dispatch)
 }
 

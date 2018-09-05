@@ -65,19 +65,12 @@ export const updateProjectColors = (project, colors) => {
         console.log(err);
     });
 
-    return {
-        type: 'UPDATE_COLOR',
-        payload: {}
-    }
-
 }
 
-export const createNewColor = (project, color) => {
+export const createNewColor = (project, colors) => {
 
     let {id} = project;
-    let updated_colors = update(project.colors_defs, {
-        $push: [color]
-    });
+    let updated_colors = update(project.colors_defs, {$set: colors});
 
     return axios({
         method: 'PUT',

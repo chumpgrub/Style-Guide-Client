@@ -706,7 +706,7 @@ header {
     .col--image .image--edit {
       padding: 10px 20px 10px 60px;
       max-width: 800px; }
-    .col--image .image--preview {
+    .col--image .image--new, .col--image .image--preview {
       padding: 20px;
       width: 100%;
       height: 100%; }
@@ -735,6 +735,12 @@ header {
       top: calc(50% - 10px);
       left: 20px;
       cursor: move; }
+    .col--image .image--new {
+      text-align: center; }
+      .col--image .image--new svg {
+        left: auto;
+        transform: rotate(45deg);
+        cursor: pointer; }
 
 .form-row {
   display: flex; }

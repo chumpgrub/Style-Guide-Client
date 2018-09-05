@@ -101,7 +101,7 @@ class ProjectsContainer extends Component {
                         <span className="export" title="export" onClick={() => this.handleProjectExport(project.id)}><FontAwesomeIcon icon={['fas', 'file-code']}/></span>
                         {/*<Link className="export" title="export" to={'/project/'+project.id+'/export'}><FontAwesomeIcon icon={['fas', 'file-code']}/></Link>*/}
                     </div>
-                    { this.state.download && this.state.download == project.id ?
+                    { this.state.download && this.state.download === project.id ?
                         <DownloadForm id={project.id} />
                         :
                         null

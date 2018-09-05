@@ -4,6 +4,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import update from 'immutability-helper';
 
+const NewImage = ({handleImageNew}) => {
+    return (
+        <div className="col col--full col--image" onClick={handleImageNew}>
+            <div className="image image--new"><FontAwesomeIcon icon={['far', 'times-circle']} size="2x"/></div>
+        </div>
+    )
+}
+
 const Image = SortableElement(({editing, image, handleImageChange}) => {
     const editingClass = editing ? '--full' : '';
     return (
@@ -119,7 +127,7 @@ const ImageEdit = ({image, handleImageChange}) => {
     )
 }
 
-const SortableList = SortableContainer(({images, editing, handleImageChange}) => {
+const SortableList = SortableContainer(({images, editing, handleImageChange, handleImageNew}) => {
     return (
         <div className="row row-gutter-10 flex-column project-images">
             {
@@ -136,18 +144,23 @@ const SortableList = SortableContainer(({images, editing, handleImageChange}) =>
                     )
                 })
             }
+            { editing ? <NewImage handleImageNew={handleImageNew} /> : null }
         </div>
     )
 })
 
 class ImagesPreview extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     handleImageChange = (image, value) => {
         this.props.handleImageChange(image, value);
+    }
+
+    handleImageNew = () => {
+        this.props.handleImageNew();
     }
 
     onSortEnd = ({oldIndex, newIndex}) => {
@@ -170,6 +183,7 @@ class ImagesPreview extends Component {
                         editing={editing}
                         images={images}
                         handleImageChange={this.handleImageChange}
+                        handleImageNew={this.handleImageNew}
                         onSortEnd={this.onSortEnd}
                     /> : null
                 }
