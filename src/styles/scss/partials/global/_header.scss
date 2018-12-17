@@ -1,5 +1,5 @@
 header {
-    padding: 1rem 0;
+    padding: 1rem;
     background: $dark-gray;
 
     .container {
@@ -16,7 +16,8 @@ header {
         text-align: right;
     }
 
-    .button {
-        @include button();
-    }
+}
+
+.button {
+    @include button();
 }

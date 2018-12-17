@@ -6,7 +6,7 @@ const Layout = (props) => {
     return (
         <div>
             <TypeKit kitId="wsw8dkp" />
-            <Header/>
+            <Header {...props} />
             <div className="container">
                 <main>
                     {props.children}

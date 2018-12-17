@@ -4,7 +4,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Link} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {getProjects} from '../actions';
+import {
+    getProjects,
+    deleteProject
+} from '../actions';
 import Layout from '../hoc/Layout';
 
 const { REACT_APP_STYLE_SERVER } = process.env;
@@ -65,6 +68,13 @@ class ProjectsContainer extends Component {
         this.setState({download: id});
     }
 
+    handleProjectDelete = (id) => {
+        let result = window.confirm('Are you sure you want to delete this?');
+        if ( result ) {
+            this.props.deleteProject(id);
+        }
+    }
+
     formatFontFamilies = (source, fonts) => {
         let fontData = fonts.map(font => {
             return font.name
@@ -99,7 +109,7 @@ class ProjectsContainer extends Component {
                     <div className="project__actions">
                         <Link className="edit" title="edit" to={'/project/'+project.id+'/edit'}><FontAwesomeIcon icon={['fas', 'pencil-alt']}/></Link>
                         <span className="export" title="export" onClick={() => this.handleProjectExport(project.id)}><FontAwesomeIcon icon={['fas', 'file-code']}/></span>
-                        {/*<Link className="export" title="export" to={'/project/'+project.id+'/export'}><FontAwesomeIcon icon={['fas', 'file-code']}/></Link>*/}
+                        <span className="delete" title="delete" onClick={() => this.handleProjectDelete(project.id)}><FontAwesomeIcon icon={['fas', 'trash']}/></span>
                     </div>
                     { this.state.download && this.state.download === project.id ?
                         <DownloadForm id={project.id} />
@@ -133,7 +143,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        getProjects
+        getProjects,
+        deleteProject
     }, dispatch)
 }
 

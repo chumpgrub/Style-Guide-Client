@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import Moment from 'react-moment';
 import _ from 'lodash';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
@@ -19,24 +17,26 @@ import {
     createNewImage
 } from "../actions";
 
-import Layout from '../hoc/Layout';
-import ProjectTitle from '../components/Project/ProjectTitle';
+import ProjectLayout from '../hoc/ProjectLayout';
+import ProjectHeader from '../components/Project/ProjectHeader';
+import ProjectEditNavigation from '../components/Project/ProjectEditNavigation';
 import ProjectNotes from '../components/Project/ProjectNotes';
 import ColorsPreview from '../components/Project/Colors/ColorsPreview';
+import ColorsEdit from '../components/Project/Colors/ColorsEdit';
 import ImagesPreview from '../components/Project/Images/ImagesPreview';
 import FontFamilies from '../components/Fonts/FontFamilies';
 import TypographyPreview from '../components/Project/Typography/TypographyPreview';
 
 const getFontFamilies = (typekit, google, web) => {
     let font_families = [];
-    if ( typekit.length ) {
+    if ( typekit && typekit.length ) {
         font_families.push({
             label: 'TypeKit Fonts',
             options: typekit
         })
     }
     let google_families = [];
-    if (google.length) {
+    if (google && google.length) {
         google_families = google.map(font => {
             return {
                 slug: font.name,
@@ -48,7 +48,7 @@ const getFontFamilies = (typekit, google, web) => {
             options: google_families
         })
     }
-    if ( web.length ) {
+    if ( web && web.length ) {
         font_families.push({
             label: 'Web Safe Fonts',
             options: web
@@ -76,7 +76,10 @@ class ProjectContainer extends Component {
     }
 
     componentWillMount() {
-        this.props.getProject(this.props.match.params.id);
+        console.log(this.props);
+        if (this.props.match.params.id) {
+            this.props.getProject(this.props.match.params.id);
+        }
     }
 
     handleTitleChange = (title) => {
@@ -98,7 +101,7 @@ class ProjectContainer extends Component {
     }
 
     handleColorNew = () => {
-        const colors = this.props.project.colors_defs;
+        const colors = this.props.project.colors_defs || [];
         const lastColor = colors.reduce((prev, current) => (prev.id > current.id) ? prev : current);
         const newColor = {
             id: lastColor.id + 1,
@@ -112,6 +115,11 @@ class ProjectContainer extends Component {
             colors: newColors
         });
         this.props.createNewColor(this.props.project, newColors)
+    }
+
+    newHandleColor = () => {
+        let project_id = this.props.match.params.id;
+        this.props.history.push(`/project/`+project_id+`/colors`);
     }
 
     handleColorNameChange = (color, name) => {
@@ -216,74 +224,76 @@ class ProjectContainer extends Component {
 
         let project_id = this.props.match.params.id;
         let editing = this.props.editing;
-        let colors = this.state.colors || this.props.project.colors_defs || null;
-        let {typekit_fonts, google_fonts, web_fonts} = this.props.project;
+        let view = this.props.view;
+        let colors = this.state.colors || project.colors_defs || null;
+        let {typekit_fonts, google_fonts, web_fonts} = project;
+
+        console.log(typekit_fonts,google_fonts,web_fonts)
 
         let font_families = getFontFamilies(typekit_fonts, google_fonts, web_fonts);
 
         return (
-            <div className="project">
-                {editing ?
-                    <Link to={'/project/' + project_id }>view</Link>
-                    : <Link to={'/project/' + project_id + '/edit'}>edit</Link>
-                }
-                <ProjectTitle
-                    editing={editing}
-                    title={project.name}
-                    handleTitleChange={this.handleTitleChange}
-                />
-                <dl className="project-timestamp">
-                    <dt>Created:</dt>
-                    <dd><Moment format="MMM DD YYYY">{project.created_at}</Moment></dd>
-                    <dt>Last Updated:</dt>
-                    <dd><Moment format="MMM DD YYYY @ h:MM A">{project.updated_at}</Moment></dd>
-                </dl>
-                <ProjectNotes
-                    editing={editing}
-                    notes={project.notes}
-                    handleNoteChange={this.handleNoteChange}
-                />
-                <ColorsPreview
-                    editing={editing}
-                    colors={colors}
-                    handleColorChange={this.handleColorChange}
-                    handleColorNew={this.handleColorNew}
-                    handleColorOrder={this.handleColorOrder}
-                />
-                <FontFamilies
-                    editing={editing}
-                    typekit={typekit_fonts}
-                    google={google_fonts}
-                    web={web_fonts}
-                    handleFontFamilyChange={this.handleFontFamilyChange}
-                />
-                <TypographyPreview
-                    editing={editing}
-                    fonts={project.font_defs}
-                    families={font_families}
-                    colors={colors}
-                />
-                <ImagesPreview
-                    editing={editing}
-                    images={project.image_defs}
-                    handleImageChange={this.handleImageChange}
-                    handleImageOrder={this.handleImageOrder}
-                    handleImageNew={this.handleImageNew}
-                />
-            </div>
+            <React.Fragment>
+                <ProjectEditNavigation {...this.props} />
+                <div className="project-info">
+                    <p>ProjectContainer.js</p>
+                    <ProjectHeader
+                        project={project}
+                        editing={editing}
+                        view={view}
+                        handleTitleChange={this.handleTitleChange}
+                    />
+                    <div className="project-content">
+                        <ProjectNotes
+                            editing={editing}
+                            notes={project.notes}
+                            handleNoteChange={this.handleNoteChange}
+                        />
+                        <ColorsPreview
+                            colors={colors}
+                            editing={editing}
+                            newHandleColor={this.newHandleColor}
+                        />
+                        {view === 'preview' ?
+                            <div>
+                                <FontFamilies
+                                    editing={editing}
+                                    typekit={typekit_fonts}
+                                    google={google_fonts}
+                                    web={web_fonts}
+                                    handleFontFamilyChange={this.handleFontFamilyChange}
+                                />
+                                <TypographyPreview
+                                    editing={editing}
+                                    fonts={project.font_defs}
+                                    families={font_families}
+                                    colors={colors}
+                                />
+                                <ImagesPreview
+                                    editing={editing}
+                                    images={project.image_defs}
+                                    handleImageChange={this.handleImageChange}
+                                    handleImageOrder={this.handleImageOrder}
+                                    handleImageNew={this.handleImageNew}
+                                />
+                            </div>
+                            : null
+                        }
+
+                    </div>
+                </div>
+            </React.Fragment>
         )
     }
 
     render() {
 
-        console.log(this.props);
         let {project} = this.props;
 
         return (
-            <Layout>
-                <Link className="back" to="/">&lsaquo; Back to all Projects</Link>
+            <ProjectLayout>
                 { ! _.isEmpty(project) ? this.renderProject(project) : <Loading/> }
-            </Layout>
+            </ProjectLayout>
         )
     }
 

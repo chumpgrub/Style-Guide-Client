@@ -3,12 +3,25 @@ html {
 }
 
 body {
-    background: $light-gray;
+    background: #ddd;
     font-family: $body;
 }
 
 section.definitions {
     margin-bottom: 6rem;
+}
+
+.project {
+    display: flex;
+
+    &-info {
+        flex-grow: 1;
+        margin: 2rem 1rem;
+    }
+    &-content {
+        padding: 2rem;
+        background: $light-gray;
+    }
 }
 
 .project-title {

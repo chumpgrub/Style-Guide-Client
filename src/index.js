@@ -17,13 +17,19 @@ import {
     faChevronRight,
     faMobileAlt,
     faTabletAlt,
-    faDesktop
+    faDesktop,
+    faPlus,
+    faHome,
+    faFont,
+    faEyeDropper,
+    faTrash
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
     faTrashAlt,
     faTimesCircle,
-    faCopy
+    faCopy,
+    faImages
 } from '@fortawesome/free-regular-svg-icons';
 
 // import css
@@ -41,7 +47,13 @@ library.add(
     faCopy,
     faMobileAlt,
     faTabletAlt,
-    faDesktop
+    faDesktop,
+    faPlus,
+    faHome,
+    faEyeDropper,
+    faFont,
+    faImages,
+    faTrash
 );
 
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore);

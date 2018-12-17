@@ -425,9 +425,7 @@ table {
 /* Colors */
 /* Fonts */
 .container {
-  padding: 0 15px;
-  margin: 0 auto;
-  max-width: 1400px; }
+  margin: 0 auto; }
 
 .col {
   padding: 0 15px; }
@@ -452,11 +450,20 @@ html {
   font-size: 16px; }
 
 body {
-  background: #e6e6e6;
+  background: #ddd;
   font-family: Arial, sans-serif; }
 
 section.definitions {
   margin-bottom: 6rem; }
+
+.project {
+  display: flex; }
+  .project-info {
+    flex-grow: 1;
+    margin: 2rem 1rem; }
+  .project-content {
+    padding: 2rem;
+    background: #e6e6e6; }
 
 .definition-title {
   margin-bottom: 2rem;
@@ -484,7 +491,7 @@ section.definitions {
     font-weight: bold; }
 
 header {
-  padding: 1rem 0;
+  padding: 1rem;
   background: #333333; }
   header .container {
     display: flex;
@@ -494,15 +501,16 @@ header {
   header .header__actions {
     flex-grow: 1;
     text-align: right; }
-  header .button {
-    font-family: "montserrat", sans-serif;
-    font-weight: 400;
-    padding: 18px 35px;
-    background: #c8543b;
-    color: #fff;
-    text-transform: uppercase;
-    text-decoration: none;
-    letter-spacing: 0.150em; }
+
+.button {
+  font-family: "montserrat", sans-serif;
+  font-weight: 400;
+  padding: 18px 35px;
+  background: #c8543b;
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.150em; }
 
 .project-search {
   margin-top: 30px;
@@ -579,6 +587,25 @@ header {
       .project-list .project__actions a + a,
       .project-list .project__actions span + a {
         border-top: 1px solid #ccc; }
+
+.project-nav {
+  flex: 0 0 160px;
+  padding-top: 2rem; }
+  .project-nav a {
+    position: relative;
+    display: block;
+    margin-left: 1rem;
+    padding: 0.5rem 1rem 0.5rem 0;
+    text-decoration: none;
+    color: #333333; }
+    .project-nav a span {
+      padding-left: 1.8rem; }
+    .project-nav a svg {
+      position: absolute;
+      top: 0.5rem;
+      left: 0; }
+    .project-nav a.active {
+      color: #c8543b; }
 
 .project-title input {
   margin: 15px -5px;
@@ -694,6 +721,42 @@ header {
   text-transform: uppercase;
   letter-spacing: 0.03em;
   color: #333333; }
+
+/* ---------------------------------------- *\
+                    PREVIEW
+ * ---------------------------------------- */
+.definitions--colors.preview .color {
+  padding-bottom: 15px; }
+  .definitions--colors.preview .color + .color {
+    padding-top: 15px;
+    border-top: 1px solid #ccc; }
+.definitions--colors.preview .color__inner {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  box-shadow: none; }
+.definitions--colors.preview .color-data--swatch {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 20px; }
+.definitions--colors.preview .color-data--name {
+  flex: 0 1 200px; }
+.definitions--colors.preview .color-data--hex {
+  flex: 0 0 100px;
+  font-family: monospace; }
+.definitions--colors.preview .color-data--var {
+  font-family: monospace; }
+.definitions--colors.preview .color-data.edit .color-swatch {
+  background: #fff;
+  border: 1px solid #ccc;
+  text-align: center;
+  line-height: 40px; }
+.definitions--colors.preview .color-data.edit svg {
+  display: inline-block;
+  position: static; }
 
 .col--image {
   margin-bottom: 30px; }
