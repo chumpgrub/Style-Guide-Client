@@ -20,4 +20,9 @@ header {
 
 .button {
     @include button();
+
+    &--secondary {
+        background: #ccc;
+        color: #666;
+    }
 }
