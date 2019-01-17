@@ -1,16 +1,16 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import Header from '../components/Global/Header';
 
 const Layout = (props) => {
     return (
-        <div>
+        <Fragment>
             <Header/>
             <div className="container">
                 <main>
                     {props.children}
                 </main>
             </div>
-        </div>
+        </Fragment>
     );
 };
 
