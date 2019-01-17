@@ -185,7 +185,7 @@ class ImagesPreview extends Component {
                         handleImageChange={this.handleImageChange}
                         handleImageNew={this.handleImageNew}
                         onSortEnd={this.onSortEnd}
-                    /> : null
+                    /> : <NewImage handleImageNew={this.handleImageNew} />
                 }
             </section>
         )

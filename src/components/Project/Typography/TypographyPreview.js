@@ -48,7 +48,6 @@ const CustomOption = (props) => {
 }
 
 const TypographyDefinition = ({font}) => {
-    console.log(font);
     const styles = {
         fontSize: font.size.trim() + 'px',
         lineHeight: font.lineheight / font.size

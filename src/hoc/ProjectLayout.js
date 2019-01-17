@@ -1,18 +1,20 @@
 import React, {Fragment} from 'react';
 import Header from '../components/Global/Header';
 
-const Layout = (props) => {
+const ProjectLayout = (props) => {
+    let projectClass = props.className || '';
     return (
         <Fragment>
             <Header/>
-            <Header {...props} />
             <div className="container">
                 <main>
-                    {props.children}
+                    <div className={`project ` + projectClass}>
+                        {props.children}
+                    </div>
                 </main>
             </div>
         </Fragment>
     );
 };
 
-export default Layout;
+export default ProjectLayout;

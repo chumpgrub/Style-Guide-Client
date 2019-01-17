@@ -1,6 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 import update from 'immutability-helper';
+import {formatProjectPayload} from "../lib/utility";
 
 const { REACT_APP_STYLE_SERVER } = process.env;
 
@@ -19,15 +20,7 @@ export const updateProjectImages = (project, images) => {
         let data = res.data;
         return {
             type: 'GET_PROJECT',
-            payload: Object.assign({},
-                {...data},
-                {image_defs: JSON.parse(data.image_defs)},
-                {colors_defs: JSON.parse(data.colors_defs)},
-                {font_defs: JSON.parse(data.font_defs)},
-                {web_fonts: JSON.parse(data.web_fonts)},
-                {typekit_fonts: JSON.parse(data.typekit_fonts)},
-                {google_fonts: JSON.parse(data.google_fonts)}
-            )
+            payload: formatProjectPayload(data)
         }
     }).catch((err) => {
         console.log(err);
@@ -49,15 +42,7 @@ export const updateProjectImageOrder = (project, images) => {
         let data = res.data;
         return {
             type: 'GET_PROJECT',
-            payload: Object.assign({},
-                {...data},
-                {image_defs: JSON.parse(data.image_defs)},
-                {colors_defs: JSON.parse(data.colors_defs)},
-                {font_defs: JSON.parse(data.font_defs)},
-                {web_fonts: JSON.parse(data.web_fonts)},
-                {typekit_fonts: JSON.parse(data.typekit_fonts)},
-                {google_fonts: JSON.parse(data.google_fonts)}
-            )
+            payload: formatProjectPayload(data)
         }
     }).catch((err) => {
         console.log(err);
@@ -80,15 +65,7 @@ export const createNewImage = (project, images) => {
         let data = res.data;
         return {
             type: 'GET_PROJECT',
-            payload: Object.assign({},
-                {...data},
-                {image_defs: JSON.parse(data.image_defs)},
-                {colors_defs: JSON.parse(data.colors_defs)},
-                {font_defs: JSON.parse(data.font_defs)},
-                {web_fonts: JSON.parse(data.web_fonts)},
-                {typekit_fonts: JSON.parse(data.typekit_fonts)},
-                {google_fonts: JSON.parse(data.google_fonts)}
-            )
+            payload: formatProjectPayload(data)
         }
     }).catch((err) => {
         console.log(err);

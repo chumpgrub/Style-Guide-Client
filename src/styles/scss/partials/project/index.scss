@@ -1,0 +1,33 @@
+@import './navigation';
+@import './sections/colors';
+@import './sections/images';
+@import './sections/notes';
+@import './sections/title';
+@import './sections/typography';
+
+.project {
+    &--new {
+        .project-title {
+
+            form {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                max-width: 800px;
+            }
+
+            input {
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .button {
+                font-size: 1rem;
+
+                + .button {
+                    margin-left: 15px;
+                }
+            }
+        }
+    }
+}

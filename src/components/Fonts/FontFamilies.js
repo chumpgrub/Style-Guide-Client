@@ -33,7 +33,7 @@ const FontFamilies = ({editing, typekit, google, web, handleFontFamilyChange}) =
         return (
             <ul>
                 {
-                    fonts.length ? fonts.map(font => (<li>{font.name}</li>)) : (<li>n/a</li>)
+                    fonts && fonts.length ? fonts.map((font, index) => (<li key={index}>{font.name}</li>)) : (<li>n/a</li>)
                 }
             </ul>
         )

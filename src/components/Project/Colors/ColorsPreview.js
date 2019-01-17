@@ -1,170 +1,68 @@
-import React, {Component} from 'react';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
+import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import update from 'immutability-helper';
-
-const NewColor = ({handleColorNew}) => {
+const ColorSwatchNew = ({handleNewColor}) => {
     return (
-        <div className="col color color--new" onClick={handleColorNew}>
-            <div className="color__inner"><FontAwesomeIcon icon={['far', 'times-circle']} size="2x"/></div>
+        <div className="color color--preview edit">
+            <div className="color__inner" onClick={handleNewColor}>
+                <div className="color-swatch">
+                    <FontAwesomeIcon icon={['fas', 'plus']} size="1x"/>
+                </div>
+            </div>
         </div>
     )
 }
 
-const ColorSwatch = SortableElement(({editing, color, id, handleColorChange, handleColorDelete}) => {
+const ColorSwatch = ({color, editing}) => {
 
     const styles = {background: color.value};
+    const editClass = editing ? 'editing' : 'preview';
 
-    const shouldColorUpdate = (key, color, event) => {
-
-        let newValue = event.target.value;
-        let oldValue = color[key];
-
-        if (newValue !== oldValue) {
-
-            let newColor = update(color, {
-                [key]: {$set: newValue}
-            });
-
-            handleColorChange(color, newColor);
+    const nameToVariable = (name) => {
+        if (name && name.length) {
+            return '$' + name.trim().toLowerCase().replace(/\W+/g, '-');
         }
     }
-
-    const edit = () => {
-        return (
-            <div className="color color--edit">
-                <div className="form-row">
-                    <div className={`form-element form-element--full color-name ${color.name ? 'focus' : ''}`}>
-                        <input type="text"
-                               name="name"
-                               defaultValue={color.name}
-                               onBlur={(e) => shouldColorUpdate('name', color, e)}
-                        />
-                        <label htmlFor="name">Color Name</label>
-                    </div>
-                </div>
-                <div className="form-row">
-                    <div className={`form-element form-element--full color-hex ${color.value ? 'focus' : ''}`}>
-                        <input type="text"
-                               name="value"
-                               defaultValue={color.value}
-                               onBlur={(e) => shouldColorUpdate('value', color, e)}
-                        />
-                        <label htmlFor="value">Color Value</label>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    const preview = () => {
-        const nameToVariable = (name) => {
-            if (name.length) {
-                return '($' + name.trim().toLowerCase().replace(/\W+/g, '-') + ')';
-            }
-        }
-        return (
-            <div className="color-data">
-                <div className="color-name">{color.name}</div>
-                <div className="color-hex">{color.value}</div>
-                <div className="color-hex color-var">{nameToVariable(color.name)}</div>
-            </div>
-        )
-    }
-
-    const edtingState = editing ? 'editing' : 'preview';
 
     return (
-        <div className={'col color color--preview ' + edtingState}>
+        <div className={`color color--preview `+editClass}>
             <div className="color__inner">
-                <div className="color-swatch" style={styles}></div>
-                {editing ? edit() : preview()}
-                {editing && <FontAwesomeIcon onClick={() => handleColorDelete(color)} icon={['far', 'trash-alt']}/>}
+                <div className="color-data color-data--swatch" style={styles}></div>
+                <div className="color-data--name">{color.name}</div>
+                <div className="color-data--hex">{color.value}</div>
+                {editing ?
+                    <div className="color-data--var">{nameToVariable(color.name)}</div> : null
+                }
             </div>
+            <div className="tools"><span></span><span></span><span></span></div>
         </div>
     )
-});
+};
 
-// ColorSwatch.defaultProps = {
-//     id:
-//     name:
-//     value:
-// }
+const ColorsPreview = ({colors, editing, newHandleColor}) => {
 
-const SortableList = SortableContainer(({colors, editing, handleColorChange, handleColorDelete, handleColorNew}) => {
     return (
-        <div className="row row--gutter-30 project-colors">
-            {
-                colors.map((color, index) => {
-                    return (
-                        <ColorSwatch
-                            key={color.id}
-                            index={index}
-                            editing={editing}
-                            color={color}
-                            disabled={!editing}
-                            handleColorChange={handleColorChange}
-                            handleColorNew={handleColorNew}
-                            handleColorDelete={handleColorDelete}
-                        />
-                    )
-                })
-            }
-            { editing ? <NewColor handleColorNew={handleColorNew} /> : null }
-        </div>
-    )
-});
-
-class ColorsPreview extends Component {
-
-    onSortEnd = ({oldIndex, newIndex}) => {
-        let updatedOrder = arrayMove(this.props.colors, oldIndex, newIndex);
-        this.props.handleColorOrder([...updatedOrder]);
-    }
-
-    handleColorChange = (color, value) => {
-        this.props.handleColorChange(color, value);
-    }
-
-    handleColorDelete = (color) => {
-        const {id} = color;
-        const {colors} = this.props;
-        const objIndex = colors.findIndex(obj => obj.id === id);
-        const updatedColors = [
-            ...colors.slice(0, objIndex),
-            ...colors.slice(objIndex + 1),
-        ];
-        this.props.handleColorOrder(updatedColors);
-    }
-
-    handleColorNew = () => {
-        this.props.handleColorNew();
-    }
-
-    render() {
-
-        let {editing, colors} = this.props;
-
-        return (
-            <section className="definitions definitions--colors">
-                <h2 className="definition-title">Color Palette</h2>
+        <section className="definitions definitions--colors preview">
+            <h2 className="definition-title">Color Palette</h2>
+            <div className="swatches">
                 {
                     colors ?
-                    <SortableList
-                        axis="xy"
-                        distance={50}
-                        editing={editing}
-                        colors={colors}
-                        handleColorChange={this.handleColorChange}
-                        handleColorDelete={this.handleColorDelete}
-                        handleColorNew={this.handleColorNew}
-                        onSortEnd={this.onSortEnd}
-                    /> : null
+                        colors.map((color, index) => {
+                            return (
+                                <ColorSwatch
+                                    key={color.id}
+                                    index={index}
+                                    color={color}
+                                    editing={editing}
+                                />
+                            )
+                        })
+                        : <div>ADD SOME COLORS!!!</div>
                 }
-            </section>
-        )
-    }
+                {editing ? <ColorSwatchNew handleNewColor={newHandleColor}/>: null}
+            </div>
+        </section>
+    )
 }
 
 export default ColorsPreview;

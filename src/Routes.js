@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, Link} from 'react-router-dom';
 
 import Projects from './components/Projects/Projects';
 import Project from './components/Project/Project';
@@ -8,19 +8,34 @@ const Routes = () => {
     return (
         <Switch>
             <Route path="/" exact component={Projects}/>
-            <Route path="/project/new" exact component={() => {
+            <Route path="/project/new" exact render={(props) => {
                 return (
-                    <Project editing={true} new={true} />
+                    <Project view="new" {...props} />
                 )
             }}/>
             <Route path="/project/:id" exact render={({match}) => {
                 return (
-                    <Project editing={false} match={match}/>
+                    <Project view="preview" editing={false} match={match}/>
                 )
             }}/>
-            <Route path="/project/:id/edit" exact render={({match}) => {
+            <Route path="/project/:id/edit" exact render={(props) => {
                 return (
-                    <Project editing={true} match={match}/>
+                    <Project view="edit" editing={true} {...props}/>
+                )
+            }}/>
+            <Route path="/project/:id/colors" exact render={(props) => {
+                return (
+                    <Project view="colors" editing={true} {...props}/>
+                )
+            }}/>
+            <Route path="/project/:id/images" exact render={({match}) => {
+                return (
+                    <Project view="images" editing={true} match={match}/>
+                )
+            }}/>
+            <Route path="/project/:id/typography" exact render={({match}) => {
+                return (
+                    <Project view="typography" editing={true} match={match}/>
                 )
             }}/>
         </Switch>

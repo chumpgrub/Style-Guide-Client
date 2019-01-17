@@ -10,7 +10,7 @@ const Header = () => {
                     <img src={orbitLogo} alt="Orbit Media Studios"/>
                 </Link>
                 <div className="header__actions">
-                    <Link className="button button--white" to="/projects/new">New Project</Link>
+                    <Link className="button button--white" to="/project/new">New Project</Link>
                 </div>
             </div>
         </header>

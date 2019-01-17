@@ -1,0 +1,27 @@
+.project-nav {
+    flex: 0 0 160px;
+    padding-top: 2rem;
+
+    a {
+        position: relative;
+        display: block;
+        margin-left: 1rem;
+        padding: 0.5rem 1rem 0.5rem 0;
+        text-decoration: none;
+        color: $dark-gray;
+
+        span {
+            padding-left: 1.8rem;
+        }
+
+        svg {
+            position: absolute;
+            top: 0.5rem;
+            left: 0;
+        }
+
+        &.active {
+            color: $orange;
+        }
+    }
+}

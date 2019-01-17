@@ -17,6 +17,7 @@ export const getProject = (id) => {
         {crossdomain: true}
     ).then((res) => {
         let data = res.data;
+        console.log(data);
         return {
             type: 'GET_PROJECT',
             payload: Object.assign({},
@@ -95,4 +96,32 @@ export const updateProjectNote = (project, notes) => {
         console.log(err);
     });
 
+}
+
+export const createProject = (projectName) => {
+
+    return axios({
+        method: 'POST',
+        headers: {'content-type': 'application/x-www-form-urlencoded'},
+        url: `${REACT_APP_STYLE_SERVER}/projects`,
+        crossdomain: true,
+        data: qs.stringify({name: projectName, image_defs: [], colors_defs: [], font_defs: [], web_fonts: [], typekit_fonts: [], google_fonts: []})
+    }).then((res) => {
+        let data = res.data;
+        console.log(data);
+        return {
+            type: 'NEW_PROJECT',
+            payload: Object.assign({}, {...data}, {isNew: true})
+        }
+    }).catch((err) => {
+        console.log(err);
+    });
+
+}
+
+export const resetIsNewProp = () => {
+    return {
+        type: 'RESET_IS_NEW',
+        payload: Object.assign({}, {isNew: false})
+    }
 }

@@ -1,12 +1,7 @@
-.project-search {
-    margin-top: 30px;
-    height: 60px;
-    padding: 15px;
-    width: 100%;
-    font-size: 16px;
-}
+.project--listing {
+    flex-direction: column;
+    margin: 0 15px;
 
-.project-list {
     .project {
         display: flex;
         margin: 30px 0;
@@ -112,4 +107,29 @@
             }
         }
     }
+}
+
+.project-search {
+    position: relative;
+    margin-top: 30px;
+
+    &__input {
+        height: 60px;
+        padding: 15px;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    &__close {
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 60px;
+        cursor: pointer;
+        padding: 15px;
+    }
+
+}
+
+.project-list {
 }

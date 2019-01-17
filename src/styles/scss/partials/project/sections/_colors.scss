@@ -88,21 +88,6 @@
 
 .color--preview.preview {
 
-    //width: 70px;
-    //.color__inner {
-    //    height: 40px;
-    //    width: 40px;
-    //    border-radius: 20px;
-    //}
-    //.color-swatch {
-    //    height: 40px;
-    //    width: 40px;
-    //    border-radius: 20px;
-    //}
-    //.color-data {
-    //    display: none;
-    //}
-
     .color-name {
         margin-bottom: 1em;
         font-family: $headline;
@@ -110,5 +95,67 @@
         text-transform: uppercase;
         letter-spacing: 0.03em;
         color: $dark-gray;
+    }
+}
+
+/* ---------------------------------------- *\
+                    PREVIEW
+ * ---------------------------------------- */
+.definitions--colors.preview {
+
+    .color {
+        padding-bottom: 15px;
+
+        + .color {
+            padding-top: 15px;
+            border-top: 1px solid #ccc;
+        }
+    }
+
+    .color__inner {
+        display: flex;
+        align-items: center;
+        background: none;
+        border: none;
+        box-shadow: none;
+    }
+
+    .color-data {
+        &--swatch {
+            flex: 0 0 40px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        &--name,
+        &--hex,
+        &--var {
+        }
+
+        &--name {
+            flex: 0 1 200px;
+        }
+        &--hex {
+            flex: 0 0 100px;
+            font-family: monospace;
+        }
+        &--var {
+            font-family: monospace;
+        }
+
+        &.edit {
+            .color-swatch {
+                background: #fff;
+                border: 1px solid #ccc;
+                text-align: center;
+                line-height: 40px;
+            }
+            svg {
+                display: inline-block;
+                position: static;
+            }
+        }
     }
 }
