@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import _ from 'lodash';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -8,7 +8,7 @@ import {
     getProjects,
     deleteProject
 } from '../actions';
-import Layout from '../hoc/Layout';
+import ProjectLayout from '../hoc/ProjectLayout';
 
 const { REACT_APP_STYLE_SERVER } = process.env;
 
@@ -56,16 +56,42 @@ class ProjectsContainer extends Component {
         this.handleProjectExport = this.handleProjectExport.bind(this);
         this.state = {
             response: '',
-            download: false
+            projects: null,
+            download: false,
+            searchValue: '',
+            searching: false
         };
     }
 
     componentWillMount() {
         this.props.getProjects();
+        this.setState({projects: this.props.data});
     }
 
     handleProjectExport = (id) => {
         this.setState({download: id});
+    }
+
+    handleProjectSearch = (e) => {
+        let {projects} = this.props.data;
+        let query = e.target.value;
+        if (query.length) {
+            this.setState({searchValue: query});
+            this.setState({searching: true});
+            this.setState({projects: projects.filter(project => {
+                return project.name.toLowerCase().includes(query.toLowerCase())
+            })});
+        } else {
+            this.setState({searching: false});
+            this.setState({projects: projects})
+        }
+        console.log(this.state.projects)
+    }
+
+    handleClearSearch = () => {
+        this.setState({searching: false});
+        this.setState({searchValue: ''});
+        this.setState({projects: this.props.data.projects})
     }
 
     handleProjectDelete = (id) => {
@@ -122,15 +148,30 @@ class ProjectsContainer extends Component {
     }
 
     render() {
-        console.log(this.props.data);
-        let {projects} = this.props.data;
+        let searchingClass = this.state.searching ? ' project-search--searching' : '';
+        // If searching, use state projects to search against.
+        let projects = this.state.searching ? this.state.projects : this.props.data.projects;
+        const shouldDisplaySearchClear = this.state.searching;
         return(
-            <Layout>
-                <input className="project-search" placeholder="Search projects..." />
-                <div className="project-list">
-                    {projects ? this.renderProjects(projects) : <p>empty</p>}
+            <ProjectLayout className="project--listing">
+                <div className={`project-search` + searchingClass}>
+                    <input className="project-search__input"
+                           placeholder="Search projects..."
+                           value={this.state.searchValue}
+                           onChange={this.handleProjectSearch}
+                    />
+                    {shouldDisplaySearchClear && (
+                        <span className="project-search__close"
+                              onClick={this.handleClearSearch}
+                        ><FontAwesomeIcon className="project-search__close" icon={['fas', 'plus']}/></span>
+                    )}
                 </div>
-            </Layout>
+                <div className="project-list">
+                </div>
+                <Fragment>
+                    {projects ? this.renderProjects(projects) : <p>empty</p>}
+                </Fragment>
+            </ProjectLayout>
         )
     }
 }

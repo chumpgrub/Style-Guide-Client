@@ -15,18 +15,17 @@ import ProjectHeader from '../components/Project/ProjectHeader';
 import ProjectEditNavigation from '../components/Project/ProjectEditNavigation';
 import FontFamilies from '../components/Fonts/FontFamilies';
 import TypographyPreview from '../components/Project/Typography/TypographyPreview';
-import Project from "../components/Project/Project";
 
 const getFontFamilies = (typekit, google, web) => {
     let font_families = [];
-    if ( typekit.length ) {
+    if ( typekit != null && typekit.length ) {
         font_families.push({
             label: 'TypeKit Fonts',
             options: typekit
         })
     }
     let google_families = [];
-    if (google.length) {
+    if ( google != null && google.length ) {
         google_families = google.map(font => {
             return {
                 slug: font.name,
@@ -38,7 +37,7 @@ const getFontFamilies = (typekit, google, web) => {
             options: google_families
         })
     }
-    if ( web.length ) {
+    if ( web != null && web.length ) {
         font_families.push({
             label: 'Web Safe Fonts',
             options: web
@@ -81,12 +80,19 @@ class ProjectTypographyContainer extends Component {
 
     renderProject(project) {
 
-        let project_id = this.props.match.params.id;
+        window.project = project;
         let editing = this.props.editing;
         let view = this.props.view;
         let colors = this.state.colors || this.props.project.colors_defs || null;
-        let {typekit_fonts, google_fonts, web_fonts} = this.props.project;
-        let font_families = getFontFamilies(typekit_fonts, google_fonts, web_fonts);
+        let {
+            typekit_fonts,
+            google_fonts,
+            web_fonts
+        } = this.props.project;
+        let typekit = (this.props.project.typekit_fonts === null ) ? [] : this.props.project.typekit_fonts;
+        let google = (this.props.project.google_fonts === null ) ? [] : this.props.project.google_fonts;
+        let web = (this.props.project.web_fonts === null ) ? [] : this.props.project.web_fonts;
+        let font_families = getFontFamilies(typekit, google, web);
 
         return (
             <React.Fragment>
@@ -101,9 +107,9 @@ class ProjectTypographyContainer extends Component {
                     <div className="project-content">
                         <FontFamilies
                             editing={editing}
-                            typekit={typekit_fonts}
-                            google={google_fonts}
-                            web={web_fonts}
+                            typekit={typekit}
+                            google={google}
+                            web={web}
                             handleFontFamilyChange={this.handleFontFamilyChange}
                         />
                         <TypographyPreview

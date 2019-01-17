@@ -6,18 +6,18 @@ import ProjectImagesContainer from '../../containers/ProjectImagesContainer';
 import ProjectTypographyContainer from '../../containers/ProjectTypographyContainer';
 
 const Project = (props) => {
-    const {view} = props;
+    const {view} = props || '';
     switch(view) {
         case 'new':
-            return <ProjectNewContainer {...props}/>
+            return <ProjectNewContainer {...props}/>;
         case 'colors':
-            return <ProjectColorsContainer {...props}/>
+            return <ProjectColorsContainer {...props}/>;
         case 'images':
-            return <ProjectImagesContainer {...props}/>
+            return <ProjectImagesContainer {...props}/>;
         case 'typography':
-            return <ProjectTypographyContainer {...props}/>
+            return <ProjectTypographyContainer {...props}/>;
         default:
-            return <ProjectContainer {...props}/>
+            return <ProjectContainer {...props}/>;
     }
 }
 

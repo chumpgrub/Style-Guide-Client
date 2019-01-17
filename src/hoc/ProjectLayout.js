@@ -1,12 +1,10 @@
-import React from 'react';
-import TypeKit from 'react-typekit';
+import React, {Fragment} from 'react';
 import Header from '../components/Global/Header';
 
 const ProjectLayout = (props) => {
     let projectClass = props.className || '';
     return (
-        <React.Fragment>
-            <TypeKit kitId="wsw8dkp" />
+        <Fragment>
             <Header/>
             <div className="container">
                 <main>
@@ -15,7 +13,7 @@ const ProjectLayout = (props) => {
                     </div>
                 </main>
             </div>
-        </React.Fragment>
+        </Fragment>
     );
 };
 

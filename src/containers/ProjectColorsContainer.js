@@ -1,8 +1,6 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import Moment from 'react-moment';
 import _ from 'lodash';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
@@ -18,7 +16,6 @@ import {
 import ProjectLayout from '../hoc/ProjectLayout';
 import ProjectHeader from '../components/Project/ProjectHeader';
 import ProjectEditNavigation from '../components/Project/ProjectEditNavigation';
-import ColorsPreview from '../components/Project/Colors/ColorsPreview';
 import ColorsEdit from '../components/Project/Colors/ColorsEdit';
 
 const Loading = () => (
@@ -134,13 +131,9 @@ class ProjectColorsContainer extends Component {
     }
 
     render() {
-
-        console.log(this.props);
         let {project} = this.props;
-
         return (
             <ProjectLayout>
-                {/*<Link className="back" to="/">&lsaquo; Back to all Projects</Link>*/}
                 { ! _.isEmpty(project) ? this.renderProject(project) : <Loading/> }
             </ProjectLayout>
         )

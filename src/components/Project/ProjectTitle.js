@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 
 class ProjectTitle extends Component {
 
@@ -33,6 +34,14 @@ class ProjectTitle extends Component {
         )
     }
 
+    newProject = (e) => {
+        e.preventDefault();
+        let projectName = this.refs.projectName.value;
+        if (projectName) {
+            this.props.handleNewProject(projectName);
+        }
+    }
+
     titleNewProject = () => {
         return (
             <form onSubmit={(e) => this.newProject(e)}>
@@ -42,16 +51,9 @@ class ProjectTitle extends Component {
                     ref="projectName"
                 />
                 <button className="button">Create Project</button>
+                <Link className="button button--secondary" to="/">Cancel</Link>
             </form>
         )
-    }
-
-    newProject = (e) => {
-        e.preventDefault();
-        let projectName = this.refs.projectName.value;
-        if (projectName) {
-            this.props.handleNewProject(projectName);
-        }
     }
 
     renderTitleType = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, Link} from 'react-router-dom';
 
 import Projects from './components/Projects/Projects';
 import Project from './components/Project/Project';

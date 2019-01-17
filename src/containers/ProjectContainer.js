@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {Link} from "react-router-dom";
 import _ from 'lodash';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
@@ -22,7 +23,6 @@ import ProjectHeader from '../components/Project/ProjectHeader';
 import ProjectEditNavigation from '../components/Project/ProjectEditNavigation';
 import ProjectNotes from '../components/Project/ProjectNotes';
 import ColorsPreview from '../components/Project/Colors/ColorsPreview';
-import ColorsEdit from '../components/Project/Colors/ColorsEdit';
 import ImagesPreview from '../components/Project/Images/ImagesPreview';
 import FontFamilies from '../components/Fonts/FontFamilies';
 import TypographyPreview from '../components/Project/Typography/TypographyPreview';
@@ -233,10 +233,9 @@ class ProjectContainer extends Component {
         let font_families = getFontFamilies(typekit_fonts, google_fonts, web_fonts);
 
         return (
-            <React.Fragment>
+            <Fragment>
                 <ProjectEditNavigation {...this.props} />
                 <div className="project-info">
-                    <p>ProjectContainer.js</p>
                     <ProjectHeader
                         project={project}
                         editing={editing}
@@ -282,7 +281,7 @@ class ProjectContainer extends Component {
 
                     </div>
                 </div>
-            </React.Fragment>
+            </Fragment>
         )
     }
 
