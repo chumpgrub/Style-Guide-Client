@@ -1,19 +1,17 @@
 @import 'variables';
 @import '../../../node_modules/bootstrap/scss/bootstrap';
 
-@import 'partials/reset';
-@import 'partials/select2';
-
 // Global
-@import 'partials/global/variables';
-@import 'partials/global/mixins';
-@import 'partials/global/grid';
-@import 'partials/global/base-app-styles';
-@import 'partials/global/app-typography';
-@import 'partials/global/header';
+//@import 'partials/global/variables';
+//@import 'partials/global/mixins';
+//@import 'partials/global/grid';
+//@import 'partials/global/base-app-styles';
+//@import 'partials/global/app-typography';
+@import 'partials/global';
+@import 'partials/header';
 
 // Projects View
-@import 'partials/projects/list';
+@import 'partials/projects/index';
 
 // Project View
 @import 'partials/project/index';

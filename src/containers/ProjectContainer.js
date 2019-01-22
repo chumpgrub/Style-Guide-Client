@@ -233,9 +233,9 @@ class ProjectContainer extends Component {
         let font_families = getFontFamilies(typekit_fonts, google_fonts, web_fonts);
 
         return (
-            <Fragment>
+            <div className="row">
                 <ProjectEditNavigation {...this.props} />
-                <div className="project-info">
+                <div className="col project-info">
                     <ProjectHeader
                         project={project}
                         editing={editing}
@@ -281,7 +281,7 @@ class ProjectContainer extends Component {
 
                     </div>
                 </div>
-            </Fragment>
+            </div>
         )
     }
 
@@ -290,7 +290,7 @@ class ProjectContainer extends Component {
         let {project} = this.props;
 
         return (
-            <ProjectLayout>
+            <ProjectLayout className={'project-view'}>
                 { ! _.isEmpty(project) ? this.renderProject(project) : <Loading/> }
             </ProjectLayout>
         )

@@ -6,7 +6,7 @@ Error: Undefined variable: "$dark-gray".
 6: @import './sections/typography';
 7: 
 8: .project {
-9:     &--new {
+9:     &-view {
 10:         .project-title {
 11: 
 12:             form {
@@ -95,4 +95,4 @@ src/styles/scss/partials/project/index.scss:1
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$dark-gray\".\A         on line 11 of src/styles/scss/partials/project/_navigation.scss\A         from line 1 of src/styles/scss/partials/project/index.scss\A \A 6: @import './sections/typography';\A 7: \A 8: .project {\A 9:     &--new {\A 10:         .project-title {\A 11: \A 12:             form {\A 13:                 display: flex;\A 14:                 flex-direction: row;\A 15:                 flex-wrap: wrap;\A 16:                 max-width: 800px;"; }
+  content: "Error: Undefined variable: \"$dark-gray\".\A         on line 11 of src/styles/scss/partials/project/_navigation.scss\A         from line 1 of src/styles/scss/partials/project/index.scss\A \A 6: @import './sections/typography';\A 7: \A 8: .project {\A 9:     &-view {\A 10:         .project-title {\A 11: \A 12:             form {\A 13:                 display: flex;\A 14:                 flex-direction: row;\A 15:                 flex-wrap: wrap;\A 16:                 max-width: 800px;"; }

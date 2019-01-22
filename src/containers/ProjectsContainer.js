@@ -15,7 +15,7 @@ const { REACT_APP_STYLE_SERVER } = process.env;
 const ColorsPreview = (colors) => {
 
     return(
-        <div className="project-colors">
+        <div className="project__colors">
         {
             Object.keys(colors).map(color => {
                 let styles = {
@@ -75,7 +75,7 @@ class ProjectsContainer extends Component {
     handleProjectSearch = (e) => {
         let {projects} = this.props.data;
         let query = e.target.value;
-        if (query.length) {
+        if (query.length > 0) {
             this.setState({searchValue: query});
             this.setState({searching: true});
             this.setState({projects: projects.filter(project => {
@@ -83,9 +83,9 @@ class ProjectsContainer extends Component {
             })});
         } else {
             this.setState({searching: false});
+            this.setState({searchValue: ''});
             this.setState({projects: projects})
         }
-        console.log(this.state.projects)
     }
 
     handleClearSearch = () => {
@@ -106,7 +106,7 @@ class ProjectsContainer extends Component {
             return font.name
         })
         return (
-            <li>{source} Fonts: {fontData.join(', ')}</li>
+            <li><span className="font-source">{source} Fonts</span> {fontData.join(', ')}</li>
         )
     }
 
@@ -120,11 +120,11 @@ class ProjectsContainer extends Component {
             const webfonts = ! _.isEmpty(JSON.parse(project.web_fonts)) ? JSON.parse(project.web_fonts) : null;
 
             return (
-                <div key={project.id} className="project">
-                    <div className="project__definitions">
-                        <h3><Link to={'/project/'+project.id}>{project.name}<FontAwesomeIcon icon={['fas', 'chevron-right']}/></Link></h3>
+                <section key={project.id} className="d-flex project">
+                    <div className="mr-auto project__definitions">
+                        <h3><Link to={`/project/`+project.id+`/edit`}>{project.name}<FontAwesomeIcon icon={['fas', 'chevron-right']}/></Link></h3>
                         {colors ? <ColorsPreview {...colors}/>: ''}
-                        <div className="project-fonts">
+                        <div className="project__fonts">
                             <ul>
                                 {typekitfonts ? this.formatFontFamilies('TypeKit', typekitfonts) : ''}
                                 {googlefonts ? this.formatFontFamilies('Google', googlefonts) : ''}
@@ -142,35 +142,32 @@ class ProjectsContainer extends Component {
                         :
                         null
                     }
-                </div>
+                </section>
             )
         })
     }
 
     render() {
-        let searchingClass = this.state.searching ? ' project-search--searching' : '';
+        let searchingClass = this.state.searching ? ' projects-search--searching' : '';
         // If searching, use state projects to search against.
         let projects = this.state.searching ? this.state.projects : this.props.data.projects;
         const shouldDisplaySearchClear = this.state.searching;
+
         return(
-            <ProjectLayout className="project--listing">
-                <div className={`project-search` + searchingClass}>
-                    <input className="project-search__input"
+            <ProjectLayout className={'projects-view'}>
+                <div className={`projects-search` + searchingClass}>
+                    <input className="projects-search__input"
                            placeholder="Search projects..."
                            value={this.state.searchValue}
                            onChange={this.handleProjectSearch}
                     />
                     {shouldDisplaySearchClear && (
-                        <span className="project-search__close"
+                        <span className="projects-search__close"
                               onClick={this.handleClearSearch}
                         ><FontAwesomeIcon className="project-search__close" icon={['fas', 'plus']}/></span>
                     )}
                 </div>
-                <div className="project-list">
-                </div>
-                <Fragment>
-                    {projects ? this.renderProjects(projects) : <p>empty</p>}
-                </Fragment>
+                {projects ? this.renderProjects(projects) : <p>empty</p>}
             </ProjectLayout>
         )
     }

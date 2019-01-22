@@ -1,22 +1,19 @@
-.project--listing {
-    flex-direction: column;
-    margin: 0 15px;
+.projects-view {
 
     .project {
         display: flex;
-        margin: 30px 0;
+        margin: 1rem 0;
         background: #fff;
         border: 1px solid #ccc;
 
         .project__definitions {
             flex-grow: 1;
-            padding: 25px 20px;
+            padding: 1.6rem;
         }
 
         h3 {
-            @include webfont();
-            margin-bottom: 15px;
-            font-size: 22px;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
             text-transform: uppercase;
 
             a {
@@ -36,24 +33,30 @@
             }
         }
 
-        &-colors {
+        &__colors {
             display: flex;
-            margin-bottom: 18px;
+            align-items: center;
+            margin-bottom: .5rem;
         }
 
-        &-fonts {
+        &__fonts {
             ul {
                 display: flex;
                 flex-wrap: wrap;
-                font-family: $body-serif;
-                font-style: italic;
                 color: $mid-gray;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                font-size: .875rem;
 
                 li {
-                    + li {
-                        margin-left: 20px;
-                        padding-left: 18px;
-                        border-left: 1px solid $mid-gray;
+                    margin-right: 1.4rem;
+
+                    > span {
+                        margin-right: 6px;
+                        text-transform: uppercase;
+                        color: $dark-gray;
+                        font-weight: bold;
                     }
                 }
             }
@@ -107,29 +110,4 @@
             }
         }
     }
-}
-
-.project-search {
-    position: relative;
-    margin-top: 30px;
-
-    &__input {
-        height: 60px;
-        padding: 15px;
-        width: 100%;
-        font-size: 16px;
-    }
-
-    &__close {
-        position: absolute;
-        right: 0;
-        top: 0;
-        font-size: 60px;
-        cursor: pointer;
-        padding: 15px;
-    }
-
-}
-
-.project-list {
 }

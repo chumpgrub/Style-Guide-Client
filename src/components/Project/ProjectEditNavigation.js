@@ -9,7 +9,7 @@ const ProjectEditNavigation = ({editing, match}) => {
     return (
         <React.Fragment>
             {editing ?
-                <div className="project-nav">
+                <div className="col project-nav">
                     {/*<div><Link to={'/project/' + project_id}>Preview</Link></div>*/}
                     {/*<div>*/}
                         <NavLink to={'/project/' +project_id + '/edit'}

@@ -23,7 +23,6 @@
         }
 
         h3 {
-            @include webfont();
             margin-bottom: 15px;
             font-size: 22px;
             text-transform: uppercase;
@@ -31,8 +30,8 @@
         }
 
         &__dimensions {
-            font-family: $body-serif;
-            font-style: italic;
+            //font-family: $body-serif;
+            //font-style: italic;
             color: $mid-gray;
         }
 
@@ -113,7 +112,7 @@
         padding: 0;
         top: 27px;
         left: 10px;
-        font-family: $headline;
+        //font-family: $headline;
         font-size: 16px;
         z-index: 1;
         color: $mid-gray;

@@ -4,13 +4,15 @@ import orbitLogo from '../../images/orbit-logo-white.png';
 
 const Header = () => {
     return(
-        <header>
-            <div className="container">
-                <Link to="/">
-                    <img src={orbitLogo} alt="Orbit Media Studios"/>
-                </Link>
-                <div className="header__actions">
-                    <Link className="button button--white" to="/project/new">New Project</Link>
+        <header className="header">
+            <div className="container-fluid">
+                <div className="row">
+                    <Link className="col" to="/">
+                        <img src={orbitLogo} alt="Orbit Media Studios"/>
+                    </Link>
+                    <div className="col d-flex flex-grow-1 justify-content-end align-items-center header__actions">
+                        <Link className="btn btn-primary" to="/project/new">New Project</Link>
+                    </div>
                 </div>
             </div>
         </header>

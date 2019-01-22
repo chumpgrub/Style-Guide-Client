@@ -107,9 +107,9 @@ class ProjectColorsContainer extends Component {
         let colors = this.state.colors || this.props.project.colors_defs || null;
 
         return (
-            <React.Fragment>
+            <div className="row">
                 <ProjectEditNavigation {...this.props} />
-                <div className="project-info">
+                <div className="col project-info">
                     <ProjectHeader
                         project={project}
                         editing={editing}
@@ -126,7 +126,7 @@ class ProjectColorsContainer extends Component {
                         />
                     </div>
                 </div>
-            </React.Fragment>
+            </div>
         )
     }
 

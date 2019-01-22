@@ -1,3 +1,19 @@
-.container {
-    max-width: 800px;
+@import '../../../node_modules/bootstrap/scss/functions';
+
+/* Colors */
+$dark-gray: #333333;
+$mid-gray: #999;
+$light-gray: #e6e6e6;
+$orange: #c8543b;
+
+$primary: $orange;
+
+$enable-caret: false;
+$enable-rounded: false;
+
+$font-family-sans-serif: 'montserrat', sans-serif;
+$font-family-serif: georgia, garamond, serif;
+
+.container-fluid {
+    max-width: 1400px;
 }

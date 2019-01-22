@@ -117,9 +117,9 @@ class ProjectImagesContainer extends Component {
         let view = this.props.view;
 
         return (
-            <React.Fragment>
+            <div className="row">
                 <ProjectEditNavigation {...this.props} />
-                <div className="project-info">
+                <div className="col project-info">
                     <ProjectHeader
                         project={project}
                         editing={editing}
@@ -136,7 +136,7 @@ class ProjectImagesContainer extends Component {
                         />
                     </div>
                 </div>
-            </React.Fragment>
+            </div>
         )
     }
 
