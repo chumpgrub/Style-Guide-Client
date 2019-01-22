@@ -67,6 +67,11 @@ class ProjectImagesContainer extends Component {
 
     }
 
+    handleImageDelete = (image) => {
+        console.log('delete ------')
+        console.log(image)
+    }
+
     handleImageOrder = (images) => {
         this.setState({
             images: images
@@ -131,6 +136,7 @@ class ProjectImagesContainer extends Component {
                             editing={editing}
                             images={project.image_defs}
                             handleImageChange={this.handleImageChange}
+                            handleImageDelete={this.handleImageDelete}
                             handleImageOrder={this.handleImageOrder}
                             handleImageNew={this.handleImageNew}
                         />

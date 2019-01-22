@@ -6,21 +6,23 @@ import update from 'immutability-helper';
 
 const NewImage = ({handleImageNew}) => {
     return (
-        <div className="col col--full col--image" onClick={handleImageNew}>
+        <div className="col col-md-6 col--image" onClick={handleImageNew}>
             <div className="image image--new"><FontAwesomeIcon icon={['far', 'times-circle']} size="2x"/></div>
         </div>
     )
 }
 
-const Image = SortableElement(({editing, image, handleImageChange}) => {
+const Image = SortableElement(({editing, image, handleImageChange, handleImageDelete, handleImageCopy}) => {
     const editingClass = editing ? '--full' : '';
     return (
-        <div className={`col col`+ editingClass +` col--image`}>
+        <div className={`col col-md-6 col--image col--image`+ editingClass}>
             {
                 editing ?
                     <ImageEdit
                         image={image}
                         handleImageChange={handleImageChange}
+                        handleImageDelete={handleImageDelete}
+                        handleImageCopy={handleImageCopy}
                     /> : <ImagePreview image={image} />
             }
         </div>
@@ -36,7 +38,7 @@ const ImagePreview = ({image}) => {
     )
 }
 
-const ImageEdit = ({image, handleImageChange}) => {
+const ImageEdit = ({image, handleImageChange, handleImageDelete, handleImageCopy}) => {
 
     const shouldImageUpdate = (key, image, event) => {
 
@@ -55,8 +57,12 @@ const ImageEdit = ({image, handleImageChange}) => {
 
     }
 
-    const handleImageDelete = (image) => {
-        console.log(image);
+    const handleDeleteImage = (image) => {
+        handleImageDelete(image);
+    }
+
+    const handleCopyImage = (image) => {
+        handleImageCopy(image);
     }
 
     return (
@@ -115,11 +121,11 @@ const ImageEdit = ({image, handleImageChange}) => {
             </div>
             <div className="form-row form-row--actions">
                 <FontAwesomeIcon
-                    onClick={() => handleImageDelete(image)}
+                    onClick={() => handleCopyImage(image)}
                     icon={['far', 'copy']}
                 />
                 <FontAwesomeIcon
-                    onClick={() => handleImageDelete(image)}
+                    onClick={() => handleDeleteImage(image)}
                     icon={['far', 'trash-alt']}
                 />
             </div>
@@ -127,9 +133,9 @@ const ImageEdit = ({image, handleImageChange}) => {
     )
 }
 
-const SortableList = SortableContainer(({images, editing, handleImageChange, handleImageNew}) => {
+const SortableList = SortableContainer(({images, editing, handleImageChange, handleImageNew, handleImageDelete, handleImageCopy}) => {
     return (
-        <div className="row row-gutter-10 flex-column project-images">
+        <div className="row flex-wrap project-images">
             {
                 images.map((image, index) => {
                     return (
@@ -140,6 +146,8 @@ const SortableList = SortableContainer(({images, editing, handleImageChange, han
                             image={image}
                             disabled={!editing}
                             handleImageChange={handleImageChange}
+                            handleImageDelete={handleImageDelete}
+                            handleImageCopy={handleImageCopy}
                         />
                     )
                 })
@@ -163,6 +171,30 @@ class ImagesPreview extends Component {
         this.props.handleImageNew();
     }
 
+    handleImageDelete = (image) => {
+        let result = window.confirm('Delete this image?');
+        if ( result ) {
+            const {id} = image;
+            const {images} = this.props;
+            const objIndex = images.findIndex(obj => obj.id === id);
+            const updatedImages = [
+                ...images.slice(0, objIndex),
+                ...images.slice(objIndex + 1),
+            ];
+            this.props.handleImageOrder(updatedImages);
+        }
+    }
+
+    handleImageCopy = (image) => {
+        const {images} = this.props;
+        const maxId = Math.max.apply(Math, images.map(function(image) { return image.id; }));
+        const updatedImages = [
+            ...images,
+            Object.assign({...image}, {id: parseInt(maxId)+1})
+        ]
+        this.props.handleImageOrder(updatedImages);
+    }
+
     onSortEnd = ({oldIndex, newIndex}) => {
         let updatedOrder = arrayMove(this.props.images, oldIndex, newIndex);
         this.props.handleImageOrder([...updatedOrder]);
@@ -184,6 +216,8 @@ class ImagesPreview extends Component {
                         images={images}
                         handleImageChange={this.handleImageChange}
                         handleImageNew={this.handleImageNew}
+                        handleImageDelete={this.handleImageDelete}
+                        handleImageCopy={this.handleImageCopy}
                         onSortEnd={this.onSortEnd}
                     /> : <NewImage handleImageNew={this.handleImageNew} />
                 }

@@ -128,14 +128,17 @@ class ColorsPreview extends Component {
     }
 
     handleColorDelete = (color) => {
-        const {id} = color;
-        const {colors} = this.props;
-        const objIndex = colors.findIndex(obj => obj.id === id);
-        const updatedColors = [
-            ...colors.slice(0, objIndex),
-            ...colors.slice(objIndex + 1),
-        ];
-        this.props.handleColorOrder(updatedColors);
+        let result = window.confirm('Delete this color?');
+        if ( result ) {
+            const {id} = color;
+            const {colors} = this.props;
+            const objIndex = colors.findIndex(obj => obj.id === id);
+            const updatedColors = [
+                ...colors.slice(0, objIndex),
+                ...colors.slice(objIndex + 1),
+            ];
+            this.props.handleColorOrder(updatedColors);
+        }
     }
 
     handleColorNew = () => {

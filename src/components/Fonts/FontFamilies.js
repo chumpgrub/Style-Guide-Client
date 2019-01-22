@@ -40,10 +40,10 @@ const FontFamilies = ({editing, typekit, google, web, handleFontFamilyChange}) =
     }
     return (
         <section className="definitions definition--font-families">
-            <h2 className="definition-title">Font Families</h2>
+            {/*<h2 className="definition-title">Font Families</h2>*/}
                 <div className="row project-fonts">
                     <div className="col font-source">
-                        <h3>Typekit Fonts</h3>
+                        <span>Typekit Fonts</span>
                         {editing ?
                             <TypeKitFonts
                                 fonts={typekit}
@@ -53,7 +53,7 @@ const FontFamilies = ({editing, typekit, google, web, handleFontFamilyChange}) =
                         }
                     </div>
                     <div className="col font-source">
-                        <h3>Google Fonts</h3>
+                        <span>Google Fonts</span>
                         {editing ?
                             <GoogleFonts
                                 fonts={google}
@@ -63,7 +63,7 @@ const FontFamilies = ({editing, typekit, google, web, handleFontFamilyChange}) =
                         }
                     </div>
                     <div className="col font-source">
-                        <h3>Web Safe Fonts</h3>
+                        <span>Web Safe Fonts</span>
                         {editing ?
                             <WebSafeFonts
                                 fonts={web}

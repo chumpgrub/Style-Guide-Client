@@ -1,14 +1,23 @@
 @import '../../../../../../node_modules/react-tabs/style/react-tabs';
 
+.definition--font-families {
+    margin: 3rem 0;
+    padding: 1.2rem 1rem 1.6rem 1rem;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    background: #eee;
+}
+
 .project-fonts {
     .font-source {
         width: 33.3333%;
 
-        h3 {
-            //@include webfont();
+        > span {
             margin-bottom: 1rem;
-            font-size: 1.2rem;
+            text-transform: uppercase;
             color: $dark-gray;
+            font-size: .875rem;
+            font-weight: bold;
         }
 
         ul {

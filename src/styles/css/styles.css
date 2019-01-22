@@ -7258,7 +7258,7 @@ a.text-dark:hover, a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6; } }
 body {
-  background: #ddd; }
+  background: #f9f9f9; }
 
 .header {
   padding-top: 1rem;
@@ -7487,8 +7487,6 @@ body {
 
 .col--image {
   margin-bottom: 30px; }
-  .col--image.col {
-    width: 50%; }
   .col--image .image {
     position: relative;
     border: 1px solid #ccc;
@@ -7656,12 +7654,21 @@ body {
     .react-tabs__tab-panel--selected {
       display: block; }
 
+.definition--font-families {
+  margin: 3rem 0;
+  padding: 1.2rem 1rem 1.6rem 1rem;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  background: #eee; }
+
 .project-fonts .font-source {
   width: 33.3333%; }
-  .project-fonts .font-source h3 {
+  .project-fonts .font-source > span {
     margin-bottom: 1rem;
-    font-size: 1.2rem;
-    color: #333333; }
+    text-transform: uppercase;
+    color: #333333;
+    font-size: .875rem;
+    font-weight: bold; }
   .project-fonts .font-source ul {
     margin-left: 8px; }
     .project-fonts .font-source ul li {

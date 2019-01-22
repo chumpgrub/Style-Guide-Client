@@ -95,7 +95,7 @@ class ProjectsContainer extends Component {
     }
 
     handleProjectDelete = (id) => {
-        let result = window.confirm('Are you sure you want to delete this?');
+        let result = window.confirm('Are you sure you want to delete this project?');
         if ( result ) {
             this.props.deleteProject(id);
         }
