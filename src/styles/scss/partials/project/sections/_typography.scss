@@ -1,9 +1,13 @@
 @import '../../../../../../node_modules/react-tabs/style/react-tabs';
 
+/* ------------------------ *\
+ * Font Families
+ * ------------------------ */
+
 .definition--font-families {
     margin: 3rem 0;
     padding: 1.2rem 1rem 1.6rem 1rem;
-    border: 1px solid #bbb;
+    border: 1px solid hsl(0,0%,80%);
     border-radius: 4px;
     background: #eee;
 }
@@ -41,6 +45,7 @@
 
 .typography-definition {
     margin-bottom: 3rem;
+    flex: 1 1 50%;
 
     .type {
         padding: 1rem;

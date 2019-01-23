@@ -5,6 +5,33 @@
 @import './sections/title';
 @import './sections/typography';
 
+/* ------------------------ *\
+ *  Time Stamp
+ * ------------------------ */
+
+.project-timestamp {
+    display: flex;
+    margin-bottom: 80px;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: $mid-gray;
+
+    dt,
+    dd {
+        margin-right: 10px;
+    }
+
+    dt {
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+}
+
+
+/* ------------------------ *\
+ *  Project
+ * ------------------------ */
+
 .project {
     &-view {
         .project-title {

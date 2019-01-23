@@ -7654,10 +7654,13 @@ body {
     .react-tabs__tab-panel--selected {
       display: block; }
 
+/* ------------------------ *\
+ * Font Families
+ * ------------------------ */
 .definition--font-families {
   margin: 3rem 0;
   padding: 1.2rem 1rem 1.6rem 1rem;
-  border: 1px solid #bbb;
+  border: 1px solid #cccccc;
   border-radius: 4px;
   background: #eee; }
 
@@ -7680,7 +7683,8 @@ body {
         margin-right: 4px; }
 
 .typography-definition {
-  margin-bottom: 3rem; }
+  margin-bottom: 3rem;
+  flex: 1 1 50%; }
   .typography-definition .type {
     padding: 1rem;
     background: #fff; }
@@ -7716,6 +7720,25 @@ body {
     .defs--global .def--font-color {
       padding-left: 15px; }
 
+/* ------------------------ *\
+ *  Time Stamp
+ * ------------------------ */
+.project-timestamp {
+  display: flex;
+  margin-bottom: 80px;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #999; }
+  .project-timestamp dt,
+  .project-timestamp dd {
+    margin-right: 10px; }
+  .project-timestamp dt {
+    text-transform: uppercase;
+    font-weight: bold; }
+
+/* ------------------------ *\
+ *  Project
+ * ------------------------ */
 .project-view .project-title form {
   display: flex;
   flex-direction: row;
