@@ -7684,10 +7684,18 @@ body {
 
 .typography-definition {
   margin-bottom: 3rem;
-  flex: 1 1 50%; }
+  flex: 1 1 100%; }
   .typography-definition .type {
+    position: relative;
     padding: 1rem;
     background: #fff; }
+    .typography-definition .type--edit {
+      padding-left: 4rem; }
+      .typography-definition .type--edit > svg {
+        position: absolute;
+        top: calc(50% - 10px);
+        left: 20px;
+        cursor: move; }
   .typography-definition h3 {
     font-weight: 400;
     margin-bottom: 15px;

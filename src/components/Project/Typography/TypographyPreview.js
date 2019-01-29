@@ -1,38 +1,12 @@
 import React, {Component} from 'react';
 import Select from 'react-select';
+import TextareaAutosize from 'react-autosize-textarea';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {getNextAvailableId} from '../../../lib/utility'
+import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
-const TypograhyElements = [
-    {
-        selector: 'h1',
-        name: 'Headline 1'
-    },
-    {
-        selector: 'h2',
-        name: 'Headline 2'
-    },
-    {
-        selector: 'h3',
-        name: 'Headline 3'
-    },
-    {
-        selector: 'h4',
-        name: 'Headline 4'
-    },
-    {
-        selector: 'h5',
-        name: 'Headline 5'
-    },
-    {
-        selector: 'h6',
-        name: 'Headline 6'
-    },
-    {
-        selector: 'body',
-        name: 'Body'
-    }
-];
+import TypographyDef from './TypographyDef';
 
 const CustomOption = (props) => {
     let styles = props.getStyles('option', props);
@@ -61,11 +35,19 @@ const TypographyDefinition = ({font}) => {
     )
 }
 
-const TypographyEdit = ({elem, families, colors}) => {
+const TypographyEdit = ({elem, families, colors, handleDefChange}) => {
     return (
         <div className="col col--full typography-definition">
             <div className="type type--edit">
+                <FontAwesomeIcon icon={['fas', 'bars']}/>
                 <h3>{elem.name}</h3>
+                <div className="defs">
+                    <TextareaAutosize
+                        rows={1}
+                        onBlur={(e) => handleDefChange('note', elem, e)}
+                        placeholder="Details, here..."
+                    />
+                </div>
                 <div className="defs defs--global">
                     <h4>Global</h4>
                     <div className="def def--font-family">
@@ -73,11 +55,11 @@ const TypographyEdit = ({elem, families, colors}) => {
                         <Select
                             getOptionValue={(option) => option.slug}
                             getOptionLabel={(option) => option.name}
-                            styles={{ menu: (base) => ({ ...base, zIndex: 100 }) }}
+                            styles={{menu: (base) => ({...base, zIndex: 100})}}
                             options={families}
                             backspaceRemovesValue
                             // value={this.state.value}
-                            // onChange={this.onChange}
+                            onChange={(e) => handleDefChange('family', elem, e)}
                         />
                     </div>
                     <div className="def def--font-color">
@@ -85,12 +67,12 @@ const TypographyEdit = ({elem, families, colors}) => {
                         <Select
                             getOptionValue={(option) => option.value}
                             getOptionLabel={(option) => option.name}
-                            components={{ Option: CustomOption }}
-                            styles={{ menu: (base) => ({ ...base, zIndex: 100 }) }}
+                            components={{Option: CustomOption}}
+                            styles={{menu: (base) => ({...base, zIndex: 100})}}
                             options={colors}
                             backspaceRemovesValue
                             // value={this.state.value}
-                            // onChange={this.onChange}
+                            onChange={(e) => handleDefChange('color', elem, e)}
                         />
                     </div>
                 </div>
@@ -125,12 +107,71 @@ const TypographyEdit = ({elem, families, colors}) => {
                         {elem.name} - Mobile
                     </TabPanel>
                 </Tabs>
+                <div className="form-row form-row--actions">
+                    <button>Done</button>
+                    <FontAwesomeIcon
+                        icon={['far', 'copy']}
+                    />
+                    <FontAwesomeIcon
+                        icon={['far', 'trash-alt']}
+                    />
+                </div>
             </div>
         </div>
     )
 }
 
+const AddTypographyDefinitions = () => {
+    return(
+        <div className="col">Add some definitions</div>
+    )
+}
+
 class TypographyPreview extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            defs: null
+        }
+    }
+
+    handleDefChange = (def) => {
+        console.log('TypographyPreview::handleDefChange')
+        console.log(def);
+        // 
+        const previousDefs = this.state.defs || [];
+        console.log('--> previousDefs')
+        console.log(previousDefs)
+        const updatedDefs = [
+            ...previousDefs,
+            {...def}
+        ]
+        console.log(updatedDefs)
+        this.setState({
+            defs: updatedDefs
+        })
+        this.props.handleTypographyChange(updatedDefs)
+    }
+
+    handleNewDef = () => {
+        const previousDef = this.state.defs || [];
+        let nextID = 1;
+        if ( previousDef.length > 0 ) {
+            nextID = getNextAvailableId(previousDef)
+        }
+
+        const updatedDef = [
+            ...previousDef,
+            {
+                id: nextID,
+                newDef : true
+            }
+        ]
+        this.setState({
+            defs: updatedDef
+        })
+    }
 
     renderPreview() {
         let {fonts} = this.props;
@@ -146,20 +187,27 @@ class TypographyPreview extends Component {
     }
 
     renderEdit() {
-        let {families, colors} = this.props;
+
+        const {defs} = this.state;
+        const {families, colors} = this.props;
+
         return (
-            <div className="row project-typography">
-                {TypograhyElements.map((elem, index) => {
-                    return (
-                        <TypographyEdit
+            <React.Fragment>
+                <div className="row project-typography">
+                    {defs && defs.map( (def, index) =>
+                        <TypographyDef
                             key={index}
-                            elem={elem}
-                            families={families}
+                            {...def}
                             colors={colors}
+                            families={families}
+                            handleDefChange={this.handleDefChange}
                         />
-                    )
-                })}
-            </div>
+                    ) }
+                </div>
+                <div className="d-flex add-typography">
+                    <button onClick={() => this.handleNewDef()}>Add Definition</button>
+                </div>
+            </React.Fragment>
         )
     }
 
@@ -168,7 +216,7 @@ class TypographyPreview extends Component {
         return (
             <section className="definitions definition--typography">
                 <h2 className="definition-title">Typography</h2>
-                    {editing ? this.renderEdit() : this.renderPreview()}
+                {editing ? this.renderEdit() : this.renderPreview()}
             </section>
         )
     }

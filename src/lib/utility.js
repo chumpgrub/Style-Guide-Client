@@ -18,3 +18,4 @@ export const getNextAvailableId = (projects) => {
         return nextId + 1;
     }
 }
+

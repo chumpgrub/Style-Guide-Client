@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import Select from 'react-select';
 import Creatable from 'react-select';
 
 const webSafeFonts = [
@@ -60,11 +59,9 @@ class WebSafeFonts extends Component {
         this.state = {
             value: [...props.fonts]
         }
-        console.log(webSafeFonts);
     }
 
     onChange = (value) => {
-        console.log(value);
         this.setState({
             value: value
         })

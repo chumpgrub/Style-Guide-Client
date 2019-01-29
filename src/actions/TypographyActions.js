@@ -1,6 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 import update from 'immutability-helper';
+import {formatProjectPayload} from "../lib/utility";
 
 const { REACT_APP_STYLE_SERVER } = process.env;
 
@@ -32,5 +33,33 @@ export const updateProjectFontFamily = (project, font_type, fonts) => {
     }).catch((err) => {
         console.log(err);
     });
+}
 
+
+export const updateProjectTypography = (project, typography) => {
+
+    let {id} = project;
+    let updated_typography = update(project.font_defs, {$set: typography});
+    console.log(updated_typography);
+
+    return {
+        type: 'GET_PROJECT',
+        payload: {}
+    }
+
+    return axios({
+        method: 'PUT',
+        headers: {'content-type': 'application/x-www-form-urlencoded'},
+        url: `${REACT_APP_STYLE_SERVER}/projects/${id}`,
+        crossdomain: true,
+        data: qs.stringify({font_defs: JSON.stringify(updated_typography)})
+    }).then((res) => {
+        let data = res.data;
+        return {
+            type: 'GET_PROJECT',
+            payload: formatProjectPayload(data)
+        }
+    }).catch((err) => {
+        console.log(err);
+    });
 }

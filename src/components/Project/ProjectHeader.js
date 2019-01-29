@@ -8,8 +8,6 @@ const ProjectHeader = (props) => {
     const {project, editing, view} = props;
     const title = ('new' === view ) ? '' : project.name;
 
-    console.log(view);
-
     const TimeStamp = () => {
         if ( 'new' !== view ) {
             return (

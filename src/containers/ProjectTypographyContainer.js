@@ -7,7 +7,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
     getProject,
     updateProjectTitle,
-    updateProjectFontFamily
+    updateProjectFontFamily,
+    updateProjectTypography
 } from "../actions";
 
 import ProjectLayout from '../hoc/ProjectLayout';
@@ -78,6 +79,12 @@ class ProjectTypographyContainer extends Component {
         this.props.updateProjectFontFamily(project, font_type, fonts);
     }
 
+    handleTypographyChange = (typography) => {
+        let {project} = this.props;
+        console.log(typography)
+        this.props.updateProjectTypography(project, typography);
+    }
+
     renderProject(project) {
 
         window.project = project;
@@ -117,6 +124,7 @@ class ProjectTypographyContainer extends Component {
                             fonts={project.font_defs}
                             families={font_families}
                             colors={colors}
+                            handleTypographyChange={this.handleTypographyChange}
                         />
                     </div>
                 </div>
@@ -149,7 +157,8 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         getProject,
         updateProjectTitle,
-        updateProjectFontFamily
+        updateProjectFontFamily,
+        updateProjectTypography
     }, dispatch)
 }
 
