@@ -17,7 +17,6 @@ export const getProject = (id) => {
         {crossdomain: true}
     ).then((res) => {
         let data = res.data;
-        console.log(data);
         return {
             type: 'GET_PROJECT',
             payload: Object.assign({},

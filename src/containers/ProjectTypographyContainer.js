@@ -74,14 +74,11 @@ class ProjectTypographyContainer extends Component {
 
     handleFontFamilyChange = (font_type, fonts) => {
         let {project} = this.props;
-        console.log(project);
-        console.log(fonts);
         this.props.updateProjectFontFamily(project, font_type, fonts);
     }
 
     handleTypographyChange = (typography) => {
         let {project} = this.props;
-        console.log(typography)
         this.props.updateProjectTypography(project, typography);
     }
 
@@ -100,6 +97,9 @@ class ProjectTypographyContainer extends Component {
         let google = (this.props.project.google_fonts === null ) ? [] : this.props.project.google_fonts;
         let web = (this.props.project.web_fonts === null ) ? [] : this.props.project.web_fonts;
         let font_families = getFontFamilies(typekit, google, web);
+
+        console.log('----- font_defs -----')
+        console.log(project.font_defs)
 
         return (
             <div className="row">
@@ -134,12 +134,10 @@ class ProjectTypographyContainer extends Component {
 
     render() {
 
-        console.log(this.props);
         let {project} = this.props;
 
         return (
             <ProjectLayout>
-                {/*<Link className="back" to="/">&lsaquo; Back to all Projects</Link>*/}
                 { ! _.isEmpty(project) ? this.renderProject(project) : <Loading/> }
             </ProjectLayout>
         )

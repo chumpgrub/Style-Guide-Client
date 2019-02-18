@@ -13,9 +13,19 @@ export const formatProjectPayload = (data) => {
 }
 
 export const getNextAvailableId = (projects) => {
-    if (projects) {
+    console.log('getNextAvailableId()')
+    console.log(projects)
+    if (projects.length > 1) {
         let nextId = projects.reduce((prev, current) => (prev.id > current.id) ? prev.id : current.id);
         return nextId + 1;
+    } else if (projects.length == 1) {
+        return projects[0].id + 1;
+    } else {
+        return 1;
     }
+}
+
+export const capitalize = (text) => {
+    return text.charAt(0).toUpperCase() + text.slice(1);
 }
 

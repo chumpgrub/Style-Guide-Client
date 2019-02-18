@@ -7,7 +7,7 @@
 .definition--font-families {
     margin: 3rem 0;
     padding: 1.2rem 1rem 1.6rem 1rem;
-    border: 1px solid hsl(0,0%,80%);
+    border: 1px solid hsl(0, 0%, 80%);
     border-radius: 4px;
     background: #eee;
 }
@@ -44,7 +44,7 @@
 }
 
 .typography-definition {
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
     flex: 1 1 100%;
 
     .type {
@@ -52,7 +52,7 @@
         padding: 1rem;
         background: #fff;
 
-        &--edit {
+        &--preview {
             padding-left: 4rem;
 
             > svg {
@@ -63,6 +63,55 @@
             }
         }
 
+        &__attributes {
+            display: flex;
+
+            .atts {
+                flex: 1;
+
+                &--general {
+                    order: 0;
+                }
+
+                &--desktop {
+                    order: 1;
+                }
+
+                &--tablet {
+                    order: 2;
+                }
+
+                &--mobile {
+                    order: 3;
+                }
+
+                &__color {
+                    display: flex;
+                    align-items: center;
+
+                    span {
+                        margin-right: 6px;
+                    }
+                }
+            }
+
+            ul {
+                margin: 0;
+                padding: 0;
+                font-size: 14px;
+                line-height: 1.6;
+                list-style: none;
+
+                li {
+                    padding: 1px 0;
+                }
+
+                li > span {
+                    color: $mid-gray;
+                    font-weight: normal;
+                }
+            }
+        }
 
     }
 

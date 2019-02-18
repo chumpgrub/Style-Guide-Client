@@ -40,12 +40,13 @@ export const updateProjectTypography = (project, typography) => {
 
     let {id} = project;
     let updated_typography = update(project.font_defs, {$set: typography});
+    console.log('TypographyActions:updateProjectTypography')
     console.log(updated_typography);
 
-    return {
-        type: 'GET_PROJECT',
-        payload: {}
-    }
+    // return {
+    //     type: 'GET_PROJECT',
+    //     payload: {}
+    // }
 
     return axios({
         method: 'PUT',

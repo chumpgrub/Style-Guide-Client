@@ -5,8 +5,8 @@ import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {getNextAvailableId} from '../../../lib/utility'
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
-
 import TypographyDef from './TypographyDef';
+import update from 'immutability-helper';
 
 const CustomOption = (props) => {
     let styles = props.getStyles('option', props);
@@ -132,44 +132,82 @@ class TypographyPreview extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            defs: null
+            defs: this.props.fonts
+        }
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextProps.fonts !== this.state.defs) {
+            this.setState({ defs: nextProps.fonts })
         }
     }
 
     handleDefChange = (def) => {
+
         console.log('TypographyPreview::handleDefChange')
-        console.log(def);
-        // 
+
+        const {id} = def;
         const previousDefs = this.state.defs || [];
-        console.log('--> previousDefs')
-        console.log(previousDefs)
-        const updatedDefs = [
-            ...previousDefs,
-            {...def}
-        ]
-        console.log(updatedDefs)
-        this.setState({
-            defs: updatedDefs
-        })
+
+        let updatedDefs = [];
+
+        if (previousDefs.length && id) {
+
+            let objIndex = previousDefs.findIndex(obj => obj.id === id)
+            let previousDef = previousDefs.find(previousDef => previousDef.id == id)
+
+            console.log(previousDef)
+
+            // If definition exists currently.
+            if ( typeof previousDef !== 'undefined' ) {
+                console.log( 'previous.length match!')
+                previousDef = Object.assign({}, previousDef, {...def})
+            } else {
+                console.log( 'else match!')
+                objIndex = 0;
+                previousDef = {...def}
+            }
+
+            console.log(previousDef)
+
+            console.log('EXISTING --------')
+            updatedDefs = update(previousDefs, {
+                [objIndex]: {$set: previousDef}
+            })
+            console.log(updatedDefs)
+
+        } else {
+            console.log('NO EXISTING --------')
+            updatedDefs = update(previousDefs, {
+               $push: def
+            })
+            console.log(updatedDefs)
+
+        }
+
         this.props.handleTypographyChange(updatedDefs)
     }
 
     handleNewDef = () => {
-        const previousDef = this.state.defs || [];
+        // May need to update to object from array
+        const previousDefs = this.state.defs || [];
         let nextID = 1;
-        if ( previousDef.length > 0 ) {
-            nextID = getNextAvailableId(previousDef)
+        if ( previousDefs.length > 0 ) {
+            nextID = getNextAvailableId(previousDefs)
         }
+        console.log('nextID')
+        console.log(nextID)
 
-        const updatedDef = [
-            ...previousDef,
-            {
-                id: nextID,
-                newDef : true
-            }
+        const newDefProps = Object.assign({}, {...TypographyDef.defaultProps}, {id: nextID})
+
+        const updatedDefs = [
+            ...previousDefs,
+            {...newDefProps}
         ]
+        console.log(updatedDefs)
+
         this.setState({
-            defs: updatedDef
+            defs: updatedDefs
         })
     }
 
@@ -191,13 +229,15 @@ class TypographyPreview extends Component {
         const {defs} = this.state;
         const {families, colors} = this.props;
 
+        console.log(this.state)
+
         return (
             <React.Fragment>
                 <div className="row project-typography">
                     {defs && defs.map( (def, index) =>
                         <TypographyDef
                             key={index}
-                            {...def}
+                            def={def}
                             colors={colors}
                             families={families}
                             handleDefChange={this.handleDefChange}
@@ -205,7 +245,7 @@ class TypographyPreview extends Component {
                     ) }
                 </div>
                 <div className="d-flex add-typography">
-                    <button onClick={() => this.handleNewDef()}>Add Definition</button>
+                    <button className="btn btn-secondary" onClick={() => this.handleNewDef()}>Add Definition</button>
                 </div>
             </React.Fragment>
         )

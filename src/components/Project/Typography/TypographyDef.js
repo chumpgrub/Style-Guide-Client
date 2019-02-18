@@ -25,37 +25,75 @@ class TypographyDef extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            editing: false,
-            device: 'desktop',
-            newDef: this.props.newDef,
-            def: {...this.props.def}
+            ...this.props.def
         }
     }
 
     handleSave = () => {
-        const {def} = this.state;
-        // Handle Definition Change.
-        this.props.handleDefChange(def);
         // Return editing state to false.
         this.setState({editing: false})
         this.setState({newDef: false})
+
+        const def = Object.assign({},
+            this.state,
+            {editing: false},
+            {newDef: false}
+        );
+
+        // Handle Definition Change.
+        this.props.handleDefChange(def)
     }
 
     handleDefChange = (field) => (e) => {
+
         const newValue = e.target.value;
-        const previousDef = this.state.def;
+        const previousDef = this.state;
         const device = field.split('-')[0];
         const deviceField = field.split('-')[1];
+
         let updatedDef = [];
+
+        console.log('TypographyDef::handleDefChange')
+        console.log(previousDef)
+
         switch (device) {
             case 'desktop':
             case 'tablet':
             case 'mobile':
                 updatedDef = update(previousDef, {
-                    [device]: {
-                        [deviceField]: {
-                            $set: newValue
+                    devices: {
+                        [device]: {
+                            [deviceField]: {
+                                $set: newValue
+                            }
                         }
+                    }
+                })
+                break;
+            case 'all':
+                updatedDef = update(previousDef, {
+                    [deviceField]: {$set: newValue},
+                    devices: {
+                        mobile: {
+                            [deviceField]: {
+                                $apply: () => {
+                                    console.log(newValue)
+                                    const prevValue = previousDef.devices.mobile[deviceField];
+                                    console.log(prevValue)
+                                    return (typeof prevValue !== 'undefined') ? prevValue : newValue;
+                                }
+                            }
+                        },
+                        tablet: {
+                            [deviceField]: {
+                                $set: newValue
+                            }
+                        },
+                        desktop: {
+                            [deviceField]: {
+                                $set: newValue
+                            }
+                        },
                     }
                 })
                 break;
@@ -65,30 +103,32 @@ class TypographyDef extends Component {
                 })
                 break;
         }
+        console.log('updatedDef')
+        console.log(updatedDef)
         this.setState({
-            def: updatedDef
+            ...updatedDef
         })
     }
 
     handleFamilyDefChange = (e) => {
         const newValue = e;
-        const previousDef = this.state.def;
+        const previousDef = this.state;
         const updatedDef = update(previousDef, {
-            ['family']: {$set: newValue}
+            family: {$set: newValue}
         })
         this.setState({
-            def: updatedDef
+            ...updatedDef
         })
     }
 
     handleColorDefChange = (e) => {
         const newValue = e;
-        const previousDef = this.state.def;
+        const previousDef = this.state;
         const updatedDef = update(previousDef, {
-            ['color']: {$set: newValue}
+            color: {$set: newValue}
         })
         this.setState({
-            def: updatedDef
+            ...updatedDef
         })
     }
 
@@ -97,21 +137,22 @@ class TypographyDef extends Component {
     }
 
     renderEdit() {
-        const {def} = this.state;
-        const family = def.family || '';
-        const color = def.color || '';
+        const {name, note, letterspacing, weight} = this.state;
+        console.log('TypographyDef::renderEdit')
+        console.log(this.state)
+        const {family} = this.state || '';
+        const {color} = this.state || '';
         const {families, colors} = this.props;
-        const {desktop, tablet, mobile} = def;
+        const {desktop, tablet, mobile} = this.state.devices;
 
         return (
             <div className="col col--full typography-definition">
                 <div className="type type--edit">
-                    <FontAwesomeIcon icon={['fas', 'bars']}/>
                     <div className="form-group">
                         <input
                             className="form-control"
                             type="text"
-                            defaultValue={def.name}
+                            defaultValue={name}
                             placeholder="Font Element"
                             onBlur={this.handleDefChange('name')}
                         />
@@ -121,7 +162,7 @@ class TypographyDef extends Component {
                             className="form-control"
                             rows={1}
                             onBlur={this.handleDefChange('note')}
-                            defaultValue={def.note}
+                            defaultValue={note}
                             placeholder="Details, here..."
                         />
                     </div>
@@ -153,6 +194,26 @@ class TypographyDef extends Component {
                             />
                         </div>
                     </div>
+                    <div className="row form-group">
+                        <div className="col">
+                            <input
+                                className="form-control"
+                                type="text"
+                                defaultValue={weight}
+                                placeholder="Font Weight"
+                                onBlur={this.handleDefChange('all-weight')}
+                            />
+                        </div>
+                        <div className="col">
+                            <input
+                                className="form-control"
+                                type="text"
+                                defaultValue={letterspacing}
+                                placeholder="Letter Spacing"
+                                onBlur={this.handleDefChange('all-letterspacing')}
+                            />
+                        </div>
+                    </div>
                     <Tabs>
                         <TabList>
                             <Tab><FontAwesomeIcon icon={['fa', 'desktop']}/></Tab>
@@ -178,6 +239,24 @@ class TypographyDef extends Component {
                                     <label htmlFor="name">Line Height</label>
                                 </div>
                             </div>
+                            <div className="form-row">
+                                <div className={`form-element form-element--half ${desktop.weight ? 'focus' : ''}`}>
+                                    <input
+                                        type="text"
+                                        defaultValue={desktop.weight}
+                                        onBlur={this.handleDefChange('desktop-weight')}
+                                    />
+                                    <label htmlFor="name">Weight</label>
+                                </div>
+                                <div className={`form-element form-element--half ${desktop.letterspacing ? 'focus' : ''}`}>
+                                    <input
+                                        type="text"
+                                        defaultValue={desktop.letterspacing}
+                                        onBlur={this.handleDefChange('desktop-letterspacing')}
+                                    />
+                                    <label htmlFor="name">Letter Spacing</label>
+                                </div>
+                            </div>
                         </TabPanel>
                         <TabPanel>
                             <div className="form-row">
@@ -196,6 +275,24 @@ class TypographyDef extends Component {
                                         onBlur={this.handleDefChange('tablet-lineheight')}
                                     />
                                     <label htmlFor="name">Line Height</label>
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className={`form-element form-element--half ${tablet.weight ? 'focus' : ''}`}>
+                                    <input
+                                        type="text"
+                                        defaultValue={tablet.weight}
+                                        onBlur={this.handleDefChange('tablet-weight')}
+                                    />
+                                    <label htmlFor="name">Weight</label>
+                                </div>
+                                <div className={`form-element form-element--half ${tablet.letterspacing ? 'focus' : ''}`}>
+                                    <input
+                                        type="text"
+                                        defaultValue={tablet.letterspacing}
+                                        onBlur={this.handleDefChange('tablet-letterspacing')}
+                                    />
+                                    <label htmlFor="name">Letter Spacing</label>
                                 </div>
                             </div>
                         </TabPanel>
@@ -218,6 +315,24 @@ class TypographyDef extends Component {
                                     <label htmlFor="name">Line Height</label>
                                 </div>
                             </div>
+                            <div className="form-row">
+                                <div className={`form-element form-element--half ${mobile.weight ? 'focus' : ''}`}>
+                                    <input
+                                        type="text"
+                                        defaultValue={mobile.weight}
+                                        onBlur={this.handleDefChange('mobile-weight')}
+                                    />
+                                    <label htmlFor="name">Weight</label>
+                                </div>
+                                <div className={`form-element form-element--half ${mobile.letterspacing ? 'focus' : ''}`}>
+                                    <input
+                                        type="text"
+                                        defaultValue={mobile.letterspacing}
+                                        onBlur={this.handleDefChange('mobile-letterspacing')}
+                                    />
+                                    <label htmlFor="name">Letter Spacing</label>
+                                </div>
+                            </div>
                         </TabPanel>
                     </Tabs>
                     <div className="form-row form-row--actions">
@@ -235,7 +350,7 @@ class TypographyDef extends Component {
     }
 
     renderPreview() {
-        const {def} = this.state;
+        const def = this.state;
         console.log('TypographyDef:renderPreview');
         console.log(def);
         return (
@@ -245,8 +360,8 @@ class TypographyDef extends Component {
 
     render() {
         console.log(this.props)
+        // todo: I don't think the newDef prop needs to exist any longer.
         const {editing, newDef} = this.state;
-        console.log(editing || newDef);
         return (
             <React.Fragment>
                 {editing || newDef ? this.renderEdit() : this.renderPreview()}
@@ -255,26 +370,29 @@ class TypographyDef extends Component {
     }
 }
 
+export default TypographyDef;
+
 TypographyDef.defaultProps = {
     editing: true,
+    newDef : false,
+    id: null,
     device: 'desktop',
-    def: {
-        id: null,
+    name: null,
+    note: null,
+    color: {
         name: null,
-        note: null,
-        color: {
-            name: null,
-            value: null
-        },
-        family: {
-            name: null,
-            slug: null
-        },
-        weight: null,
-        letterspacing: null,
-        styles: null,
-        underline: null,
-        lineheight: null,
+        value: null
+    },
+    family: {
+        name: null,
+        slug: null
+    },
+    weight: null,
+    letterspacing: null,
+    styles: null,
+    underline: null,
+    lineheight: null,
+    devices: {
         desktop: {
             size: '11111',
             margin: null
@@ -290,4 +408,3 @@ TypographyDef.defaultProps = {
     }
 }
 
-export default TypographyDef;
