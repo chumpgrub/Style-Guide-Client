@@ -79,7 +79,7 @@ const TypographyDefPreview = SortableElement((props) => {
                             icon={['far', 'copy']}
                         />
                     </button>
-                    <button className="btn btn-sm btn-outline-danger">
+                    <button className="btn btn-sm btn-outline-danger" onClick={props.handleDelete}>
                         Delete
                         <FontAwesomeIcon
                             icon={['far', 'trash-alt']}

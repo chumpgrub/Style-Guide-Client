@@ -121,6 +121,7 @@ class TypographyPreview extends Component {
         this.setState({
             defs: updatedDefs
         })
+        this.props.handleTypographyChange(updatedDefs)
     }
 
     renderEdit() {

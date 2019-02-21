@@ -30,6 +30,13 @@ class TypographyDef extends Component {
         }
     }
 
+    handleDelete = () => {
+        let result = window.confirm('Delete this definition?');
+        if ( result ) {
+            this.props.handleDeleteDef(this.state)
+        }
+    }
+
     handleCancel = () => {
         const {newDef} = this.state;
         const currentState = Object.assign({}, this.state, {editing: false});
@@ -399,7 +406,11 @@ class TypographyDef extends Component {
         console.log('TypographyDef:renderPreview');
         console.log(def);
         return (
-            <TypographyDefPreview index={index} {...def} handleEditToggle={this.handleEditToggle}/>
+            <TypographyDefPreview
+                index={index} {...def}
+                handleEditToggle={this.handleEditToggle}
+                handleDelete={this.handleDelete}
+            />
         )
     }
 
