@@ -65,6 +65,7 @@
 
         &__attributes {
             display: flex;
+            margin: 2rem 0;
 
             .atts {
                 flex: 1;
@@ -98,7 +99,7 @@
             ul {
                 margin: 0;
                 padding: 0;
-                font-size: 14px;
+                font-size: 13px;
                 line-height: 1.6;
                 list-style: none;
 
@@ -113,6 +114,23 @@
             }
         }
 
+        &__actions {
+            display: grid;
+            grid-template-columns: 100px 100px 1fr;
+            column-gap: 15px;
+
+            .btn {
+                width: 100px;
+
+                > svg {
+                    margin-left: 8px;
+                }
+            }
+
+            .btn-outline-danger {
+                place-self: end;
+            }
+        }
     }
 
     h3 {

@@ -128,7 +128,7 @@ class ProjectsContainer extends Component {
                             <ul>
                                 {typekitfonts ? this.formatFontFamilies('TypeKit', typekitfonts) : ''}
                                 {googlefonts ? this.formatFontFamilies('Google', googlefonts) : ''}
-                                {webfonts ?  this.formatFontFamilies('Web', webfonts) : ''}
+                                {webfonts ?  this.formatFontFamilies('Web Safe', webfonts) : ''}
                             </ul>
                         </div>
                     </div>

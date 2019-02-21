@@ -1,4 +1,5 @@
 import React from 'react';
+import {SortableHandle, SortableElement} from 'react-sortable-hoc';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {capitalize} from '../../../lib/utility';
 
@@ -29,6 +30,7 @@ const TypeAttributes = (props) => {
                     <li><span>Letter Spacing: </span>{props.letterspacing}</li>
                     <li><span>Line Height: </span>{props.lineheight}</li>
                     <li><span>Weight: </span>{props.weight}</li>
+                    <li><span>Margin: </span>{props.margin}</li>
                 </ul>
             </div>
             <AttributesByDevice {...devices}/>
@@ -41,12 +43,13 @@ const AttributesByDevice = (devices) => {
         Object.keys(devices).map((key, index) => {
             const device = devices[key];
             return (
-                <div className={`atts atts--${key}`}>
+                <div key={index} className={`atts atts--${key}`}>
                     <h6 key={index}>{capitalize(key)}</h6>
                     <ul>
                         <li><span>Size: </span>{device.size}</li>
                         <li><span>Line Height: </span>{device.lineheight}</li>
                         <li><span>Weight: </span>{device.weight}</li>
+                        <li><span>Margin: </span>{device.margin}</li>
                     </ul>
                 </div>
             )
@@ -54,20 +57,38 @@ const AttributesByDevice = (devices) => {
     )
 }
 
-const TypographyDefPreview = (props) => {
+const DragHandle = SortableHandle(() =>
+    <FontAwesomeIcon icon={['fas', 'bars']}/>
+)
+
+const TypographyDefPreview = SortableElement((props) => {
     console.log('TypographyDefPreview');
     return (
-        <div className="col col--full typography-definition"
-            onClick={props.handleEditToggle}>
+        <div className="col col--full typography-definition">
             <div className="type type--preview">
-                <FontAwesomeIcon icon={['fas', 'bars']}/>
+                <DragHandle/>
                 <div className="type__data">
                     {props.name && <h3>{props.name}</h3>}
                     <TypeAttributes {...props}/>
                 </div>
+                <div className="type__actions">
+                    <button className="btn btn-sm btn-primary" onClick={props.handleEditToggle}>Edit</button>
+                    <button className="btn btn-sm btn-outline-secondary">
+                        Copy
+                        <FontAwesomeIcon
+                            icon={['far', 'copy']}
+                        />
+                    </button>
+                    <button className="btn btn-sm btn-outline-danger">
+                        Delete
+                        <FontAwesomeIcon
+                            icon={['far', 'trash-alt']}
+                        />
+                    </button>
+                </div>
             </div>
         </div>
     )
-}
+})
 
 export default TypographyDefPreview;

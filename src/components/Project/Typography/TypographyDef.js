@@ -4,8 +4,9 @@ import Select from 'react-select';
 import TextareaAutosize from 'react-autosize-textarea';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import _ from 'lodash';
 
-import TyopgraphyDefPreview from './TypographyDefPreview';
+import TypographyDefPreview from './TypographyDefPreview';
 
 const CustomOption = (props) => {
     let styles = props.getStyles('option', props);
@@ -26,6 +27,36 @@ class TypographyDef extends Component {
         super(props);
         this.state = {
             ...this.props.def
+        }
+    }
+
+    handleCancel = () => {
+        const {newDef} = this.state;
+        const currentState = Object.assign({}, this.state, {editing: false});
+        const currentProps = Object.assign({}, this.props.def, {editing: false});
+
+        // New definition and no change detected.
+        if ( newDef && _.isEqual( currentState, currentProps ) ) {
+            this.props.handleDeleteDef(currentState)
+
+        // Not new definition and no change detected.
+        } else if ( !newDef && _.isEqual( currentState, currentProps ) ) {
+            this.setState({editing: false})
+
+        // New definition with values added.
+        } else if ( newDef && !_.isEqual( currentState, currentProps ) ) {
+            let result = window.confirm('Are you sure you\'d like to proceed without saving your changes?');
+            if ( result ) {
+                this.props.handleDeleteDef(currentState)
+            }
+
+        // Changes in existing definition, but not saved.
+        } else {
+            let result = window.confirm('Are you sure you\'d like to proceed without saving your changes?');
+            if ( result ) {
+                // Revert definition to original values.
+                this.setState({...currentProps})
+            }
         }
     }
 
@@ -257,6 +288,24 @@ class TypographyDef extends Component {
                                     <label htmlFor="name">Letter Spacing</label>
                                 </div>
                             </div>
+                            <div className="form-row">
+                                <div className={`form-element form-element--half ${desktop.margin ? 'focus' : ''}`}>
+                                    <input
+                                        type="text"
+                                        defaultValue={desktop.margin}
+                                        onBlur={this.handleDefChange('desktop-margin')}
+                                    />
+                                    <label htmlFor="name">Margin</label>
+                                </div>
+                                <div className={`form-element form-element--half ${desktop.style ? 'focus' : ''}`}>
+                                    <input
+                                        type="text"
+                                        defaultValue={desktop.style}
+                                        onBlur={this.handleDefChange('desktop-style')}
+                                    />
+                                    <label htmlFor="name">Style (temp)</label>
+                                </div>
+                            </div>
                         </TabPanel>
                         <TabPanel>
                             <div className="form-row">
@@ -336,13 +385,8 @@ class TypographyDef extends Component {
                         </TabPanel>
                     </Tabs>
                     <div className="form-row form-row--actions">
-                        <button onClick={this.handleSave}>Save</button>
-                        <FontAwesomeIcon
-                            icon={['far', 'copy']}
-                        />
-                        <FontAwesomeIcon
-                            icon={['far', 'trash-alt']}
-                        />
+                        <button className="btn btn-sm btn-outline-secondary" onClick={this.handleCancel}>Cancel</button>
+                        <button className="btn btn-sm btn-primary" onClick={this.handleSave}>Save</button>
                     </div>
                 </div>
             </div>
@@ -351,10 +395,11 @@ class TypographyDef extends Component {
 
     renderPreview() {
         const def = this.state;
+        const {index} = this.props
         console.log('TypographyDef:renderPreview');
         console.log(def);
         return (
-            <TyopgraphyDefPreview {...def} handleEditToggle={this.handleEditToggle}/>
+            <TypographyDefPreview index={index} {...def} handleEditToggle={this.handleEditToggle}/>
         )
     }
 
@@ -392,9 +437,10 @@ TypographyDef.defaultProps = {
     styles: null,
     underline: null,
     lineheight: null,
+    margin: null,
     devices: {
         desktop: {
-            size: '11111',
+            size: null,
             margin: null
         },
         tablet: {
