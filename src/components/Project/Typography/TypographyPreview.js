@@ -4,7 +4,7 @@ import {SortableContainer, arrayMove} from 'react-sortable-hoc';
 import TypographyDef from './TypographyDef';
 import update from 'immutability-helper';
 
-const SortableList = SortableContainer(({defs, colors, families, handleDefChange, handleDeleteDef}) => {
+const SortableList = SortableContainer(({defs, colors, families, handleDefChange, handleDeleteDef, handleCopy}) => {
     return (
         <div className="row project-typography">
             {defs.map((def, index) =>
@@ -16,6 +16,7 @@ const SortableList = SortableContainer(({defs, colors, families, handleDefChange
                     families={families}
                     handleDefChange={handleDefChange}
                     handleDeleteDef={handleDeleteDef}
+                    handleCopy={handleCopy}
                 />
             )}
         </div>
@@ -38,18 +39,39 @@ class TypographyPreview extends Component {
     }
 
     onSortEnd = ({oldIndex, newIndex}) => {
-        const {defs} = this.state
-        const updatedDefs = arrayMove(defs, oldIndex, newIndex)
+        let {defs} = this.state
+        let updatedDefs = arrayMove(defs, oldIndex, newIndex)
         this.setState({defs: updatedDefs})
+        this.props.handleTypographyChange(updatedDefs)
+    }
+
+    handleCopy = (def) => {
+
+        let previousDefs = this.state.defs
+        let defIndex = previousDefs.findIndex(obj => obj.id === def.id)
+        let maxId = Math.max.apply(Math, previousDefs.map(function(obj) { return obj.id; }))
+        let defCopy = Object.assign({}, def, {id: parseInt(maxId) + 1}, {name: def.name + ' - Copy'})
+        let updatedDefs = []
+
+        // If previousDefs contains only one item or we're copying the last item.
+        if (previousDefs.length === 1 || previousDefs.length === (defIndex + 1)) {
+            updatedDefs = update(previousDefs, {$push: [defCopy]})
+        } else {
+            defIndex++
+            updatedDefs = [
+                ...previousDefs.slice(0, defIndex),
+                defCopy,
+                ...previousDefs.slice(defIndex)
+            ]
+        }
+
         this.props.handleTypographyChange(updatedDefs)
     }
 
     handleDefChange = (def) => {
 
-        console.log('TypographyPreview::handleDefChange')
-
-        const {id} = def;
-        const previousDefs = this.state.defs || [];
+        let {id} = def;
+        let previousDefs = this.state.defs || [];
 
         let updatedDefs = [];
 
@@ -58,32 +80,23 @@ class TypographyPreview extends Component {
             let objIndex = previousDefs.findIndex(obj => obj.id === id)
             let previousDef = previousDefs.find(previousDef => previousDef.id == id)
 
-            console.log(previousDef)
-
             // If definition exists currently.
             if ( typeof previousDef !== 'undefined' ) {
-                console.log( 'previous.length match!')
                 previousDef = Object.assign({}, previousDef, {...def})
             } else {
-                console.log( 'else match!')
                 objIndex = 0;
                 previousDef = {...def}
             }
 
-            console.log(previousDef)
-
-            console.log('EXISTING --------')
             updatedDefs = update(previousDefs, {
                 [objIndex]: {$set: previousDef}
             })
-            console.log(updatedDefs)
 
         } else {
-            console.log('NO EXISTING --------')
+
             updatedDefs = update(previousDefs, {
                $push: def
             })
-            console.log(updatedDefs)
 
         }
 
@@ -91,22 +104,19 @@ class TypographyPreview extends Component {
     }
 
     handleNewDef = () => {
-        // May need to update to object from array
-        const previousDefs = this.state.defs || [];
+        let previousDefs = this.state.defs || [];
         let nextID = 1;
+
         if ( previousDefs.length > 0 ) {
             nextID = getNextAvailableId(previousDefs)
         }
-        console.log('nextID')
-        console.log(nextID)
 
-        const newDefProps = Object.assign({}, {...TypographyDef.defaultProps}, {id: nextID}, {newDef: true})
+        let newDefProps = Object.assign({}, {...TypographyDef.defaultProps}, {id: nextID}, {newDef: true})
 
-        const updatedDefs = [
+        let updatedDefs = [
             ...previousDefs,
             {...newDefProps}
         ]
-        console.log(updatedDefs)
 
         this.setState({
             defs: updatedDefs
@@ -114,10 +124,10 @@ class TypographyPreview extends Component {
     }
 
     handleDeleteDef = (def) => {
-        const {id} = def
-        const previousDefs = this.state.defs;
-        const objIndex = previousDefs.findIndex(obj => obj.id === id)
-        const updatedDefs = update(previousDefs, { $splice: [[objIndex, 1]] })
+        let {id} = def
+        let previousDefs = this.state.defs;
+        let objIndex = previousDefs.findIndex(obj => obj.id === id)
+        let updatedDefs = update(previousDefs, { $splice: [[objIndex, 1]] })
         this.setState({
             defs: updatedDefs
         })
@@ -126,8 +136,8 @@ class TypographyPreview extends Component {
 
     renderEdit() {
 
-        const {defs} = this.state;
-        const {families, colors} = this.props;
+        let {defs} = this.state;
+        let {families, colors} = this.props;
 
         console.log('RENDERING EDIT -----')
         console.log(defs)
@@ -145,6 +155,7 @@ class TypographyPreview extends Component {
                         onSortEnd={this.onSortEnd}
                         handleDefChange={this.handleDefChange}
                         handleDeleteDef={this.handleDeleteDef}
+                        handleCopy={this.handleCopy}
                     />
                 }
                 <div className="d-flex add-typography">

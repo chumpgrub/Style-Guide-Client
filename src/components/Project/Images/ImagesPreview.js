@@ -159,10 +159,6 @@ const SortableList = SortableContainer(({images, editing, handleImageChange, han
 
 class ImagesPreview extends Component {
 
-    // constructor(props) {
-    //     super(props);
-    // }
-
     handleImageChange = (image, value) => {
         this.props.handleImageChange(image, value);
     }

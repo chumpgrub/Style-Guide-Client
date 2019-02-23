@@ -62,7 +62,6 @@ const DragHandle = SortableHandle(() =>
 )
 
 const TypographyDefPreview = SortableElement((props) => {
-    console.log('TypographyDefPreview');
     return (
         <div className="col col--full typography-definition">
             <div className="type type--preview">
@@ -73,7 +72,7 @@ const TypographyDefPreview = SortableElement((props) => {
                 </div>
                 <div className="type__actions">
                     <button className="btn btn-sm btn-primary" onClick={props.handleEditToggle}>Edit</button>
-                    <button className="btn btn-sm btn-outline-secondary">
+                    <button className="btn btn-sm btn-outline-secondary" onClick={props.handleCopy}>
                         Copy
                         <FontAwesomeIcon
                             icon={['far', 'copy']}

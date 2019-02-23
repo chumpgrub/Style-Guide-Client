@@ -37,6 +37,11 @@ class TypographyDef extends Component {
         }
     }
 
+    handleCopy = () => {
+        console.log('TypographyDef::handleCopy')
+        this.props.handleCopy( Object.assign({}, this.state, {editing: false}, {newDef: false} ))
+    }
+
     handleCancel = () => {
         const {newDef} = this.state;
         const currentState = Object.assign({}, this.state, {editing: false});
@@ -410,6 +415,7 @@ class TypographyDef extends Component {
                 index={index} {...def}
                 handleEditToggle={this.handleEditToggle}
                 handleDelete={this.handleDelete}
+                handleCopy={this.handleCopy}
             />
         )
     }

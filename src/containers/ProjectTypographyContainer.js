@@ -84,22 +84,12 @@ class ProjectTypographyContainer extends Component {
 
     renderProject(project) {
 
-        window.project = project;
-        let editing = this.props.editing;
-        let view = this.props.view;
-        let colors = this.state.colors || this.props.project.colors_defs || null;
-        let {
-            typekit_fonts,
-            google_fonts,
-            web_fonts
-        } = this.props.project;
-        let typekit = (this.props.project.typekit_fonts === null ) ? [] : this.props.project.typekit_fonts;
-        let google = (this.props.project.google_fonts === null ) ? [] : this.props.project.google_fonts;
-        let web = (this.props.project.web_fonts === null ) ? [] : this.props.project.web_fonts;
-        let font_families = getFontFamilies(typekit, google, web);
-
-        console.log('----- font_defs -----')
-        console.log(project.font_defs)
+        const {editing, view} = this.props;
+        const colors = this.state.colors || this.props.project.colors_defs || null;
+        const typekit = (this.props.project.typekit_fonts === null ) ? [] : this.props.project.typekit_fonts;
+        const google = (this.props.project.google_fonts === null ) ? [] : this.props.project.google_fonts;
+        const web = (this.props.project.web_fonts === null ) ? [] : this.props.project.web_fonts;
+        const font_families = getFontFamilies(typekit, google, web);
 
         return (
             <div className="row">
@@ -135,6 +125,9 @@ class ProjectTypographyContainer extends Component {
     render() {
 
         let {project} = this.props;
+
+        console.log('ProjectTypographyContainer::render()')
+        console.log(project)
 
         return (
             <ProjectLayout>
