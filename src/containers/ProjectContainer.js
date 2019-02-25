@@ -63,6 +63,7 @@ const Loading = () => (
     </div>
 )
 
+
 class ProjectContainer extends Component {
 
     constructor(props) {
@@ -228,9 +229,11 @@ class ProjectContainer extends Component {
         let colors = this.state.colors || project.colors_defs || null;
         let {typekit_fonts, google_fonts, web_fonts} = project;
 
-        console.log(typekit_fonts,google_fonts,web_fonts)
+        console.log('ProjectContainer::renderProject')
 
         let font_families = getFontFamilies(typekit_fonts, google_fonts, web_fonts);
+        let {font_defs} = project;
+        console.log(font_defs)
 
         return (
             <div className="row">
@@ -253,32 +256,10 @@ class ProjectContainer extends Component {
                             editing={editing}
                             newHandleColor={this.newHandleColor}
                         />
-                        {view === 'preview' ?
-                            <div>
-                                <FontFamilies
-                                    editing={editing}
-                                    typekit={typekit_fonts}
-                                    google={google_fonts}
-                                    web={web_fonts}
-                                    handleFontFamilyChange={this.handleFontFamilyChange}
-                                />
-                                <TypographyPreview
-                                    editing={editing}
-                                    fonts={project.font_defs}
-                                    families={font_families}
-                                    colors={colors}
-                                />
-                                <ImagesPreview
-                                    editing={editing}
-                                    images={project.image_defs}
-                                    handleImageChange={this.handleImageChange}
-                                    handleImageOrder={this.handleImageOrder}
-                                    handleImageNew={this.handleImageNew}
-                                />
-                            </div>
-                            : null
-                        }
-
+                        <div className="definitions definitions--typography preview">
+                            <h2 className="definition-title">Typography</h2>
+                            {font_defs.length && font_defs.map(def => <TypographyPreview key={def.id} {...def}/>)}
+                        </div>
                     </div>
                 </div>
             </div>

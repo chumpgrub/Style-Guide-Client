@@ -15,7 +15,7 @@ import ProjectLayout from '../hoc/ProjectLayout';
 import ProjectHeader from '../components/Project/ProjectHeader';
 import ProjectEditNavigation from '../components/Project/ProjectEditNavigation';
 import FontFamilies from '../components/Fonts/FontFamilies';
-import TypographyPreview from '../components/Project/Typography/TypographyPreview';
+import TypographyEdit from '../components/Project/Typography/TypographyEdit';
 
 const getFontFamilies = (typekit, google, web) => {
     let font_families = [];
@@ -109,7 +109,7 @@ class ProjectTypographyContainer extends Component {
                             web={web}
                             handleFontFamilyChange={this.handleFontFamilyChange}
                         />
-                        <TypographyPreview
+                        <TypographyEdit
                             editing={editing}
                             fonts={project.font_defs}
                             families={font_families}
