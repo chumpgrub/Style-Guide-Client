@@ -7286,6 +7286,9 @@ body {
     .projects-search__close svg {
       transform: rotate(45deg); }
 
+section.definitions {
+  margin-bottom: 2rem; }
+
 .projects-view .project {
   display: flex;
   margin: 1rem 0;
@@ -7385,17 +7388,7 @@ body {
 .col.color {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin-bottom: 30px; }
-  @media (min-width: 480px) {
-    .col.color {
-      width: 50%; } }
-  @media (min-width: 768px) {
-    .col.color {
-      width: 33.3333%; } }
-  @media (min-width: 960px) {
-    .col.color {
-      width: 20%; } }
+  width: 100%; }
 
 .color--new .color__inner {
   display: flex;
@@ -7409,6 +7402,8 @@ body {
   transform: rotate(45deg);
   color: #ddd; }
 
+.color--preview .form-row {
+  margin: 0; }
 .color--preview svg {
   transition: opacity 0.2s;
   position: absolute;
@@ -7417,9 +7412,6 @@ body {
   cursor: pointer; }
   .color--preview svg:hover {
     opacity: 0.25; }
-
-.color--preview.editing .color__inner {
-  padding-bottom: 20px; }
 
 .color__inner {
   position: relative;
@@ -7453,9 +7445,9 @@ body {
                     PREVIEW
  * ---------------------------------------- */
 .definitions--colors.preview .color {
-  padding-bottom: 15px; }
+  padding-bottom: 20px; }
   .definitions--colors.preview .color + .color {
-    padding-top: 15px;
+    padding-top: 20px;
     border-top: 1px solid #ccc; }
 .definitions--colors.preview .color__inner {
   display: flex;
@@ -7486,25 +7478,28 @@ body {
   position: static; }
 
 .col--image {
-  margin-bottom: 30px; }
+  margin-bottom: 30px;
+  max-width: 800px; }
   .col--image .image {
     position: relative;
+    padding: 1rem;
     border: 1px solid #ccc;
     background: #fff; }
-    .col--image .image--edit {
-      padding: 10px 20px 10px 60px;
-      max-width: 800px; }
-    .col--image .image--new, .col--image .image--preview {
-      padding: 20px;
-      width: 100%;
-      height: 100%; }
+    .col--image .image--preview {
+      padding-left: 4rem; }
     .col--image .image h3 {
       margin-bottom: 15px;
       font-size: 22px;
       text-transform: uppercase;
       color: #333333; }
+      .col--image .image h3 span {
+        font-size: 70%;
+        text-transform: none; }
     .col--image .image__dimensions {
       color: #999; }
+    .col--image .image__preview svg {
+      width: 100%;
+      height: auto; }
     .col--image .image input {
       display: block;
       width: 100%; }
@@ -7527,19 +7522,23 @@ body {
         cursor: pointer; }
 
 .form-row {
-  display: flex; }
+  display: flex;
+  margin: 0; }
   .form-row:last-of-type .form-element {
     border-bottom: none; }
   .form-row--actions {
+    margin-top: 1rem;
     justify-content: flex-end; }
     .form-row--actions svg {
       margin: 10px;
       cursor: pointer; }
+    .form-row--actions .btn + .btn {
+      margin-left: 1rem; }
 
 .form-element {
   position: relative;
   border-bottom: 1px solid #ccc;
-  height: 55px; }
+  min-height: 55px; }
   .form-element--full {
     width: 100%; }
   .form-element--half {
@@ -7556,22 +7555,36 @@ body {
     z-index: 1;
     color: #999;
     pointer-events: none; }
+  .form-element textarea,
   .form-element input {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
     display: block;
     width: 100%;
     border: none;
     outline: 0;
     font-size: 16px;
-    padding: 15px 4px 10px 10px; }
+    padding: 35px 4px 13px 10px; }
+    .form-element textarea:focus,
+    .form-element input:focus {
+      border: none;
+      box-shadow: none; }
   .form-element.focus label,
+  .form-element textarea:focus + label,
   .form-element input:focus + label {
-    top: 10px;
+    top: 17px;
     font-size: 12px;
     color: #999; }
+
+.preview-actions {
+  display: grid;
+  margin-top: 1rem;
+  grid-template-columns: 100px 100px 1fr;
+  column-gap: 15px; }
+  .preview-actions .btn {
+    width: 100px; }
+    .preview-actions .btn > svg {
+      margin-left: 8px; }
+  .preview-actions .btn-outline-danger {
+    place-self: end; }
 
 .definitions--notes textarea {
   margin: -5px -5px;
@@ -7725,16 +7738,6 @@ body {
         .typography-definition .type__attributes ul li > span {
           color: #999;
           font-weight: normal; }
-    .typography-definition .type__actions {
-      display: grid;
-      grid-template-columns: 100px 100px 1fr;
-      column-gap: 15px; }
-      .typography-definition .type__actions .btn {
-        width: 100px; }
-        .typography-definition .type__actions .btn > svg {
-          margin-left: 8px; }
-      .typography-definition .type__actions .btn-outline-danger {
-        place-self: end; }
   .typography-definition h3 {
     font-weight: 400;
     margin-bottom: 15px;
@@ -7798,5 +7801,8 @@ body {
   font-size: 1rem; }
   .project-view .project-title .button + .button {
     margin-left: 15px; }
+
+.definition-title {
+  margin-bottom: 1rem; }
 
 /*# sourceMappingURL=styles.css.map */

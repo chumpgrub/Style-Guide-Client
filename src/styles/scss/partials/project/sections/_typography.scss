@@ -113,24 +113,6 @@
                 }
             }
         }
-
-        &__actions {
-            display: grid;
-            grid-template-columns: 100px 100px 1fr;
-            column-gap: 15px;
-
-            .btn {
-                width: 100px;
-
-                > svg {
-                    margin-left: 8px;
-                }
-            }
-
-            .btn-outline-danger {
-                place-self: end;
-            }
-        }
     }
 
     h3 {

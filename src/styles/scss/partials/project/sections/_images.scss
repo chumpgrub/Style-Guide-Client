@@ -1,5 +1,6 @@
 .col--image {
     margin-bottom: 30px;
+    max-width: 800px;
 
     //&.col {
     //    width: 50%;
@@ -7,19 +8,15 @@
 
     .image {
         position: relative;
+        padding: 1rem;
         border: 1px solid #ccc;
         background: #fff;
 
-        &--edit {
-            padding: 10px 20px 10px 60px;
-            max-width: 800px;
+        &--preview {
+            padding-left: 4rem;
         }
 
-        &--new,
-        &--preview {
-            padding: 20px;
-            width: 100%;
-            height: 100%;
+        &--edit {
         }
 
         h3 {
@@ -27,12 +24,24 @@
             font-size: 22px;
             text-transform: uppercase;
             color: $dark-gray;
+            
+            span {
+                font-size: 70%;
+                text-transform: none;
+            }
         }
 
         &__dimensions {
             //font-family: $body-serif;
             //font-style: italic;
             color: $mid-gray;
+        }
+
+        &__preview {
+            svg {
+                width: 100%;
+                height: auto;
+            }
         }
 
         input {
@@ -74,17 +83,23 @@
 
 .form-row {
     display: flex;
+    margin: 0;
 
     &:last-of-type .form-element {
         border-bottom: none;
     }
 
     &--actions {
+        margin-top: 1rem;
         justify-content: flex-end;
 
         svg {
             margin: 10px;
             cursor: pointer;
+        }
+
+        .btn + .btn {
+            margin-left: 1rem;
         }
     }
 }
@@ -92,7 +107,7 @@
 .form-element {
     position: relative;
     border-bottom: 1px solid #ccc;
-    height: 55px;
+    min-height: 55px;
 
     &--full {
         width: 100%;
@@ -112,33 +127,51 @@
         padding: 0;
         top: 27px;
         left: 10px;
-        //font-family: $headline;
         font-size: 16px;
         z-index: 1;
         color: $mid-gray;
         pointer-events: none;
     }
 
+    textarea,
     input {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
         display: block;
         width: 100%;
         border: none;
         outline: 0;
         font-size: 16px;
-        padding: 15px 4px 10px 10px;
+        padding: 35px 4px 13px 10px;
 
-        &:focus + label {
+        &:focus {
+            border: none;
+            box-shadow: none;
         }
     }
 
     &.focus label,
+    textarea:focus + label,
     input:focus + label {
-        top: 10px;
+        top: 17px;
         font-size: 12px;
         color: $mid-gray;
+    }
+}
+
+.preview-actions {
+    display: grid;
+    margin-top: 1rem;
+    grid-template-columns: 100px 100px 1fr;
+    column-gap: 15px;
+
+    .btn {
+        width: 100px;
+
+        > svg {
+            margin-left: 8px;
+        }
+    }
+
+    .btn-outline-danger {
+        place-self: end;
     }
 }

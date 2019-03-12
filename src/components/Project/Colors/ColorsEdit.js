@@ -6,7 +6,7 @@ import update from 'immutability-helper';
 
 const NewColor = ({handleColorNew}) => {
     return (
-        <div className="col color color--new" onClick={handleColorNew}>
+        <div className="col-12 col-sm-6 col-md-4 col-lg-3 color color--new" onClick={handleColorNew}>
             <div className="color__inner"><FontAwesomeIcon icon={['far', 'times-circle']} size="2x"/></div>
         </div>
     )
@@ -37,9 +37,9 @@ const ColorSwatch = SortableElement(({editing, color, id, handleColorChange, han
                 <div className="form-row">
                     <div className={`form-element form-element--full color-name ${color.name ? 'focus' : ''}`}>
                         <input type="text"
-                               name="name"
                                defaultValue={color.name}
                                onBlur={(e) => shouldColorUpdate('name', color, e)}
+                               autoComplete="new-password"
                         />
                         <label htmlFor="name">Color Name</label>
                     </div>
@@ -47,9 +47,9 @@ const ColorSwatch = SortableElement(({editing, color, id, handleColorChange, han
                 <div className="form-row">
                     <div className={`form-element form-element--full color-hex ${color.value ? 'focus' : ''}`}>
                         <input type="text"
-                               name="value"
                                defaultValue={color.value}
                                onBlur={(e) => shouldColorUpdate('value', color, e)}
+                               autoComplete="new-password"
                         />
                         <label htmlFor="value">Color Value</label>
                     </div>
@@ -76,7 +76,7 @@ const ColorSwatch = SortableElement(({editing, color, id, handleColorChange, han
     const edtingState = editing ? 'editing' : 'preview';
 
     return (
-        <div className={'col color color--preview ' + edtingState}>
+        <div className={'col-12 col-sm-6 col-md-4 col-lg-3 color color--preview ' + edtingState}>
             <div className="color__inner">
                 <div className="color-swatch" style={styles}></div>
                 {editing ? edit() : preview()}
@@ -94,7 +94,7 @@ const ColorSwatch = SortableElement(({editing, color, id, handleColorChange, han
 
 const SortableList = SortableContainer(({colors, editing, handleColorChange, handleColorDelete, handleColorNew}) => {
     return (
-        <div className="row row--gutter-30 project-colors">
+        <div className="row project-colors flex-wrap">
             {
                 colors.map((color, index) => {
                     return (

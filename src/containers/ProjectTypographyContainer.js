@@ -68,7 +68,6 @@ class ProjectTypographyContainer extends Component {
     }
 
     handleTitleChange = (title) => {
-        console.log(title);
         this.props.updateProjectTitle(this.props.project, title);
     }
 
@@ -123,12 +122,7 @@ class ProjectTypographyContainer extends Component {
     }
 
     render() {
-
         let {project} = this.props;
-
-        console.log('ProjectTypographyContainer::render()')
-        console.log(project)
-
         return (
             <ProjectLayout>
                 { ! _.isEmpty(project) ? this.renderProject(project) : <Loading/> }

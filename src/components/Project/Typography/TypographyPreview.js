@@ -4,6 +4,7 @@ import TypeAttributes from './TypeAttributes'
 const TypographyPreview = (props) => {
 
     let globalStyles = {
+        fontFamily: `"${props.family.slug}"`,
         fontWeight: props.devices.desktop.weight,
         fontSize: props.devices.desktop.size,
         letterSpacing: props.devices.desktop.letterspacing,
@@ -36,9 +37,8 @@ const TypographyPreview = (props) => {
                             letterSpacing: device.letterspacing,
                             lineHeight: device.lineheight
                         }
-                        console.log(device)
                         preview.push(
-                            <div style={localStyles} className={`type--` + key}>
+                            <div key={key} style={localStyles} className={`type--` + key}>
                             </div>
                         )
                     }

@@ -42,6 +42,7 @@ class TypeKitFonts extends Component {
                 return results.json()
             })
             .then(dataJSON => {
+                console.log(dataJSON)
                 return dataJSON;
             })
             .catch((error) => {

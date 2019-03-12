@@ -1,222 +1,187 @@
 import React, {Component} from 'react';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import ImageDef from './ImageDef';
+import {SortableContainer, arrayMove} from 'react-sortable-hoc';
+import {getNextAvailableId} from '../../../lib/utility'
 
 import update from 'immutability-helper';
 
 const NewImage = ({handleImageNew}) => {
     return (
-        <div className="col col-md-6 col--image" onClick={handleImageNew}>
-            <div className="image image--new"><FontAwesomeIcon icon={['far', 'times-circle']} size="2x"/></div>
+        <div className="d-flex add-image">
+            <button className="btn btn-secondary" onClick={handleImageNew}>Add Definition</button>
         </div>
     )
 }
 
-const Image = SortableElement(({editing, image, handleImageChange, handleImageDelete, handleImageCopy}) => {
-    const editingClass = editing ? '--full' : '';
-    return (
-        <div className={`col col-md-6 col--image col--image`+ editingClass}>
-            {
-                editing ?
-                    <ImageEdit
-                        image={image}
-                        handleImageChange={handleImageChange}
-                        handleImageDelete={handleImageDelete}
-                        handleImageCopy={handleImageCopy}
-                    /> : <ImagePreview image={image} />
-            }
-        </div>
-    )
-});
-
-const ImagePreview = ({image}) => {
-    return(
-        <div className="image image--preview">
-            <h3>{image.name}</h3>
-            <div className="image__dimensions">{image.width} x {image.height}</div>
-        </div>
-    )
-}
-
-const ImageEdit = ({image, handleImageChange, handleImageDelete, handleImageCopy}) => {
-
-    const shouldImageUpdate = (key, image, event) => {
-
-        let newValue = event.target.value;
-        let oldValue = image[key];
-
-        if (newValue !== oldValue) {
-
-            // Update image data.
-            let newImage = update(image, {
-                [key]: {$set: newValue}
-            });
-
-            handleImageChange(image, newImage);
-        }
-
-    }
-
-    const handleDeleteImage = (image) => {
-        handleImageDelete(image);
-    }
-
-    const handleCopyImage = (image) => {
-        handleImageCopy(image);
-    }
-
-    return (
-        <div className="image image--edit">
-            <FontAwesomeIcon icon={['fas', 'bars']}/>
-            <div className="form-row">
-                <div className={`form-element form-element--full ${image.name ? 'focus' : ''}`}>
-                    <input
-                        type="text"
-                        name="name"
-                        defaultValue={image.name}
-                        onBlur={(e) => shouldImageUpdate('name', image, e)}
-                    />
-                    <label htmlFor="name">Image Name</label>
-                </div>
-            </div>
-            <div className="form-row">
-                <div className={`form-element form-element--half ${image.width ? 'focus' : ''}`}>
-                    <input
-                        type="text"
-                        name="width"
-                        defaultValue={image.width}
-                        onBlur={(e) => shouldImageUpdate('width', image, e)}
-                    />
-                    <label htmlFor="width">Width</label>
-                </div>
-                <div className={`form-element form-element--half ${image.height ? 'focus' : ''}`}>
-                    <input
-                        type="text"
-                        name="height"
-                        defaultValue={image.height}
-                        onBlur={(e) => shouldImageUpdate('height', image, e)}
-                    />
-                    <label htmlFor="width">Height</label>
-                </div>
-            </div>
-            <div className="form-row">
-                <div className={`form-element form-element--half ${image.background ? 'focus' : ''}`}>
-                    <input
-                        type="text"
-                        name="background"
-                        defaultValue={image.background}
-                        onBlur={(e) => shouldImageUpdate('background', image, e)}
-                    />
-                    <label htmlFor="background">Background Color</label>
-                </div>
-                <div className={`form-element form-element--half ${image.text ? 'focus' : ''}`}>
-                    <input
-                        type="text"
-                        name="text"
-                        defaultValue={image.text}
-                        onBlur={(e) => shouldImageUpdate('text', image, e)}
-                    />
-                    <label htmlFor="color">Text Color</label>
-                </div>
-            </div>
-            <div className="form-row form-row--actions">
-                <FontAwesomeIcon
-                    onClick={() => handleCopyImage(image)}
-                    icon={['far', 'copy']}
-                />
-                <FontAwesomeIcon
-                    onClick={() => handleDeleteImage(image)}
-                    icon={['far', 'trash-alt']}
-                />
-            </div>
-        </div>
-    )
-}
-
-const SortableList = SortableContainer(({images, editing, handleImageChange, handleImageNew, handleImageDelete, handleImageCopy}) => {
+const SortableList = SortableContainer(({images, handleDefChange, handleImageDelete, handleImageCopy}) => {
     return (
         <div className="row flex-wrap project-images">
             {
                 images.map((image, index) => {
                     return (
-                        <Image
+                        <ImageDef
                             key={image.id}
                             index={index}
-                            editing={editing}
                             image={image}
-                            disabled={!editing}
-                            handleImageChange={handleImageChange}
+                            handleDefChange={handleDefChange}
                             handleImageDelete={handleImageDelete}
                             handleImageCopy={handleImageCopy}
                         />
                     )
                 })
             }
-            { editing ? <NewImage handleImageNew={handleImageNew} /> : null }
         </div>
     )
 })
 
 class ImagesPreview extends Component {
 
-    handleImageChange = (image, value) => {
-        this.props.handleImageChange(image, value);
-    }
-
-    handleImageNew = () => {
-        this.props.handleImageNew();
-    }
-
-    handleImageDelete = (image) => {
-        let result = window.confirm('Delete this image?');
-        if ( result ) {
-            const {id} = image;
-            const {images} = this.props;
-            const objIndex = images.findIndex(obj => obj.id === id);
-            const updatedImages = [
-                ...images.slice(0, objIndex),
-                ...images.slice(objIndex + 1),
-            ];
-            this.props.handleImageOrder(updatedImages);
+    constructor(props) {
+        super(props)
+        this.state = {
+            ...props
         }
     }
 
-    handleImageCopy = (image) => {
-        const {images} = this.props;
-        const maxId = Math.max.apply(Math, images.map(function(image) { return image.id; }));
-        const updatedImages = [
-            ...images,
-            Object.assign({...image}, {id: parseInt(maxId)+1})
+    handleDefChange = (def) => {
+        let {id} = def;
+        let previousDefs = this.state.images || [];
+
+        let updatedDefs = [];
+
+        if (previousDefs.length && id) {
+
+            let objIndex = previousDefs.findIndex(obj => obj.id === id)
+            let previousDef = previousDefs.find(previousDef => previousDef.id == id)
+
+            // If definition exists currently.
+            if ( typeof previousDef !== 'undefined' ) {
+                previousDef = Object.assign({}, previousDef, {...def})
+            } else {
+                objIndex = 0;
+                previousDef = {...def}
+            }
+
+            updatedDefs = update(previousDefs, {
+                [objIndex]: {$set: previousDef}
+            })
+
+        } else {
+
+            updatedDefs = update(previousDefs, {
+                $push: def
+            })
+
+        }
+
+        this.setState({ images: updatedDefs })
+        this.props.handleImageChange(updatedDefs)
+    }
+
+    handleImageNew = () => {
+        let previousImages = this.state.images || [];
+        let nextID = 1;
+
+        if ( previousImages.length > 0 ) {
+            nextID = getNextAvailableId(previousImages)
+        }
+
+        let newImageProps = Object.assign({}, {id: nextID}, {newDef: true}, {editing: true})
+
+        let updatedImages = [
+            ...previousImages,
+            {...newImageProps}
         ]
-        this.props.handleImageOrder(updatedImages);
+
+        console.log(updatedImages)
+
+        this.setState({
+            images: updatedImages
+        })
+        // this.props.handleImageNew();
+    }
+
+    handleImageDelete = (image) => {
+
+        let {id} = image
+        let previousDefs = this.state.images
+        let objIndex = previousDefs.findIndex(obj => obj.id === id)
+        let updatedDefs = update(previousDefs, { $splice: [[objIndex, 1]] })
+
+        this.setState({ images: updatedDefs })
+        this.props.handleImageChange(updatedDefs);
+
+        // let result = window.confirm('Delete this image?');
+        // if ( result ) {
+        //     const {id} = image;
+        //     const {images} = this.props;
+        //     const objIndex = images.findIndex(obj => obj.id === id);
+        //     const updatedImages = [
+        //         ...images.slice(0, objIndex),
+        //         ...images.slice(objIndex + 1),
+        //     ];
+        //
+        //     this.setState({
+        //         images: updatedImages
+        //     })
+        //
+        //     this.props.handleImageChange(updatedImages);
+        // }
+    }
+
+    handleImageCopy = (def) => {
+
+        let previousDefs = this.state.images
+        let defIndex = previousDefs.findIndex(obj => obj.id === def.id)
+        let maxId = Math.max.apply(Math, previousDefs.map(function(obj) { return obj.id; }))
+        let defCopy = Object.assign({}, def, {id: parseInt(maxId) + 1}, {name: def.name + ' - Copy'})
+        let updatedDefs = []
+
+        // If previousDefs contains only one item or we're copying the last item.
+        if (previousDefs.length === 1 || previousDefs.length === (defIndex + 1)) {
+            updatedDefs = update(previousDefs, {$push: [defCopy]})
+        } else {
+            defIndex++
+            updatedDefs = [
+                ...previousDefs.slice(0, defIndex),
+                defCopy,
+                ...previousDefs.slice(defIndex)
+            ]
+        }
+
+        this.setState({
+            images: updatedDefs
+        })
+
+        this.props.handleImageChange(updatedDefs);
     }
 
     onSortEnd = ({oldIndex, newIndex}) => {
-        let updatedOrder = arrayMove(this.props.images, oldIndex, newIndex);
-        this.props.handleImageOrder([...updatedOrder]);
+        let updatedOrder = arrayMove(this.state.images, oldIndex, newIndex)
+        this.setState({ images: updatedOrder })
+        this.props.handleImageChange([...updatedOrder])
     }
 
     render() {
 
-        let {editing, images} = this.props;
+        let {images} = this.state;
 
         return (
             <section className="definitions definitions--images">
                 <h2 className="definition-title">Images</h2>
                 {
-                    images ?
+                    images &&
                     <SortableList
-                        axis="xy"
+                        axis="y"
                         distance={50}
-                        editing={editing}
                         images={images}
-                        handleImageChange={this.handleImageChange}
-                        handleImageNew={this.handleImageNew}
+                        handleDefChange={this.handleDefChange}
                         handleImageDelete={this.handleImageDelete}
                         handleImageCopy={this.handleImageCopy}
                         onSortEnd={this.onSortEnd}
-                    /> : <NewImage handleImageNew={this.handleImageNew} />
+                    />
                 }
+                <NewImage handleImageNew={this.handleImageNew} />
             </section>
         )
     }

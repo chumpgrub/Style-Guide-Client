@@ -26,6 +26,7 @@ const ProjectHeader = (props) => {
     return (
         <div className="project-header">
             <ProjectTitle
+                key={project.id}
                 editing={editing}
                 view={view}
                 title={title}

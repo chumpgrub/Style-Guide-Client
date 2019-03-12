@@ -16,11 +16,16 @@ export const getNextAvailableId = (projects) => {
     console.log('getNextAvailableId()')
     console.log(projects)
     if (projects.length > 1) {
+        let maxId = Math.max.apply(Math, projects.map(function(project) { return project.id; }));
         let nextId = projects.reduce((prev, current) => (prev.id > current.id) ? prev.id : current.id);
-        return nextId + 1;
+        console.log(nextId + 1)
+        console.log(maxId)
+        return maxId + 1;
     } else if (projects.length == 1) {
+        console.log(projects[0].id + 1)
         return projects[0].id + 1;
     } else {
+        console.log(1)
         return 1;
     }
 }

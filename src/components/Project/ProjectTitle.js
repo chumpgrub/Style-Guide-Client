@@ -5,16 +5,17 @@ class ProjectTitle extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {...props}
     }
 
     checkTitleChange = (e) => {
-
         if (this.props.title !== e.target.value) {
             this.props.handleTitleChange(e.target.value);
         }
     }
 
-    titleEdit = (title) => {
+    titleEdit = () => {
+        let {title} = this.state
         return (
             <div>
                 <input
@@ -26,7 +27,8 @@ class ProjectTitle extends Component {
         )
     }
 
-    titlePreview = (title) => {
+    titlePreview = () => {
+        let {title} = this.state
         return (
             <div className="title">
                 {title}
@@ -45,19 +47,22 @@ class ProjectTitle extends Component {
     titleNewProject = () => {
         return (
             <form onSubmit={(e) => this.newProject(e)}>
-                <input
-                    defaultValue=""
-                    placeholder="Project Name"
-                    ref="projectName"
-                />
-                <button className="button">Create Project</button>
-                <Link className="button button--secondary" to="/">Cancel</Link>
+                <div className="form-group">
+                    <input
+                        className="form-control"
+                        defaultValue=""
+                        placeholder="Project Name"
+                        ref="projectName"
+                    />
+                </div>
+                <button className="btn btn-primary">Create Project</button>
+                <Link className="btn btn-secondary" to="/">Cancel</Link>
             </form>
         )
     }
 
     renderTitleType = () => {
-        const {title, editing, view} = this.props;
+        const {title, editing, view} = this.state;
 
         if (editing && view === 'edit') {
             return this.titleEdit(title);
@@ -75,69 +80,6 @@ class ProjectTitle extends Component {
             </section>
         )
     }
-}
-
-const OldProjectTitle = ({view, editing, title, handleTitleChange, handleNewProject}) => {
-
-    const checkTitleChange = (e) => {
-        if (title !== e.target.value) {
-            handleTitleChange(e.target.value);
-        }
-    }
-
-    const titleEdit = () => {
-        return (
-            <div>
-                <input
-                    defaultValue={title}
-                    onBlur={(e) => checkTitleChange(e)}
-                    placeholder="Project Name"
-                />
-            </div>
-        )
-    }
-
-    const titlePreview = () => {
-        return (
-            <div className="title">
-                {title}
-            </div>
-        )
-    }
-
-    const titleNewProject = () => {
-        return (
-            <form onSubmit={(e) => newProject(e)}>
-                <input
-                    defaultValue=""
-                    placeholder="Project Name"
-                    ref="projectName"
-                />
-                <button className="button">Create Project</button>
-            </form>
-        )
-    }
-
-    const newProject = (e) => {
-        e.preventDefault();
-        console.log(e);
-    }
-
-    const ProjectTitleType = () => {
-        if (editing && view === 'edit') {
-            return titleEdit();
-        } else if (view === 'new') {
-            return titleNewProject()
-        } else {
-            return titlePreview()
-        }
-    }
-
-    return (
-        <section className="project-title">
-            <ProjectTitleType/>
-        </section>
-    )
 }
 
 export default ProjectTitle;

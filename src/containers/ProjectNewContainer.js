@@ -71,7 +71,6 @@ class ProjectNewContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         project: state.project,
         isNew: state.project.isNew

@@ -14,9 +14,10 @@ const TypographyDefPreview = SortableElement((props) => {
                 <DragHandle/>
                 <div className="type__data">
                     {props.name && <h3>{props.name}</h3>}
+                    {props.note && <p>{props.note}</p>}
                     <TypeAttributes {...props}/>
                 </div>
-                <div className="type__actions">
+                <div className="preview-actions">
                     <button className="btn btn-sm btn-primary" onClick={props.handleEditToggle}>Edit</button>
                     <button className="btn btn-sm btn-outline-secondary" onClick={props.handleCopy}>
                         Copy

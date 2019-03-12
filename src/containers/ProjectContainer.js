@@ -27,6 +27,8 @@ import ImagesPreview from '../components/Project/Images/ImagesPreview';
 import FontFamilies from '../components/Fonts/FontFamilies';
 import TypographyPreview from '../components/Project/Typography/TypographyPreview';
 
+import WebFont from 'webfontloader';
+
 const getFontFamilies = (typekit, google, web) => {
     let font_families = [];
     if ( typekit && typekit.length ) {
@@ -80,6 +82,36 @@ class ProjectContainer extends Component {
         console.log(this.props);
         if (this.props.match.params.id) {
             this.props.getProject(this.props.match.params.id);
+        }
+
+        console.log('TypekitPreview')
+        console.log(window.TypekitPreview.load({
+            'id': 'zwzx',
+            'variations': ['n4','n7'],
+            'css_name': 'grandma'
+        }))
+    }
+
+    loadWebFonts() {
+        console.log(this.props)
+        const {google_fonts, typekit_fonts} = this.props.project
+        if (google_fonts !== null && google_fonts.length) {
+            const googleFonts = [];
+            this.props.project.google_fonts.map(font => (
+                googleFonts.push(`${font.name}:100,200,300,400,500,600,700,800,900`)
+            ))
+            WebFont.load({
+                google: {
+                    families: googleFonts
+                }
+            });
+        }
+        if (typekit_fonts !== null && typekit_fonts.length) {
+            WebFont.load({
+                typekit: {
+                    id: 'kye4wjw',
+                }
+            });
         }
     }
 
@@ -223,17 +255,10 @@ class ProjectContainer extends Component {
 
     renderProject(project) {
 
-        let project_id = this.props.match.params.id;
         let editing = this.props.editing;
         let view = this.props.view;
         let colors = this.state.colors || project.colors_defs || null;
-        let {typekit_fonts, google_fonts, web_fonts} = project;
-
-        console.log('ProjectContainer::renderProject')
-
-        let font_families = getFontFamilies(typekit_fonts, google_fonts, web_fonts);
         let {font_defs} = project;
-        console.log(font_defs)
 
         return (
             <div className="row">
@@ -247,6 +272,7 @@ class ProjectContainer extends Component {
                     />
                     <div className="project-content">
                         <ProjectNotes
+                            key={project.id}
                             editing={editing}
                             notes={project.notes}
                             handleNoteChange={this.handleNoteChange}
@@ -256,10 +282,10 @@ class ProjectContainer extends Component {
                             editing={editing}
                             newHandleColor={this.newHandleColor}
                         />
-                        <div className="definitions definitions--typography preview">
+                        <section className="definitions definitions--typography preview">
                             <h2 className="definition-title">Typography</h2>
-                            {font_defs.length && font_defs.map(def => <TypographyPreview key={def.id} {...def}/>)}
-                        </div>
+                            {font_defs && font_defs.length && font_defs.map(def => <TypographyPreview key={def.id} {...def}/>)}
+                        </section>
                     </div>
                 </div>
             </div>
@@ -269,6 +295,10 @@ class ProjectContainer extends Component {
     render() {
 
         let {project} = this.props;
+
+        if (!_.isEmpty(project)) {
+            this.loadWebFonts()
+        }
 
         return (
             <ProjectLayout className={'project-view'}>
@@ -280,6 +310,7 @@ class ProjectContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state.project)
     return {
         project: state.project
     }
@@ -298,6 +329,14 @@ const mapDispatchToProps = (dispatch) => {
         updateProjectImages,
         createNewImage
     }, dispatch)
+}
+
+ProjectContainer.defaultProps = {
+    project: {
+        google_fonts: [],
+        typekit_fonts: {},
+        web_fonts: {}
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectContainer);

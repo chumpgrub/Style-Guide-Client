@@ -45,33 +45,18 @@ class ProjectImagesContainer extends Component {
         this.props.updateProjectTitle(this.props.project, title);
     }
 
-    handleImageChange = (image, value) => {
-
-        const images = this.props.project.image_defs;
-        const objIndex = images.findIndex(obj => obj.id === image.id);
-
-        let newImages = [
-            ...images.slice(0, objIndex),
-            {...value},
-            ...images.slice(objIndex + 1)
-        ];
-
-        this.setState({
-            images: newImages
-        });
-
-        this.props.updateProjectImages(
-            this.props.project,
-            newImages
-        );
-
+    handleImageChange = (images) => {
+        let {project} = this.props;
+        this.props.updateProjectImages(project, images);
     }
 
+    // Delete
     handleImageDelete = (image) => {
         console.log('delete ------')
         console.log(image)
     }
 
+    // Delete
     handleImageOrder = (images) => {
         this.setState({
             images: images
@@ -79,6 +64,7 @@ class ProjectImagesContainer extends Component {
         this.props.updateProjectImageOrder(this.props.project, images);
     }
 
+    // Delete
     handleImageNew = () => {
         const images = this.props.project.image_defs || [];
         let newImage = {};
@@ -117,7 +103,6 @@ class ProjectImagesContainer extends Component {
 
     renderProject(project) {
 
-        let project_id = this.props.match.params.id;
         let editing = this.props.editing;
         let view = this.props.view;
 
@@ -136,9 +121,6 @@ class ProjectImagesContainer extends Component {
                             editing={editing}
                             images={project.image_defs}
                             handleImageChange={this.handleImageChange}
-                            handleImageDelete={this.handleImageDelete}
-                            handleImageOrder={this.handleImageOrder}
-                            handleImageNew={this.handleImageNew}
                         />
                     </div>
                 </div>
@@ -147,13 +129,9 @@ class ProjectImagesContainer extends Component {
     }
 
     render() {
-
-        console.log(this.props);
         let {project} = this.props;
-
         return (
             <ProjectLayout>
-                {/*<Link className="back" to="/">&lsaquo; Back to all Projects</Link>*/}
                 { ! _.isEmpty(project) ? this.renderProject(project) : <Loading/> }
             </ProjectLayout>
         )
